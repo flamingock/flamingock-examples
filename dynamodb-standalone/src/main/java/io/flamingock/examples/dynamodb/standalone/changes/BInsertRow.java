@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.community.dynamodb.changes;
+package io.flamingock.examples.dynamodb.standalone.changes;
 
 import io.flamingock.core.api.annotations.ChangeUnit;
 import io.flamingock.core.api.annotations.Execution;

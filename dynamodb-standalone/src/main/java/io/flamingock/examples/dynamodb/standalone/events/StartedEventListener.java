@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.community.dynamodb.events;
+package io.flamingock.examples.dynamodb.standalone.events;
 
 import io.flamingock.core.event.model.IPipelineStartedEvent;
 

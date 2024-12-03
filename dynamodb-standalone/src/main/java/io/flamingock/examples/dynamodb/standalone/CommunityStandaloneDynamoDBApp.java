@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.community.dynamodb;
+package io.flamingock.examples.dynamodb.standalone;
 
 import io.flamingock.core.configurator.standalone.FlamingockStandalone;
 import io.flamingock.core.pipeline.Stage;
-import io.flamingock.examples.community.dynamodb.events.FailureEventListener;
-import io.flamingock.examples.community.dynamodb.events.StartedEventListener;
-import io.flamingock.examples.community.dynamodb.events.SuccessEventListener;
+import io.flamingock.examples.dynamodb.standalone.events.FailureEventListener;
+import io.flamingock.examples.dynamodb.standalone.events.StartedEventListener;
+import io.flamingock.examples.dynamodb.standalone.events.SuccessEventListener;
 import io.flamingock.oss.driver.dynamodb.driver.DynamoDBDriver;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -55,7 +55,7 @@ public class CommunityStandaloneDynamoDBApp {
                 .setLockAcquiredForMillis(60 * 1000L)// this is just to show how is set. Default value is still 60 * 1000L
                 .setLockQuitTryingAfterMillis(3 * 60 * 1000L)// this is just to show how is set. Default value is still 3 * 60 * 1000L
                 .setLockTryFrequencyMillis(1000L)// this is just to show how is set. Default value is still 1000L
-                .addStage(new Stage("stage-name").addCodePackage("io.flamingock.examples.community.dynamodb.changes"))
+                .addStage(new Stage("stage-name").addCodePackage("io.flamingock.examples.dynamodb.standalone.changes"))
                 .addDependency(client)
                 .setTrackIgnored(true)
                 .setTransactionEnabled(true)

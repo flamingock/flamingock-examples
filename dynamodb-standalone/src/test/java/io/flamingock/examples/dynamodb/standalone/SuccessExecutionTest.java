@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.community.dynamodb;
+package io.flamingock.examples.dynamodb.standalone;
 
 import com.amazonaws.services.dynamodbv2.local.main.ServerRunner;
 import com.amazonaws.services.dynamodbv2.local.server.DynamoDBProxyServer;
-import io.flamingock.examples.community.dynamodb.changes.UserEntity;
-import io.flamingock.examples.community.dynamodb.events.FailureEventListener;
-import io.flamingock.examples.community.dynamodb.events.StartedEventListener;
-import io.flamingock.examples.community.dynamodb.events.SuccessEventListener;
+import io.flamingock.examples.dynamodb.standalone.changes.UserEntity;
+import io.flamingock.examples.dynamodb.standalone.events.FailureEventListener;
+import io.flamingock.examples.dynamodb.standalone.events.StartedEventListener;
+import io.flamingock.examples.dynamodb.standalone.events.SuccessEventListener;
 import io.flamingock.oss.driver.dynamodb.internal.entities.AuditEntryEntity;
 import io.flamingock.oss.driver.dynamodb.internal.util.DynamoClients;
 import io.flamingock.oss.driver.dynamodb.internal.util.DynamoDBConstants;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -125,9 +122,9 @@ public class SuccessExecutionTest {
         List<String> classes = rows.stream()
                 .map(AuditEntryEntity::getClassName)
                 .collect(Collectors.toList());
-        assertTrue(classes.contains("io.flamingock.examples.community.dynamodb.changes.ACreateTable"));
-        assertTrue(classes.contains("io.flamingock.examples.community.dynamodb.changes.BInsertRow"));
-        assertTrue(classes.contains("io.flamingock.examples.community.dynamodb.changes.CInsertAnotherRow"));
+        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes.ACreateTable"));
+        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes.BInsertRow"));
+        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes.CInsertAnotherRow"));
 
         assertEquals(3, rows.size());
     }
@@ -135,8 +132,8 @@ public class SuccessExecutionTest {
     @Test
     @DisplayName("SHOULD trigger start and success event WHEN executed IF happy path")
     void events() {
-        assertTrue(StartedEventListener.executed);
-        assertTrue(SuccessEventListener.executed);
-        assertFalse(FailureEventListener.executed);
+        Assertions.assertTrue(StartedEventListener.executed);
+        Assertions.assertTrue(SuccessEventListener.executed);
+        Assertions.assertFalse(FailureEventListener.executed);
     }
 }

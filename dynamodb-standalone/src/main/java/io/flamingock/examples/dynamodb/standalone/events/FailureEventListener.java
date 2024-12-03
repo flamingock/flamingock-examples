@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.community.dynamodb.events;
+package io.flamingock.examples.dynamodb.standalone.events;
 
-
-import io.flamingock.core.event.model.IPipelineCompletedEvent;
+import io.flamingock.core.event.model.IPipelineFailedEvent;
 
 import java.util.function.Consumer;
 
-public class SuccessEventListener implements Consumer<IPipelineCompletedEvent> {
+public class FailureEventListener implements Consumer<IPipelineFailedEvent> {
 
     public static boolean executed = false;
 
     @Override
-    public void accept(IPipelineCompletedEvent event) {
+    public void accept(IPipelineFailedEvent migrationStartedEvent) {
         executed = true;
     }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.community.dynamodb.changes;
+package io.flamingock.examples.dynamodb.standalone.changes;
 
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.*;

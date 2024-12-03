@@ -5,7 +5,7 @@ plugins {
 
 group = "io.flamingock"
 version = "1.0-SNAPSHOT"
-val defaultFlamingockVersion = "0.0.16-beta"
+val defaultFlamingockVersion = "0.0.17-beta"
 
 
 allprojects {

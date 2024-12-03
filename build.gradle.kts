@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm") version "1.9.22"
     id("java-library")
@@ -7,7 +5,19 @@ plugins {
 
 group = "io.flamingock"
 version = "1.0-SNAPSHOT"
+val defaultFlamingockVersion = "0.0.16-beta"
 
+
+allprojects {
+    group = "io.flamingock"
+    version = "1.0-SNAPSHOT"
+
+    apply(plugin = "org.jetbrains.kotlin.jvm")
+
+    extra["flamingockVersion"] = project.findProperty("flamingockVersion")?.toString() ?: defaultFlamingockVersion
+
+
+}
 
 subprojects {
     apply(plugin = "java-library")

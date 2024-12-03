@@ -4,10 +4,13 @@ plugins {
     id("io.spring.dependency-management") version "1.1.0"
 }
 
+val flamingockVersion = project.findProperty("flamingockVersion") as String
+
+
 dependencies {
 
-    implementation("io.flamingock:flamingock-springboot-v2-runner:0.0.16-beta")
-    implementation("io.flamingock:mongodb-springdata-v3-driver:0.0.16-beta")
+    implementation("io.flamingock:flamingock-springboot-v2-runner:$flamingockVersion")
+    implementation("io.flamingock:mongodb-springdata-v3-driver:$flamingockVersion")
 
 
     implementation("org.slf4j:slf4j-simple:2.0.6")

@@ -1,9 +1,7 @@
 name: Triggered Workflow
-
 on:
-  repository_dispatch:
-    types:
-      - trigger-example-job
+  workflow_call:
+
 jobs:
   build:
     runs-on: ubuntu-latest

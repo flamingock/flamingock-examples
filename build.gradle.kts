@@ -1,3 +1,6 @@
+import java.net.URL
+import javax.xml.parsers.DocumentBuilderFactory
+
 plugins {
     kotlin("jvm") version "1.9.22"
     id("java-library")
@@ -5,7 +8,19 @@ plugins {
 
 group = "io.flamingock"
 version = "1.0-SNAPSHOT"
-val defaultFlamingockVersion = "0.0.17-beta"
+
+
+val flamingockVersionAsParameter: String? = project.findProperty("flamingockVersion")?.toString()
+val flamingockVersion: String = if(flamingockVersionAsParameter != null) {
+    logger.lifecycle("Building with flamingock version passed as parameter: $flamingockVersionAsParameter")
+    flamingockVersionAsParameter
+} else {
+    val flamingockReleasedVersion = getFlamingockReleasedVersion()
+    logger.lifecycle("Building with flamingock released version: $flamingockReleasedVersion")
+    flamingockReleasedVersion
+
+}
+
 
 
 allprojects {
@@ -14,10 +29,11 @@ allprojects {
 
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
-    extra["flamingockVersion"] = project.findProperty("flamingockVersion")?.toString() ?: defaultFlamingockVersion
+    extra["flamingockVersion"] = flamingockVersion
 
 
 }
+
 
 subprojects {
     apply(plugin = "java-library")
@@ -50,10 +66,10 @@ subprojects {
         useJUnitPlatform()
         testLogging {
             events(
-                org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
-                org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED,
-                org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-                org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_OUT,
+                    org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
+                    org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED,
+                    org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
+                    org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_OUT,
             )
         }
     }
@@ -67,5 +83,18 @@ subprojects {
         toolchain {
             languageVersion.set(JavaLanguageVersion.of(8))
         }
+    }
+}
+
+fun getFlamingockReleasedVersion(): String {
+    val metadataUrl = "https://repo.maven.apache.org/maven2/io/flamingock/flamingock-core/maven-metadata.xml"
+    try {
+        val metadata = URL(metadataUrl).readText()
+        val documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+        val inputStream = metadata.byteInputStream()
+        val document = documentBuilder.parse(inputStream)
+        return document.getElementsByTagName("latest").item(0).textContent
+    } catch (e: Exception) {
+        throw RuntimeException("Cannot obtain Flamingock's latest version")
     }
 }

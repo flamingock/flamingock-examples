@@ -1,5 +1,9 @@
-name: Build
-on: [pull_request]
+name: Triggered Workflow
+
+on:
+  repository_dispatch:
+    types:
+      - trigger-example-job
 jobs:
   build:
     runs-on: ubuntu-latest

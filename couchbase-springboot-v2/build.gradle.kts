@@ -6,7 +6,6 @@ plugins {
 
 val flamingockVersion = project.findProperty("flamingockVersion") as String
 
-
 dependencies {
     implementation("io.flamingock:flamingock-springboot-v2-runner:$flamingockVersion")
     implementation("io.flamingock:couchbase-springboot-v2-driver:$flamingockVersion")

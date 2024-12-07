@@ -16,6 +16,7 @@
 
 package io.flamingock.examples.mongodb.springboot.springdata.config;
 
+import io.flamingock.examples.mongodb.springboot.springdata.mongock.MongockExecutor;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -36,10 +37,15 @@ public class MongoInitializer  implements ApplicationContextInitializer<Configur
     @Override
     public void initialize(ConfigurableApplicationContext context) {
         mongoDBContainer.start();
+        String replicaSetUrl = mongoDBContainer.getReplicaSetUrl();
         List<String> addedProperties = Collections.singletonList(
-                "spring.data.mongodb.uri=" + mongoDBContainer.getReplicaSetUrl()
+                "spring.data.mongodb.uri=" + replicaSetUrl
         );
         TestPropertyValues.of(addedProperties).applyTo(context.getEnvironment());
+        String[] urlChunks = replicaSetUrl.split("/");
+        String database = urlChunks[urlChunks.length - 1 ];
+        String mongoHost = urlChunks[urlChunks.length - 2 ];
+        MongockExecutor.addMongockLegacyData("mongodb://" + mongoHost + "/", database);
     }
 }
 

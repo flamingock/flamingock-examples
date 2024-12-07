@@ -27,6 +27,7 @@ import io.flamingock.examples.mongodb.springboot.springdata.events.PipelineStart
 import io.flamingock.examples.mongodb.springboot.springdata.events.StageCompletedListener;
 import io.flamingock.examples.mongodb.springboot.springdata.events.StageFailedListener;
 import io.flamingock.examples.mongodb.springboot.springdata.events.StageStartedListener;
+import io.flamingock.examples.mongodb.springboot.springdata.mongock.MongockExecutor;
 import io.flamingock.examples.mongodb.springboot.springdata.mongock.MongockLegacyChangeUnit;
 import io.flamingock.springboot.v2.context.EnableFlamingock;
 import io.mongock.driver.mongodb.sync.v4.driver.MongoSync4Driver;
@@ -52,7 +53,7 @@ public class MongodbSpringbootSpringdata {
     public final static String CLIENTS_COLLECTION_NAME = "clientCollection";
 
     public static void main(String[] args) {
-        addMongockLegacyData();
+        MongockExecutor.addMongockLegacyData("mongodb://localhost:27017/", DATABASE_NAME);
         SpringApplication.run(MongodbSpringbootSpringdata.class, args);
     }
 
@@ -80,29 +81,5 @@ public class MongodbSpringbootSpringdata {
     @Bean
     public StageFailedListener stageFailedListener() {return new StageFailedListener();}
 
-    private static void addMongockLegacyData() {
-        MongoClient mongoClient = getMongoClient("mongodb://localhost:27017/");
-        MongoSync4Driver mongockSync4Driver = io.mongock.driver.mongodb.sync.v4.driver.MongoSync4Driver
-                .withDefaultLock(mongoClient, DATABASE_NAME);
 
-        MongockStandalone.builder()
-                .setDriver(mongockSync4Driver)
-                .addMigrationClass(MongockLegacyChangeUnit.class)
-                .setTrackIgnored(true)
-                .setTransactional(true)
-                .buildRunner()
-                .execute();
-    }
-
-    private static MongoClient getMongoClient(String connectionString) {
-        CodecRegistry codecRegistry = fromRegistries(CodecRegistries.fromCodecs(new ZonedDateTimeCodec()),
-                MongoClientSettings.getDefaultCodecRegistry(),
-                fromProviders(PojoCodecProvider.builder().automatic(true).build()));
-
-        MongoClientSettings.Builder builder = MongoClientSettings.builder();
-        builder.applyConnectionString(new ConnectionString(connectionString));
-        builder.codecRegistry(codecRegistry);
-        MongoClientSettings build = builder.build();
-        return MongoClients.create(build);
-    }
 }

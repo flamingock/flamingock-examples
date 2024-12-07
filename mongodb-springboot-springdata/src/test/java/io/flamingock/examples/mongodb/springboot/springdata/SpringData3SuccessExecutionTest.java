@@ -149,8 +149,9 @@ class SpringData3SuccessExecutionTest {
         assertTrue(pipelineCompletedListener.executed);
         assertFalse(pipelineFailedListener.executed);
 
-        assertEquals(1, stageStartedListener.executed);
-        assertEquals(1, stageCompletedListener.executed);
+        //2 because the importer runs on its own stage
+        assertEquals(2, stageStartedListener.executed);
+        assertEquals(2, stageCompletedListener.executed);
         assertEquals(0, stageFailedListener.executed);
     }
 }

@@ -93,22 +93,52 @@ class SpringData3SuccessExecutionTest {
                 .find()
                 .into(new ArrayList<>());
 
-        Document aCreateCollection = flamingockDocuments.get(0);
+
+        //New changes added
+        Document aCreateCollection = flamingockDocuments.get(5);
         assertEquals("create-collection", aCreateCollection.get("changeId"));
         assertEquals("EXECUTED", aCreateCollection.get("state"));
         assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes.ACreateCollection", aCreateCollection.get("changeLogClass"));
 
-        Document bInsertDocument = flamingockDocuments.get(1);
+        Document bInsertDocument = flamingockDocuments.get(6);
         assertEquals("insert-document", bInsertDocument.get("changeId"));
         assertEquals("EXECUTED", bInsertDocument.get("state"));
         assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes.BInsertDocument", bInsertDocument.get("changeLogClass"));
 
-        Document cInsertAnotherDocument = flamingockDocuments.get(2);
+        Document cInsertAnotherDocument = flamingockDocuments.get(7);
         assertEquals("insert-another-document", cInsertAnotherDocument.get("changeId"));
         assertEquals("EXECUTED", cInsertAnotherDocument.get("state"));
         assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes.CInsertAnotherDocument", cInsertAnotherDocument.get("changeLogClass"));
 
-        assertEquals(3, flamingockDocuments.size());
+        //Form importing mongock legacy data
+        Document mongoSystemChangeBefore = flamingockDocuments.get(0);
+        assertEquals("system-change-00001_before", mongoSystemChangeBefore.get("changeId"));
+        assertEquals("EXECUTED", mongoSystemChangeBefore.get("state"));
+        assertEquals("io.mongock.runner.core.executor.system.changes.SystemChangeUnit00001", mongoSystemChangeBefore.get("changeLogClass"));
+
+        Document mongoSystemChange = flamingockDocuments.get(1);
+        assertEquals("system-change-00001", mongoSystemChange.get("changeId"));
+        assertEquals("EXECUTED", mongoSystemChange.get("state"));
+        assertEquals("io.mongock.runner.core.executor.system.changes.SystemChangeUnit00001", mongoSystemChange.get("changeLogClass"));
+
+        Document changeUnitExecutedInMongockBefore = flamingockDocuments.get(2);
+        assertEquals("legacy-mongock-change-unit_before", changeUnitExecutedInMongockBefore.get("changeId"));
+        assertEquals("EXECUTED", changeUnitExecutedInMongockBefore.get("state"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.mongock.MongockLegacyChangeUnit", changeUnitExecutedInMongockBefore.get("changeLogClass"));
+
+        Document changeUnitExecutedInMongock = flamingockDocuments.get(3);
+        assertEquals("legacy-mongock-change-unit", changeUnitExecutedInMongock.get("changeId"));
+        assertEquals("EXECUTED", changeUnitExecutedInMongock.get("state"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.mongock.MongockLegacyChangeUnit", changeUnitExecutedInMongock.get("changeLogClass"));
+
+        Document legacyImporterChangeUnit = flamingockDocuments.get(4);
+        assertEquals("mongock-local-legacy-importer-mongodb-3", legacyImporterChangeUnit.get("changeId"));
+        assertEquals("EXECUTED", legacyImporterChangeUnit.get("state"));
+        assertEquals("io.flamingock.oss.driver.mongodb.sync.v4.internal.mongock.MongockLocalLegacyImporterChangeUnit", legacyImporterChangeUnit.get("changeLogClass"));
+
+
+        //8 changes: 3 new changes we are adding plus that come from legacy importer
+        assertEquals(8, flamingockDocuments.size());
     }
 
 

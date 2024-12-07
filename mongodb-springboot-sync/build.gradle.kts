@@ -28,3 +28,7 @@ dependencies {
 
 }
 
+springBoot {
+    mainClass.set("io.flamingock.examples.mongodb.springboot.sync.CommunitySpringbootMongodbSyncApp")
+}
+

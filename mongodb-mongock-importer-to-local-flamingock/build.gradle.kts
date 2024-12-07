@@ -29,3 +29,8 @@ dependencies {
 
 
 }
+
+
+springBoot {
+    mainClass.set("io.flamingock.mongock.importer.local.ImporterApplication")
+}

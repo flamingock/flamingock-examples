@@ -4,3 +4,4 @@ flamingock:
       code-packages:
         - io.flamingock.examples.mongodb.springboot.springdata.changes
   transactionEnabled: true
+  mongock-importer-source: mongockChangeLog

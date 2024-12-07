@@ -1,0 +1,8 @@
+flamingock:
+  stages:
+    - name: stage1
+      code-packages:
+        - io.flamingock.mongock.importer.local.changes
+  transaction-enabled: true
+  mongock-importer-source: mongockChangeLog
+

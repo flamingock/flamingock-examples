@@ -20,3 +20,6 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
+springBoot {
+    mainClass.set("io.flamingock.examples.community.couchbase.CommunitySpringbootV2CouchbaseApp")
+}

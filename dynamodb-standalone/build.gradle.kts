@@ -17,7 +17,7 @@ dependencies {
 
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "io.flamingock.examples.community.dynamodb.CommunityStandaloneDynamoDBApp"
+        attributes["Main-Class"] = "io.flamingock.examples.dynamodb.standalone.CommunityStandaloneDynamoDBApp"
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from(sourceSets.main.get().output)

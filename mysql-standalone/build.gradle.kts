@@ -1,7 +1,5 @@
 plugins {
     java
-    id("org.springframework.boot") version "2.7.12"
-    id("io.spring.dependency-management") version "1.1.0"
 }
 
 val flamingockVersion = project.findProperty("flamingockVersion") as String

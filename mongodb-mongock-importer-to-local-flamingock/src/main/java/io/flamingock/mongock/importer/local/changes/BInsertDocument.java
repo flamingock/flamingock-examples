@@ -21,7 +21,7 @@ import io.flamingock.core.api.annotations.Execution;
 import io.flamingock.mongock.importer.local.client.Client;
 import io.flamingock.mongock.importer.local.client.ClientRepository;
 
-@ChangeUnit( id="insert-document" , order = "2")
+@ChangeUnit( id="insert-document" , order = "3")
 public class BInsertDocument {
 
     @Execution

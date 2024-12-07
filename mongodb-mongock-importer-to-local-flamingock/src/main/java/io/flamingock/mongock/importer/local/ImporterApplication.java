@@ -58,7 +58,7 @@ public class ImporterApplication {
                 .setDriver(mongockSync4Driver)
                 .addMigrationClass(MongockLegacyChangeUnit.class)
                 .setTrackIgnored(true)
-                .setTransactional(false)
+                .setTransactional(true)
                 .buildRunner()
                 .execute();
     }

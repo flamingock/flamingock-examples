@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 
-@ChangeUnit(id = "client-initializer", order = "1", author = "mongock")
+@ChangeUnit(id = "legacy-mongock-change-unit", order = "1", author = "mongock")
 public class MongockLegacyChangeUnit {
 
     public final static int INITIAL_CLIENTS = 10;

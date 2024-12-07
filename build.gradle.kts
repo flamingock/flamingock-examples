@@ -10,15 +10,16 @@ group = "io.flamingock"
 version = "1.0-SNAPSHOT"
 
 
+var passedAsParameter = false
 val flamingockVersionAsParameter: String? = project.findProperty("flamingockVersion")?.toString()
 val flamingockVersion: String =  if(flamingockVersionAsParameter != null) {
-    logger.lifecycle("Building with flamingock version passed as parameter: $flamingockVersionAsParameter")
+    passedAsParameter = true
     flamingockVersionAsParameter
 } else {
-    val flamingockReleasedVersion = getFlamingockReleasedVersion()
-    logger.lifecycle("Building with flamingock released version: $flamingockReleasedVersion")
+    val flamingockReleasedVersion = "latest.release"
     flamingockReleasedVersion
 }
+logger.lifecycle("Building with flamingock version${if(passedAsParameter)"[from parameter]" else ""}: $flamingockVersion")
 
 
 
@@ -27,9 +28,7 @@ allprojects {
     version = "1.0-SNAPSHOT"
 
     apply(plugin = "org.jetbrains.kotlin.jvm")
-
     extra["flamingockVersion"] = flamingockVersion
-
 
 }
 
@@ -83,18 +82,4 @@ subprojects {
             languageVersion.set(JavaLanguageVersion.of(8))
         }
     }
-}
-
-fun getFlamingockReleasedVersion(): String {
-    return "latest.release"
-//    val metadataUrl = "https://repo.maven.apache.org/maven2/io/flamingock/flamingock-core/maven-metadata.xml"
-//    try {
-//        val metadata = URL(metadataUrl).readText()
-//        val documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-//        val inputStream = metadata.byteInputStream()
-//        val document = documentBuilder.parse(inputStream)
-//        return document.getElementsByTagName("latest").item(0).textContent
-//    } catch (e: Exception) {
-//        throw RuntimeException("Cannot obtain Flamingock's latest version")
-//    }
 }

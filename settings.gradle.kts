@@ -4,6 +4,7 @@ include("mongodb-springboot-springdata")
 include("mongodb-springboot-sync")
 include("mongodb-springboot-v3-springdata-v4")
 include("mongodb-sync-standalone")
+include("mongodb-mongock-importer-to-local-flamingock")
 
 include("mysql-springboot")
 include("mysql-standalone")

@@ -1,4 +1,4 @@
-package io.flamingock.mongock.importer.local.mongock;
+package io.flamingock.examples.mongodb.springboot.springdata.mongock;
 
 import com.mongodb.client.MongoDatabase;
 import io.mongock.api.annotations.*;

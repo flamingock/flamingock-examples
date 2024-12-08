@@ -12,15 +12,13 @@ version = "1.0-SNAPSHOT"
 
 var passedAsParameter = false
 val flamingockVersionAsParameter: String? = project.findProperty("flamingockVersion")?.toString()
-val flamingockVersion: String =  "0.0.22-beta"
-
-//    if(flamingockVersionAsParameter != null) {
-//    passedAsParameter = true
-//    flamingockVersionAsParameter
-//} else {
-//    val flamingockReleasedVersion = "latest.release"
-//    flamingockReleasedVersion
-//}
+val flamingockVersion: String =  if(flamingockVersionAsParameter != null) {
+    passedAsParameter = true
+    flamingockVersionAsParameter
+} else {
+    val flamingockReleasedVersion = "latest.release"
+    flamingockReleasedVersion
+}
 logger.lifecycle("Building with flamingock version${if(passedAsParameter)"[from parameter]" else ""}: $flamingockVersion")
 
 

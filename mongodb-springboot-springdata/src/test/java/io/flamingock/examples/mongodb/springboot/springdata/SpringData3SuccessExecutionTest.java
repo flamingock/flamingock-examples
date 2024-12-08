@@ -112,22 +112,22 @@ class SpringData3SuccessExecutionTest {
 
         //Form importing mongock legacy data
         Document mongoSystemChangeBefore = flamingockDocuments.get(0);
-        assertEquals("mongock_system-change-00001_before", mongoSystemChangeBefore.get("changeId"));
+        assertEquals("[mongock]system-change-00001_before", mongoSystemChangeBefore.get("changeId"));
         assertEquals("EXECUTED", mongoSystemChangeBefore.get("state"));
         assertEquals("io.mongock.runner.core.executor.system.changes.SystemChangeUnit00001", mongoSystemChangeBefore.get("changeLogClass"));
 
         Document mongoSystemChange = flamingockDocuments.get(1);
-        assertEquals("mongock_system-change-00001", mongoSystemChange.get("changeId"));
+        assertEquals("[mongock]system-change-00001", mongoSystemChange.get("changeId"));
         assertEquals("EXECUTED", mongoSystemChange.get("state"));
         assertEquals("io.mongock.runner.core.executor.system.changes.SystemChangeUnit00001", mongoSystemChange.get("changeLogClass"));
 
         Document changeUnitExecutedInMongockBefore = flamingockDocuments.get(2);
-        assertEquals("mongock_legacy-mongock-change-unit_before", changeUnitExecutedInMongockBefore.get("changeId"));
+        assertEquals("[mongock]legacy-mongock-change-unit_before", changeUnitExecutedInMongockBefore.get("changeId"));
         assertEquals("EXECUTED", changeUnitExecutedInMongockBefore.get("state"));
         assertEquals("io.flamingock.examples.mongodb.springboot.springdata.mongock.MongockLegacyChangeUnit", changeUnitExecutedInMongockBefore.get("changeLogClass"));
 
         Document changeUnitExecutedInMongock = flamingockDocuments.get(3);
-        assertEquals("mongock_legacy-mongock-change-unit", changeUnitExecutedInMongock.get("changeId"));
+        assertEquals("[mongock]legacy-mongock-change-unit", changeUnitExecutedInMongock.get("changeId"));
         assertEquals("EXECUTED", changeUnitExecutedInMongock.get("state"));
         assertEquals("io.flamingock.examples.mongodb.springboot.springdata.mongock.MongockLegacyChangeUnit", changeUnitExecutedInMongock.get("changeLogClass"));
 

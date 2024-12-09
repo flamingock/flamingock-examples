@@ -19,9 +19,7 @@ package io.flamingock.examples.dynamodb.standalone;
 import io.flamingock.core.configurator.core.CoreConfiguration;
 import io.flamingock.core.configurator.standalone.FlamingockStandalone;
 import io.flamingock.core.pipeline.Stage;
-import io.flamingock.examples.dynamodb.standalone.events.FailureEventListener;
-import io.flamingock.examples.dynamodb.standalone.events.StartedEventListener;
-import io.flamingock.examples.dynamodb.standalone.events.SuccessEventListener;
+import io.flamingock.examples.dynamodb.standalone.mongock.MongockLegacyDataProvisioner;
 import io.flamingock.oss.driver.dynamodb.driver.DynamoDBDriver;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
@@ -33,21 +31,21 @@ public class CommunityStandaloneDynamoDBApp {
         new CommunityStandaloneDynamoDBApp().run(DynamoDBUtil.getClient());
     }
 
-    public void run(DynamoDbClient client) throws URISyntaxException {
-        DynamoDBUtil.addMongockLegacyData();
+    public void run(DynamoDbClient client) {
+        //This line adds data to simulate previous legacy Mongock executions
+        MongockLegacyDataProvisioner.provisionLegacyMongockData();
+
+        //Running flamingock
         FlamingockStandalone.local()
                 .setDriver(new DynamoDBDriver(client))
                 .setMongockImporterConfiguration(CoreConfiguration.MongockImporterConfiguration.withSource("mongockChangeLog"))
-                .setLockAcquiredForMillis(60 * 1000L)// this is just to show how is set. Default value is still 60 * 1000L
-                .setLockQuitTryingAfterMillis(3 * 60 * 1000L)// this is just to show how is set. Default value is still 3 * 60 * 1000L
-                .setLockTryFrequencyMillis(1000L)// this is just to show how is set. Default value is still 1000L
-                .addStage(new Stage("stage-name").addCodePackage("io.flamingock.examples.dynamodb.standalone.changes"))
+                .addStage(new Stage("stage-name")
+                        //adding mongock legacy changeUnits
+                        .addCodePackage("io.flamingock.examples.dynamodb.standalone.mongock")
+                        //Adding a package for new changeUnits (note that legacy and new changeUnits can coexist in the same package)
+                        .addCodePackage("io.flamingock.examples.dynamodb.standalone.changes"))
                 .addDependency(client)
-                .setTrackIgnored(true)
                 .setTransactionEnabled(true)
-                .setPipelineStartedListener(new StartedEventListener())
-                .setPipelineCompletedListener(new SuccessEventListener())
-                .setPipelineFailedListener(new FailureEventListener())
                 .build()
                 .run();
     }

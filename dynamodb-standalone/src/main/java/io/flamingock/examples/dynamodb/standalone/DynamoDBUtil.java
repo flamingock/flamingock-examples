@@ -16,14 +16,6 @@
 
 package io.flamingock.examples.dynamodb.standalone;
 
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import io.flamingock.examples.dynamodb.standalone.mongock._1_mongockInitialiseTableLegacyChangeUnit;
-import io.mongock.driver.dynamodb.driver.DynamoDBDriver;
-import io.mongock.runner.standalone.MongockStandalone;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
@@ -156,45 +148,4 @@ public final class DynamoDBUtil {
 
 
 
-    public static void addMongockLegacyData() throws URISyntaxException {
-
-        DynamoDBDriver mongockDriver = DynamoDBDriver.withDefaultLock(getAmazonDynamoDBClient());
-
-        MongockStandalone.builder()
-                .setDriver(mongockDriver)
-                .addMigrationClass(_1_mongockInitialiseTableLegacyChangeUnit.class)
-                .addDependency(getDynamoDbClient())
-                .setTrackIgnored(true)
-                .setTransactional(false)
-                .buildRunner()
-                .execute();
-    }
-
-    private static AmazonDynamoDBClient getAmazonDynamoDBClient() {
-        return (AmazonDynamoDBClient) AmazonDynamoDBClientBuilder
-                .standard()
-                .withEndpointConfiguration(
-                        new AwsClientBuilder.EndpointConfiguration(
-                                "http://localhost:8000", Region.EU_WEST_1.toString()
-                        )
-                )
-                .withCredentials(
-                        new AWSStaticCredentialsProvider(
-                                new BasicAWSCredentials("dummye", "dummye")
-                        )
-                )
-                .build();
-    }
-
-    private static DynamoDbClient getDynamoDbClient() throws URISyntaxException {
-        return DynamoDbClient.builder()
-                .region(Region.EU_WEST_1)
-                .endpointOverride(new URI("http://localhost:8000"))
-                .credentialsProvider(
-                        StaticCredentialsProvider.create(
-                                AwsBasicCredentials.create("dummye", "dummye")
-                        )
-                )
-                .build();
-    }
 }

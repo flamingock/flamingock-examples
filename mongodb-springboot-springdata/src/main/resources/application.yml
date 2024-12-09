@@ -5,4 +5,4 @@ flamingock:
         - io.flamingock.examples.mongodb.springboot.springdata.changes
         - io.flamingock.examples.mongodb.springboot.springdata.mongock
   transactionEnabled: true
-  mongock-importer-source: mongockChangeLog
+  legacy-mongock-changelog-source: mongockChangeLog

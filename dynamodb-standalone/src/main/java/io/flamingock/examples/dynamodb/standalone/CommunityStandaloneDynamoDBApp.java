@@ -22,6 +22,7 @@ import io.flamingock.core.pipeline.Stage;
 import io.flamingock.examples.dynamodb.standalone.events.FailureEventListener;
 import io.flamingock.examples.dynamodb.standalone.events.StartedEventListener;
 import io.flamingock.examples.dynamodb.standalone.events.SuccessEventListener;
+import io.flamingock.examples.dynamodb.standalone.mongock.MongockLegacyDataProvisioner;
 import io.flamingock.oss.driver.dynamodb.driver.DynamoDBDriver;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
@@ -34,7 +35,7 @@ public class CommunityStandaloneDynamoDBApp {
     }
 
     public void run(DynamoDbClient client) throws URISyntaxException {
-        DynamoDBUtil.addMongockLegacyData();
+        MongockLegacyDataProvisioner.provisionLegacyMongockData();
         FlamingockStandalone.local()
                 .setDriver(new DynamoDBDriver(client))
                 .setMongockImporterConfiguration(CoreConfiguration.MongockImporterConfiguration.withSource("mongockChangeLog"))

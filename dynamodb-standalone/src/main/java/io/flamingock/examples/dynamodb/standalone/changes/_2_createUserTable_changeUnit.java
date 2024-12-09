@@ -18,27 +18,44 @@ package io.flamingock.examples.dynamodb.standalone.changes;
 
 import io.flamingock.core.api.annotations.ChangeUnit;
 import io.flamingock.core.api.annotations.Execution;
+import io.flamingock.examples.dynamodb.standalone.DynamoDBUtil;
 import io.flamingock.examples.dynamodb.standalone.UserEntity;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
-import software.amazon.awssdk.enhanced.dynamodb.model.PutItemEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.model.DescribeTableRequest;
 
-@ChangeUnit(id = "insert-user", order = "2", transactional = false)
-public class _2_insertUser_changeUnit {
+import static java.util.Collections.emptyList;
+
+@ChangeUnit(id = "table-create", order = "2", transactional = false)
+public class _2_createUserTable_changeUnit {
+
+    private DynamoDbEnhancedClient enhancedClient;
+    private DynamoDbTable<UserEntity> table;
 
     @Execution
     public void execution(DynamoDbClient client) {
-        DynamoDbTable<UserEntity> table = DynamoDbEnhancedClient.builder()
-                .dynamoDbClient(client)
-                .build()
-                .table(UserEntity.tableName, TableSchema.fromBean(UserEntity.class));
 
-        table.putItem(
-                PutItemEnhancedRequest.builder(UserEntity.class)
-                        .item(new UserEntity("Pepe", "Pérez"))
+
+        DynamoDBUtil.createTable(
+                client,
+                DynamoDBUtil.getAttributeDefinitions(UserEntity.pkName, UserEntity.skName),
+                DynamoDBUtil.getKeySchemas(UserEntity.pkName, UserEntity.skName),
+                DynamoDBUtil.getProvisionedThroughput(UserEntity.readCap, UserEntity.writeCap),
+                UserEntity.tableName,
+                emptyList(),
+                emptyList()
+        );
+        client.describeTable(
+                DescribeTableRequest.builder()
+                        .tableName(UserEntity.tableName)
                         .build()
         );
+
+        this.enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(client).build();
+        this.table = this.enhancedClient.table(UserEntity.tableName, TableSchema.fromBean(UserEntity.class));
+
+
     }
 }

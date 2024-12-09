@@ -1,4 +1,4 @@
-package io.flamingock.examples.dynamodb.standalone.changes;
+package io.flamingock.examples.dynamodb.standalone;
 
 
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
@@ -9,11 +9,11 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortK
 @DynamoDbBean
 public class UserEntity {
 
-    static final String tableName = "test_table";
-    static final String pkName = "PartitionKey";
-    static final String skName = "SortKey";
-    static final Long readCap = 5L;
-    static final Long writeCap = 5L;
+    public static final String tableName = "test_table";
+    public static final String pkName = "PartitionKey";
+    public static final String skName = "SortKey";
+    public static final Long readCap = 5L;
+    public static final Long writeCap = 5L;
 
     private String partitionKey;
     private String sortKey;

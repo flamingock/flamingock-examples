@@ -16,11 +16,11 @@ val flamingockVersion: String =  if(flamingockVersionAsParameter != null) {
     passedAsParameter = true
     flamingockVersionAsParameter
 } else {
-    val flamingockReleasedVersion = "latest.release"
+    //using "release.latest" doesn't play nice with intellij
+    val flamingockReleasedVersion = getFlamingockReleasedVersion()
     flamingockReleasedVersion
 }
 logger.lifecycle("Building with flamingock version${if(passedAsParameter)"[from parameter]" else ""}: $flamingockVersion")
-
 
 
 allprojects {
@@ -81,5 +81,18 @@ subprojects {
         toolchain {
             languageVersion.set(JavaLanguageVersion.of(8))
         }
+    }
+}
+
+fun getFlamingockReleasedVersion(): String {
+    val metadataUrl = "https://repo.maven.apache.org/maven2/io/flamingock/flamingock-core/maven-metadata.xml"
+    try {
+        val metadata = URL(metadataUrl).readText()
+        val documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+        val inputStream = metadata.byteInputStream()
+        val document = documentBuilder.parse(inputStream)
+        return document.getElementsByTagName("latest").item(0).textContent
+    } catch (e: Exception) {
+        throw RuntimeException("Cannot obtain Flamingock's latest version")
     }
 }

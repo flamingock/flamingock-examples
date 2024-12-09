@@ -14,11 +14,24 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.dynamodb.standalone.changes;
+package io.flamingock.examples.dynamodb.standalone;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.client.builder.AwsClientBuilder;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import io.flamingock.examples.dynamodb.standalone.mongock._1_mongockInitialiseTableLegacyChangeUnit;
+import io.mongock.driver.dynamodb.driver.DynamoDBDriver;
+import io.mongock.runner.standalone.MongockStandalone;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +40,20 @@ public final class DynamoDBUtil {
     public DynamoDBUtil() {
     }
 
-    public List<AttributeDefinition> getAttributeDefinitions(String pkName, String skName, String... vargs) {
+    public static DynamoDbClient getClient() throws URISyntaxException {
+        return DynamoDbClient.builder()
+                .region(Region.EU_WEST_1)
+                .endpointOverride(new URI("http://localhost:8000"))
+                .credentialsProvider(
+                        StaticCredentialsProvider.create(
+                                AwsBasicCredentials.create("dummye", "dummye")
+                        )
+                )
+                //.httpClient(UrlConnectionHttpClient.builder().build())
+                .build();
+    }
+
+    public static List<AttributeDefinition> getAttributeDefinitions(String pkName, String skName, String... vargs) {
         List<AttributeDefinition> result = new ArrayList<>();
         result.add(
                 AttributeDefinition.builder()
@@ -52,7 +78,7 @@ public final class DynamoDBUtil {
         return result;
     }
 
-    public List<KeySchemaElement> getKeySchemas(String pkName, String skName) {
+    public static List<KeySchemaElement> getKeySchemas(String pkName, String skName) {
         return Arrays.asList(
                 KeySchemaElement.builder()
                         .attributeName(pkName)
@@ -65,11 +91,11 @@ public final class DynamoDBUtil {
         );
     }
 
-    public ProvisionedThroughput getProvisionedThroughput(Long readCap, Long writeCap) {
+    public static ProvisionedThroughput getProvisionedThroughput(Long readCap, Long writeCap) {
         return ProvisionedThroughput.builder().readCapacityUnits(readCap).writeCapacityUnits(writeCap).build();
     }
 
-    public LocalSecondaryIndex generateLSI(String lsiName, String lsiPK, String lsiSK) {
+    public static LocalSecondaryIndex generateLSI(String lsiName, String lsiPK, String lsiSK) {
         return LocalSecondaryIndex.builder()
                 .indexName(lsiName)
                 .keySchema(
@@ -90,7 +116,7 @@ public final class DynamoDBUtil {
                 .build();
     }
 
-    public void createTable(
+    public static void createTable(
             DynamoDbClient dynamoDbClient,
             List<AttributeDefinition> attributeDefinitions,
             List<KeySchemaElement> keySchemas,
@@ -126,5 +152,49 @@ public final class DynamoDBUtil {
         } catch (ResourceInUseException e) {
             // Table already exists, continue
         }
+    }
+
+
+
+    public static void addMongockLegacyData() throws URISyntaxException {
+
+        DynamoDBDriver mongockDriver = DynamoDBDriver.withDefaultLock(getAmazonDynamoDBClient());
+
+        MongockStandalone.builder()
+                .setDriver(mongockDriver)
+                .addMigrationClass(_1_mongockInitialiseTableLegacyChangeUnit.class)
+                .addDependency(getDynamoDbClient())
+                .setTrackIgnored(true)
+                .setTransactional(false)
+                .buildRunner()
+                .execute();
+    }
+
+    private static AmazonDynamoDBClient getAmazonDynamoDBClient() {
+        return (AmazonDynamoDBClient) AmazonDynamoDBClientBuilder
+                .standard()
+                .withEndpointConfiguration(
+                        new AwsClientBuilder.EndpointConfiguration(
+                                "http://localhost:8000", Region.EU_WEST_1.toString()
+                        )
+                )
+                .withCredentials(
+                        new AWSStaticCredentialsProvider(
+                                new BasicAWSCredentials("dummye", "dummye")
+                        )
+                )
+                .build();
+    }
+
+    private static DynamoDbClient getDynamoDbClient() throws URISyntaxException {
+        return DynamoDbClient.builder()
+                .region(Region.EU_WEST_1)
+                .endpointOverride(new URI("http://localhost:8000"))
+                .credentialsProvider(
+                        StaticCredentialsProvider.create(
+                                AwsBasicCredentials.create("dummye", "dummye")
+                        )
+                )
+                .build();
     }
 }

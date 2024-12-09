@@ -16,42 +16,28 @@
 
 package io.flamingock.examples.dynamodb.standalone;
 
+import io.flamingock.core.configurator.core.CoreConfiguration;
 import io.flamingock.core.configurator.standalone.FlamingockStandalone;
 import io.flamingock.core.pipeline.Stage;
 import io.flamingock.examples.dynamodb.standalone.events.FailureEventListener;
 import io.flamingock.examples.dynamodb.standalone.events.StartedEventListener;
 import io.flamingock.examples.dynamodb.standalone.events.SuccessEventListener;
 import io.flamingock.oss.driver.dynamodb.driver.DynamoDBDriver;
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
-import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
-import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 
 public class CommunityStandaloneDynamoDBApp {
 
     public static void main(String[] args) throws URISyntaxException {
-        new CommunityStandaloneDynamoDBApp().run(connect());
+        new CommunityStandaloneDynamoDBApp().run(DynamoDBUtil.getClient());
     }
 
-    private static DynamoDbClient connect() throws URISyntaxException {
-        return DynamoDbClient.builder()
-                .region(Region.EU_WEST_1)
-                .endpointOverride(new URI("http://localhost:8000"))
-                .credentialsProvider(
-                        StaticCredentialsProvider.create(
-                                AwsBasicCredentials.create("dummye", "dummye")
-                        )
-                )
-                //.httpClient(UrlConnectionHttpClient.builder().build())
-                .build();
-    }
-
-    public void run(DynamoDbClient client) {
+    public void run(DynamoDbClient client) throws URISyntaxException {
+        DynamoDBUtil.addMongockLegacyData();
         FlamingockStandalone.local()
                 .setDriver(new DynamoDBDriver(client))
+                .setMongockImporterConfiguration(CoreConfiguration.MongockImporterConfiguration.withSource("mongockChangeLog"))
                 .setLockAcquiredForMillis(60 * 1000L)// this is just to show how is set. Default value is still 60 * 1000L
                 .setLockQuitTryingAfterMillis(3 * 60 * 1000L)// this is just to show how is set. Default value is still 3 * 60 * 1000L
                 .setLockTryFrequencyMillis(1000L)// this is just to show how is set. Default value is still 1000L

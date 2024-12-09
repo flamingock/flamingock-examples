@@ -18,7 +18,6 @@ package io.flamingock.examples.dynamodb.standalone;
 
 import com.amazonaws.services.dynamodbv2.local.main.ServerRunner;
 import com.amazonaws.services.dynamodbv2.local.server.DynamoDBProxyServer;
-import io.flamingock.examples.dynamodb.standalone.changes.UserEntity;
 import io.flamingock.examples.dynamodb.standalone.events.FailureEventListener;
 import io.flamingock.examples.dynamodb.standalone.events.StartedEventListener;
 import io.flamingock.examples.dynamodb.standalone.events.SuccessEventListener;

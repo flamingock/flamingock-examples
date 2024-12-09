@@ -30,13 +30,11 @@ import java.net.URISyntaxException;
 public class CommunityStandaloneDynamoDBApp {
 
     public static void main(String[] args) throws URISyntaxException {
-        DynamoDBUtil.addMongockLegacyData();
         new CommunityStandaloneDynamoDBApp().run(DynamoDBUtil.getClient());
     }
 
-
-
-    public void run(DynamoDbClient client) {
+    public void run(DynamoDbClient client) throws URISyntaxException {
+        DynamoDBUtil.addMongockLegacyData();
         FlamingockStandalone.local()
                 .setDriver(new DynamoDBDriver(client))
                 .setMongockImporterConfiguration(CoreConfiguration.MongockImporterConfiguration.withSource("mongockChangeLog"))

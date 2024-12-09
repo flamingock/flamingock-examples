@@ -12,9 +12,7 @@ dependencies {
     implementation("software.amazon.awssdk:url-connection-client:2.24.11")
     implementation("org.slf4j:slf4j-simple:2.0.6")
 
-    implementation("io.mongock:mongock-standalone:5.5.0")
-    implementation("io.mongock:dynamodb-driver:5.5.0")
-    implementation("com.amazonaws:DynamoDBLocal:1.25.0")
+    testImplementation("com.amazonaws:DynamoDBLocal:1.25.0")
 }
 
 tasks.withType<Jar> {

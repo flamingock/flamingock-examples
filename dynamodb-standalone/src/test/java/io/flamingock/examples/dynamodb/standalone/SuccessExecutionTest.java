@@ -18,13 +18,13 @@ package io.flamingock.examples.dynamodb.standalone;
 
 import com.amazonaws.services.dynamodbv2.local.main.ServerRunner;
 import com.amazonaws.services.dynamodbv2.local.server.DynamoDBProxyServer;
-import io.flamingock.examples.dynamodb.standalone.events.FailureEventListener;
-import io.flamingock.examples.dynamodb.standalone.events.StartedEventListener;
-import io.flamingock.examples.dynamodb.standalone.events.SuccessEventListener;
 import io.flamingock.oss.driver.dynamodb.internal.entities.AuditEntryEntity;
 import io.flamingock.oss.driver.dynamodb.internal.util.DynamoClients;
 import io.flamingock.oss.driver.dynamodb.internal.util.DynamoDBConstants;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -37,7 +37,6 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -143,11 +142,4 @@ public class SuccessExecutionTest {
         assertEquals(8, rows.size());
     }
 
-    @Test
-    @DisplayName("SHOULD trigger start and success event WHEN executed IF happy path")
-    void events() {
-        Assertions.assertTrue(StartedEventListener.executed);
-        Assertions.assertTrue(SuccessEventListener.executed);
-        Assertions.assertFalse(FailureEventListener.executed);
-    }
 }

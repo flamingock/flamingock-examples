@@ -1,8 +1,8 @@
 flamingock:
   stages:
-    - name: stage1
+    - name: mongodb-migration
       code-packages:
-        - io.flamingock.examples.mongodb.springboot.springdata.changes
         - io.flamingock.examples.mongodb.springboot.springdata.mongock
+        - io.flamingock.examples.mongodb.springboot.springdata.changes
   transactionEnabled: true
   legacy-mongock-changelog-source: mongockChangeLog

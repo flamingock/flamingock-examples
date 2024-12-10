@@ -65,7 +65,7 @@ cd mongodb-springboot-springdata
 ___
 
 ## 📢 Contributing
-We welcome contributions! If you have an idea for a new example or improvement to an existing one, feel free to submit a pull request. Check out our CONTRIBUTING.md for guidelines.
+We welcome contributions! If you have an idea for a new example or improvement to an existing one, feel free to submit a pull request. Check out our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ___
 

@@ -26,8 +26,8 @@ your needs!
 
 If you're transitioning from Mongock to Flamingock, we have separate migration guides for each use case:
 
-- **[Standalone Applications](#MONGOCK_STANDALONE_MIGRATION.md)**: Detailed instructions for migrating from Mongock to Flamingock in a standalone Java application.
-- **[Spring Boot Applications](#MONGOCK_SPRINGBOOT_MIGRATION.md)**: Step-by-step guide for migrating from Mongock to Flamingock in a Spring Boot application.
+- **[Standalone Applications](https://github.com/mongock/flamingock-project/blob/master/MONGOCK_STANDALONE_MIGRATION.md)**: Detailed instructions for migrating from Mongock to Flamingock in a standalone Java application.
+- **[Spring Boot Applications](https://github.com/mongock/flamingock-project/blob/master/MONGOCK_SPRINGBOOT_MIGRATION.md)**: Step-by-step guide for migrating from Mongock to Flamingock in a Spring Boot application.
 
 Each guide provides specific instructions tailored to the corresponding environment. Follow the appropriate guide to ensure a smooth migration process.
 

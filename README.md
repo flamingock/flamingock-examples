@@ -1,4 +1,4 @@
-# Flamingock Examples 🐓🔥
+# Flamingock Examples 🦩🔥
 
 Welcome to the **Flamingock Examples** repository!  
 This project showcases practical use cases of **[Flamingock](https://github.com/mongock/flamingock-project)** across various
@@ -17,7 +17,7 @@ expanding its capabilities to support a broader range of systems.
 
 ## 📖 Examples Overview
 
-This repository is structured as a **Gradle Kotlin multiproject**, with each subproject demonstrating Flamingock's
+This repository is structured as a **Gradle multiproject**, with each subproject demonstrating Flamingock's
 integration with different frameworks, technologies, and use cases. Explore the examples to find the one that matches
 your needs!
 
@@ -57,7 +57,7 @@ cd mongodb-springboot-springdata
 
 **3. Run the project using Gradle**
 ```shell
-./gradlew bootRun
+../gradlew bootRun
 ```
 
 **4. Follow the instructions in the specific subproject's README for further details.**

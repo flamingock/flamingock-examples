@@ -1,9 +1,14 @@
-# Flamingock Examples 🦩🔥
+![Header Image](misc/logo-with-text.png)
+___ 
 
-Welcome to the **Flamingock Examples** repository!  
-This project showcases practical use cases of **[Flamingock](https://github.com/mongock/flamingock-project)** across various
-scenarios, frameworks, and technologies. Whether you're working with databases, message queues, or other systems, these
-examples will help you integrate and use Flamingock seamlessly.
+**Flamingock** is the evolution of Mongock, designed as a cloud-native solution for managing versioning, and auditing changes in systems that evolve alongside your application.
+
+Whilst Mongock focused on versioning NoSQL databases, Flamingock extends this concept to all technologies, systems, and configurations, with built-in auditing and rollback capabilities.
+It ensures the application and its dependent components evolve together by managing configuration changes during startup to maintain version compatibility, streamline integration, and reduce conflicts at deployment time.
+
+Flamingock also introduces new mechanisms for defining changes in an extensible and customizable manner, beyond traditional code-based methods.
+
+> Additionally, Flamingock offers multiple infrastructure setups for providing flexibility to users, as it introduces a Cloud offering whilst still retaining existing supported databases such as MongoDB, DynamoDB, or Couchbase.
 
 ---
 

@@ -21,6 +21,17 @@ This repository is structured as a **Gradle multiproject**, with each subproject
 integration with different frameworks, technologies, and use cases. Explore the examples to find the one that matches
 your needs!
 
+
+## Migration from Mongock to Flamingock
+
+If you're transitioning from Mongock to Flamingock, we have separate migration guides for each use case:
+
+- **[Standalone Applications](#MONGOCK_STANDALONE_MIGRATION.md)**: Detailed instructions for migrating from Mongock to Flamingock in a standalone Java application.
+- **[Spring Boot Applications](#MONGOCK_SPRINGBOOT_MIGRATION.md)**: Step-by-step guide for migrating from Mongock to Flamingock in a Spring Boot application.
+
+Each guide provides specific instructions tailored to the corresponding environment. Follow the appropriate guide to ensure a smooth migration process.
+
+
 ---
 
 ## 📂 Index of Examples

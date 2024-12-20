@@ -19,7 +19,7 @@ package io.flamingock.examples.mongodb.springboot.sync;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 
-import io.flamingock.core.engine.local.driver.ConnectionDriver;
+import io.flamingock.core.engine.local.driver.LocalDriver;
 import io.flamingock.examples.mongodb.springboot.sync.events.FailureEventListener;
 import io.flamingock.examples.mongodb.springboot.sync.events.StartedEventListener;
 import io.flamingock.examples.mongodb.springboot.sync.events.SuccessEventListener;
@@ -42,7 +42,7 @@ public class CommunitySpringbootMongodbSyncApp {
     }
 
     @Bean
-    public ConnectionDriver<?> connectionDriver(MongoClient mongoClient) {
+    public LocalDriver<?> LocalDriver(MongoClient mongoClient) {
         return new MongoSync4Driver(mongoClient, DATABASE_NAME);
     }
 

@@ -57,7 +57,6 @@ public class CommunityStandaloneMongodbSyncApp {
                 .setLockTryFrequencyMillis(1000L)//this is just to show how is set. Default value is still 1000L
                 .addDependency(mongoClient.getDatabase(databaseName))
                 .setTrackIgnored(true)
-                .setTransactionEnabled(true)
                 .setPipelineStartedListener(new PipelineStartedListener())
                 .setPipelineCompletedListener(new PipelineCompletedListener())
                 .setPipelineFailedListener(new PipelineFailedListener())

@@ -1,11 +1,11 @@
 id: create-clients-table-from-template
-order: 2
+order: 3
 transactional: false #DDL are not transactional in Mysql, so it won't be rolled back
 templateName: sql-template
 templateConfiguration:
     executionSql: |
         CREATE TABLE Clients (
-            PersonID in,
+            PersonID int,
             LastName varchar(255),
             FirstName varchar(255),
             Address varchar(255),

@@ -45,7 +45,6 @@ public class CommunityStandaloneDynamoDBApp {
                         //Adding a package for new changeUnits (note that legacy and new changeUnits can coexist in the same package)
                         .addCodePackage("io.flamingock.examples.dynamodb.standalone.changes"))
                 .addDependency(client)
-                .setTransactionEnabled(true)
                 .build()
                 .run();
     }

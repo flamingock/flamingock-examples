@@ -1,0 +1,10 @@
+id: insert-person-mcmannaman
+order: 2
+#transactional: true #True by default
+templateName: sql-template
+templateConfiguration:
+    executionSql: |
+        insert into Persons (PersonID, LastName, FirstName, Address, City)
+        values (1, 'McMannaman', 'George', '24, Carnaby Street', 'London')
+    rollbackSql: |
+        DELETE FROM Persons WHERE PersonID = 1

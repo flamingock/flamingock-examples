@@ -45,7 +45,7 @@ public class CommunityStandaloneCouchbaseApp {
                 .addDependency(cluster)
                 .addDependency(collection)
                 .setTrackIgnored(true)
-                .setTransactionEnabled(false)
+                .disableTransaction()
                 .setPipelineStartedListener(new StartedEventListener())
                 .setPipelineCompletedListener(new SuccessEventListener())
                 .setPipelineFailedListener(new FailureEventListener())

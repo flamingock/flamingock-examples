@@ -1,32 +1,54 @@
 
 rootProject.name = "flamingock-examples"
 
-include("mongodb:mongodb-springboot-springdata")
-project(":mongodb:mongodb-springboot-springdata").projectDir = file("mongodb/mongodb-springboot-springdata")
-project(":mongodb:mongodb-springboot-springdata").name = "mongodb-springboot-springdata"
+/**
+ * MONGODB
+ */
+include("examples:mongodb:mongodb-springboot-springdata")
+project(":examples:mongodb:mongodb-springboot-springdata").projectDir = file("examples/mongodb/mongodb-springboot-springdata")
+project(":examples:mongodb:mongodb-springboot-springdata").name = "mongodb-springboot-springdata"
 
-include("mongodb:mongodb-springboot-sync")
-project(":mongodb:mongodb-springboot-sync").projectDir = file("mongodb/mongodb-springboot-sync")
-project(":mongodb:mongodb-springboot-sync").name = "mongodb-springboot-sync"
+include("examples:mongodb:mongodb-springboot-sync")
+project(":examples:mongodb:mongodb-springboot-sync").projectDir = file("examples/mongodb/mongodb-springboot-sync")
+project(":examples:mongodb:mongodb-springboot-sync").name = "mongodb-springboot-sync"
 
-include("mongodb:mongodb-springboot-v3-springdata-v4")
-project(":mongodb:mongodb-springboot-v3-springdata-v4").projectDir = file("mongodb/mongodb-springboot-v3-springdata-v4")
-project(":mongodb:mongodb-springboot-v3-springdata-v4").name = "mongodb-springboot-v3-springdata-v4"
+include("examples:mongodb:mongodb-springboot-v3-springdata-v4")
+project(":examples:mongodb:mongodb-springboot-v3-springdata-v4").projectDir = file("examples/mongodb/mongodb-springboot-v3-springdata-v4")
+project(":examples:mongodb:mongodb-springboot-v3-springdata-v4").name = "mongodb-springboot-v3-springdata-v4"
 
-include("mongodb:mongodb-sync-standalone")
-project(":mongodb:mongodb-sync-standalone").projectDir = file("mongodb/mongodb-sync-standalone")
-project(":mongodb:mongodb-sync-standalone").name = "mongodb-sync-standalone"
+include("examples:mongodb:mongodb-sync-standalone")
+project(":examples:mongodb:mongodb-sync-standalone").projectDir = file("examples/mongodb/mongodb-sync-standalone")
+project(":examples:mongodb:mongodb-sync-standalone").name = "mongodb-sync-standalone"
 
+include("examples:mongodb:mongodb-sync-standalone")
+project(":examples:mongodb:mongodb-sync-standalone").projectDir = file("examples/mongodb/mongodb-sync-standalone")
+project(":examples:mongodb:mongodb-sync-standalone").name = "mongodb-sync-standalone"
 
+/**
+ * MYSQL
+ */
+include("examples:sql:mysql:mysql-springboot")
+project(":examples:sql:mysql:mysql-springboot").projectDir = file("examples/sql/mysql/mysql-springboot")
+project(":examples:sql:mysql:mysql-springboot").name = "mysql-springboot"
 
+include("examples:sql:mysql:mysql-standalone")
+project(":examples:sql:mysql:mysql-standalone").projectDir = file("examples/sql/mysql/mysql-standalone")
+project(":examples:sql:mysql:mysql-standalone").name = "mysql-standalone"
 
-include("mysql-springboot")
-include("mysql-standalone")
+/**
+ * COUCHBASE
+ */
+include("examples:couchbase:couchbase-springboot-v2")
+project(":examples:couchbase:couchbase-springboot-v2").projectDir = file("examples/couchbase/couchbase-springboot-v2")
+project(":examples:couchbase:couchbase-springboot-v2").name = "couchbase-springboot-v2"
 
-include("couchbase-springboot-v2")
-include("couchbase-standalone")
+include("examples:couchbase:couchbase-standalone")
+project(":examples:couchbase:couchbase-standalone").projectDir = file("examples/couchbase/couchbase-standalone")
+project(":examples:couchbase:couchbase-standalone").name = "couchbase-standalone"
 
-include("dynamodb:dynamodb-standalone")
-val dynamoDbProject = project(":dynamodb:dynamodb-standalone")
-dynamoDbProject.projectDir = file("dynamodb/dynamodb-standalone")
-dynamoDbProject.name = "dynamodb-standalone"
+/**
+ * DYNAMODB
+ */
+include("examples:dynamodb:dynamodb-standalone")
+project(":examples:dynamodb:dynamodb-standalone").projectDir = file("examples/dynamodb/dynamodb-standalone")
+project(":examples:dynamodb:dynamodb-standalone").name = "dynamodb-standalone"

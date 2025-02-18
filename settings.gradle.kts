@@ -11,4 +11,7 @@ include("mysql-standalone")
 include("couchbase-springboot-v2")
 include("couchbase-standalone")
 
-include("dynamodb-standalone")
+include("dynamodb:dynamodb-standalone")
+val dynamoDbProject = project(":dynamodb:dynamodb-standalone")
+dynamoDbProject.projectDir = file("dynamodb/dynamodb-standalone")
+dynamoDbProject.name = "dynamodb-standalone"

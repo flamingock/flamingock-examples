@@ -11,8 +11,9 @@ version = "1.0-SNAPSHOT"
 
 
 var passedAsParameter = false
-val flamingockVersionAsParameter: String? = project.findProperty("flamingockVersion")?.toString()
-val flamingockVersion: String =  if(flamingockVersionAsParameter != null) {
+val flamingockVersionAsParameter: String? = "0.0.31-beta"//project.findProperty("flamingockVersion")?.toString()
+val flamingockVersion: String =
+    if(flamingockVersionAsParameter != null) {
     passedAsParameter = true
     flamingockVersionAsParameter
 } else {

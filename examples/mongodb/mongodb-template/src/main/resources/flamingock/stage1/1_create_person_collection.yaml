@@ -1,0 +1,11 @@
+id: create-persons-collection-from-template
+order: 1
+transactional: false
+templateName: mongo-change-template
+templateConfiguration:
+    changes:
+        - type: create-collection
+          collection: persons
+    rollbacks:
+        - type: delete-collection
+          collection: users

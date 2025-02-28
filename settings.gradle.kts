@@ -24,6 +24,10 @@ include("examples:mongodb:mongodb-sync-standalone")
 project(":examples:mongodb:mongodb-sync-standalone").projectDir = file("examples/mongodb/mongodb-sync-standalone")
 project(":examples:mongodb:mongodb-sync-standalone").name = "mongodb-sync-standalone"
 
+include("examples:mongodb:mongodb-template")
+project(":examples:mongodb:mongodb-template").projectDir = file("examples/mongodb/mongodb-template")
+project(":examples:mongodb:mongodb-template").name = "mongodb-template"
+
 /**
  * MYSQL
  */
@@ -52,3 +56,4 @@ project(":examples:couchbase:couchbase-standalone").name = "couchbase-standalone
 include("examples:dynamodb:dynamodb-standalone")
 project(":examples:dynamodb:dynamodb-standalone").projectDir = file("examples/dynamodb/dynamodb-standalone")
 project(":examples:dynamodb:dynamodb-standalone").name = "dynamodb-standalone"
+

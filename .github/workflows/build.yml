@@ -14,4 +14,4 @@ jobs:
           java-version: '17'
 
       - name: Unit and Integration tests
-        run: ./gradlew clean build
+        run: ./misc/buildAll.sh

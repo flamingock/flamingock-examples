@@ -13,7 +13,7 @@ for buildFile in ${buildFiles}; do
     echo "Building $(basename ${project})..."
     echo "-----------------------------------------------"
     cd ${project}
-    output=$(./gradlew clean build) && echo "BUILD SUCCESSFUL" || echo "/!\ FAIL!:${output}"
+    ./gradlew clean build
     echo
 done
 

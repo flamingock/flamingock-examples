@@ -13,9 +13,8 @@ for buildFile in ${buildFiles}; do
     echo "Building $(basename ${project})..."
     echo "-----------------------------------------------"
     cd ${project}
-    if ! ./gradlew clea--no-daemon --stacktrace; then
+    if ! ./gradlew clean build --no-daemon --stacktrace; then
       exit 1
     fi
     echo
 done
-

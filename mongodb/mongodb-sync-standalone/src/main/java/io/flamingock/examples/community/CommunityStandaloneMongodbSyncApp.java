@@ -43,27 +43,30 @@ public class CommunityStandaloneMongodbSyncApp {
     public final static String DATABASE_NAME = "test";
     public static void main(String[] args) {
         new CommunityStandaloneMongodbSyncApp()
-                .run(getMongoClient("mongodb://localhost:27017/"), DATABASE_NAME);
+                .run(getMongoClient("mongodb://localhost:27017/"), DATABASE_NAME); // Set your MongoDB endpoint
     }
 
 
     public  void run(MongoClient mongoClient, String databaseName) {
-        FlamingockStandalone
-                .local()
+        FlamingockStandalone.local()
                 .setDriver(new MongoSync4Driver(mongoClient, databaseName))
-                .addStage(new Stage("stage-name").addCodePackage("io.flamingock.examples.community.changes"))
-                .setLockAcquiredForMillis(60 * 1000L)//this is just to show how is set. Default value is still 60 * 1000L
-                .setLockQuitTryingAfterMillis(3 * 60 * 1000L)//this is just to show how is set. Default value is still 3 * 60 * 1000L
-                .setLockTryFrequencyMillis(1000L)//this is just to show how is set. Default value is still 1000L
+                .addStage(new Stage("stage-name")
+                        .addCodePackage("io.flamingock.examples.community.changes"))
                 .addDependency(mongoClient.getDatabase(databaseName))
+                // All of these configurations are optional and set to their default values
+                .setLockAcquiredForMillis(60 * 1000L)
+                .setLockQuitTryingAfterMillis(3 * 60 * 1000L)
+                .setLockTryFrequencyMillis(1000L)
                 .setTrackIgnored(true)
                 .setTransactionEnabled(true)
+                // Set optional Pipeline Listeners
                 .setPipelineStartedListener(new PipelineStartedListener())
                 .setPipelineCompletedListener(new PipelineCompletedListener())
                 .setPipelineFailedListener(new PipelineFailedListener())
                 .setStageStartedListener(new StageStartedListener())
                 .setStageCompletedListener(new StageCompletedListener())
                 .setStageFailedListener(new StageFailedListener())
+                //Build and Run
                 .build()
                 .run();
     }

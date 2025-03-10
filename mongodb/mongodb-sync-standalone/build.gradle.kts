@@ -3,6 +3,7 @@ import javax.xml.parsers.DocumentBuilderFactory
 
 plugins {
     java
+    application
 }
 
 repositories {
@@ -14,17 +15,21 @@ group = "io.flamingock"
 version = "1.0-SNAPSHOT"
 
 val flamingockVersion = flamingockVersion()
-extra["flamingockVersion"] = flamingockVersion
 
 val mongodbVersion = "4.3.3"
 
 dependencies {
+//    Flamingock Dependencies
     implementation("io.flamingock:flamingock-core:$flamingockVersion")
     implementation("io.flamingock:mongodb-sync-v4-driver:$flamingockVersion")
 
+//    MongoDB dependencies
     implementation("org.mongodb:mongodb-driver-sync:$mongodbVersion")
     implementation("org.mongodb:mongodb-driver-core:$mongodbVersion")
     implementation("org.mongodb:bson:$mongodbVersion")
+
+//    Others dependencies needed for this example
+    implementation("org.slf4j:slf4j-simple:2.0.6")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
@@ -33,8 +38,13 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter:1.18.3")
 }
 
+application {
+    mainClass = "io.flamingock.examples.community.CommunityStandaloneMongodbSyncApp"
+}
+
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+    systemProperty("org.slf4j.simpleLogger.logFile", "System.out")
     testLogging {
         events(
             org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,

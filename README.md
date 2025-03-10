@@ -1,48 +1,59 @@
 ![Header Image](misc/logo-with-text.png)
 ___
 
-**Flamingock** is the evolution of Mongock, designed as a cloud-native solution for managing versioning, and auditing changes in systems that evolve alongside your application.
+**Flamingock** is the evolution of Mongock, designed as a cloud-native solution for managing versioning, and auditing
+changes in systems that evolve alongside your application.
 
-Whilst Mongock focused on versioning NoSQL databases, Flamingock extends this concept to all technologies, systems, and configurations, with built-in auditing and rollback capabilities. It ensures the application and its dependent components evolve together, managing configuration changes during the application startup to enable seamless integration and deployment.
+Whilst Mongock focused on versioning NoSQL databases, Flamingock extends this concept to all technologies, systems, and
+configurations, with built-in auditing and rollback capabilities. It ensures the application and its dependent
+components evolve together, managing configuration changes during the application startup to enable seamless integration
+and deployment.
 
-Flamingock also introduces new mechanisms for defining changes in an extensible and customizable manner, beyond traditional code-based methods.
+Flamingock also introduces new mechanisms for defining changes in an extensible and customizable manner, beyond
+traditional  code-based methods.
 
-> Additionally, Flamingock offers multiple infrastructure setups for providing flexibility to users, as it introduces a Cloud offering whilst still retaining existing supported databases such as MongoDB, DynamoDB, or Couchbase.
+> Additionally, Flamingock offers multiple infrastructure setups for providing flexibility to users, as it introduces a
+Cloud offering whilst still retaining existing supported databases such as MongoDB, DynamoDB, or Couchbase.
 
 ---
 
 ## 📖 Examples Overview
 
-This repository is structured as a **Gradle multiproject**, with each subproject demonstrating Flamingock's
+This repository is structured as **Individual Gradle Projects**, with each project demonstrating Flamingock's
 integration with different frameworks, technologies, and use cases. Explore the examples to find the one that matches
 your needs!
+
+Each example is prepared to run from its own test with all infrastructure (databases, mocked servers, etc.) needed.
+But you can also  run it with your own infrastructure.
 
 
 ## 🐥 Migration from Mongock to Flamingock
 
 If you're transitioning from Mongock to Flamingock, we have separate migration guides for each use case:
 
-- **[Standalone Applications](https://github.com/mongock/flamingock-project/blob/master/MONGOCK_STANDALONE_MIGRATION.md)**: Detailed instructions for migrating from Mongock to Flamingock in a standalone Java application.
-- **[Spring Boot Applications](https://github.com/mongock/flamingock-project/blob/master/MONGOCK_SPRINGBOOT_MIGRATION.md)**: Step-by-step guide for migrating from Mongock to Flamingock in a Spring Boot application.
+- **[Standalone Applications](https://github.com/mongock/flamingock-project/blob/master/MONGOCK_STANDALONE_MIGRATION.md)**:
+Detailed instructions for migrating from Mongock to Flamingock in a standalone Java application.
+- **[Spring Boot Applications](https://github.com/mongock/flamingock-project/blob/master/MONGOCK_SPRINGBOOT_MIGRATION.md)**:
+Step-by-step guide for migrating from Mongock to Flamingock in a Spring Boot application.
 
-Each guide provides specific instructions tailored to the corresponding environment. Follow the appropriate guide to ensure a smooth migration process.
+Each guide provides specific instructions tailored to the corresponding environment. Follow the appropriate guide to
+ensure a smooth migration process.
 
 
 ---
 
 ## 📂 Index of Examples
 
-| **Technology**       | **Example Subproject**                                                     | **Description**                                                                                                    |
-|----------------------|----------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
-| **MongoDB**          | **[mongodb-sync-standalone](mongodb-sync-standalone)**                     | Example of using Flamingock with the MongoDB synchronous driver in a Java standalone application.                  |
-|                      | **[mongodb-springboot-springdata-2.x](mongodb-springboot-springdata-2.x)** | Integration of Flamingock with MongoDB, Spring Boot 2.x, and Spring Data for seamless database migrations.         |
-|                      | **[mongodb-springboot-springdata-3.x](mongodb-springboot-springdata-3.x)** | Integration of Flamingock with MongoDB, Spring Boot 3.x, and Spring Data, leveraging the latest Spring features.   |
-|                      | **[mongodb-springboot-sync](mongodb-springboot-sync)**                     | Demonstrates Flamingock with MongoDB sync driver and Spring Boot, without relying on Spring Data abstractions.     |
-| **DynamoDB**         | **[dynamodb-standalone](dynamodb-standalone)**                             | Example showcasing Flamingock with DynamoDB in a Java standalone application.                                      |
-| **Couchbase**        | **[couchbase-standalone](couchbase-standalone)**                           | Example of using Flamingock with Couchbase in a Java standalone application.                                       |
-|                      | **[couchbase-springboot-v2](couchbase-springboot-v2)**                     | Demonstrates Flamingock with Couchbase and Spring Boot 2.x for database migrations.                                |
-| **MySQL**            | **[mysql-standalone](mysql-standalone)**                                   | Example showcasing Flamingock with MySQL in a Java standalone application.                                         |
-|                      | **[mysql-springboot](mysql-springboot)**                                   | Integration of Flamingock with MySQL and Spring Boot 2.x for database schema migrations.                           |
+| **Technology**       | **Example Project**                                                                | **Description**                                                                                                    |
+|----------------------|------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+| **MongoDB**          | **[mongodb-sync-standalone](mongodb/mongodb-sync-standalone)**                     | Example of using Flamingock with the MongoDB synchronous driver in a Java standalone application.                  |
+|                      | **[mongodb-springboot-springdata-2.x](mongodb/mongodb-springboot-springdata-2.x)** | Integration of Flamingock with MongoDB, Spring Boot 2.x, and Spring Data for seamless database migrations.         |
+|                      | **[mongodb-springboot-springdata-3.x](mongodb/mongodb-springboot-springdata-3.x)** | Integration of Flamingock with MongoDB, Spring Boot 3.x, and Spring Data, leveraging the latest Spring features.   |
+|                      | **[mongodb-springboot-sync](mongodb/mongodb-springboot-sync)**                     | Demonstrates Flamingock with MongoDB sync driver and Spring Boot, without relying on Spring Data abstractions.     |
+| **DynamoDB**         | **[dynamodb-standalone](dynamodb/dynamodb-standalone)**                            | Example showcasing Flamingock with DynamoDB in a Java standalone application.                                      |
+| **Couchbase**        | **[couchbase-standalone](couchbase/couchbase-standalone)**                         | Example of using Flamingock with Couchbase in a Java standalone application.                                       |
+|                      | **[couchbase-springboot-v2](couchbase/couchbase-springboot-v2)**                   | Demonstrates Flamingock with Couchbase and Spring Boot 2.x for database migrations.                                |
+| **MySQL**            | **[mysql-springboot](sql/mysql/mysql-springboot)**                                 | Integration of Flamingock with MySQL and Spring Boot 2.x for database schema migrations.                           |
 
 > 🚀 **New examples will be added regularly!** Stay tuned for updates as we expand the repository to cover even more
 > systems and frameworks.
@@ -59,20 +70,28 @@ Each guide provides specific instructions tailored to the corresponding environm
 
 **2. Navigate to the example you want to explore:**
 ```shell
-cd mongodb-springboot-springdata
+cd mongodb/mongodb-springboot-springdata
 ```
 
-**3. Run the project using Gradle**
+**3. Run example**
+
+***3.a. Run the project test using Gradle***
 ```shell
-../gradlew bootRun
+./gradlew test
 ```
 
-**4. Follow the instructions in the specific subproject's README for further details.**
+***3.b. Run the project using Gradle and your own infrastructure***
+```shell
+./gradlew run
+```
+
+**4. Follow the instructions in the specific project's README for further details.**
 
 ___
 
 ## 📢 Contributing
-We welcome contributions! If you have an idea for a new example or improvement to an existing one, feel free to submit a pull request. Check out our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+We welcome contributions! If you have an idea for a new example or improvement to an existing one, feel free to submit a
+pull request. Check out our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ___
 

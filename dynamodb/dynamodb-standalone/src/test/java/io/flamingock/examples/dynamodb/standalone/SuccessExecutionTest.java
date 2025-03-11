@@ -36,7 +36,6 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -92,7 +91,7 @@ public class SuccessExecutionTest {
                 .table("test_table", TableSchema.fromBean(UserEntity.class))
                 .scan().items().stream()
                 .map(UserEntity::getPartitionKey)
-                .collect(Collectors.toList());
+                .toList();
 
         assertEquals(2, rows.size());
         assertTrue(rows.contains("Pepe Pérez"));
@@ -105,18 +104,14 @@ public class SuccessExecutionTest {
         List<AuditEntryEntity> rows = enhancedClient
                 .table(DynamoDBConstants.AUDIT_LOG_TABLE_NAME, TableSchema.fromBean(AuditEntryEntity.class))
                 .scan().items().stream()
-                .collect(Collectors.toList());
+                .toList();
 
         List<String> taskIds = rows.stream()
                 .map(AuditEntryEntity::getTaskId)
-                .collect(Collectors.toList());
-        assertTrue(taskIds.contains("[mongock]system-change-00001_before"));
-        assertTrue(taskIds.contains("[mongock]system-change-00001"));
-        assertTrue(taskIds.contains("[mongock_author]mongock-initialise-table-legacy_before"));
-        assertTrue(taskIds.contains("[mongock_author]mongock-initialise-table-legacy"));
+                .toList();
+
         assertTrue(taskIds.contains("table-create"));
         assertTrue(taskIds.contains("insert-user"));
-        assertTrue(taskIds.contains("mongock-local-legacy-importer-dynamodb"));
         assertTrue(taskIds.contains("insert-another-user"));
 
         rows.stream()
@@ -125,21 +120,13 @@ public class SuccessExecutionTest {
 
         List<String> classes = rows.stream()
                 .map(AuditEntryEntity::getClassName)
-                .collect(Collectors.toList());
-        assertTrue(classes.contains("io.mongock.runner.core.executor.system.changes.SystemChangeUnit00001"));
-        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.mongock._1_mongockInitialiseTableLegacyChangeUnit"));
-        assertTrue(classes.contains("io.flamingock.oss.driver.dynamodb.internal.mongock.MongockLocalLegacyImporterChangeUnit"));
-        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._2_createUserTable_changeUnit"));
-        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._3_insertUser_changeUnit"));
-        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._4_insertAnotherUser_changeUnit"));
+                .toList();
 
-        //It should be two _1_mongockInitialiseTableLegacyChangeUnit, one for before and another for the actual execution
-        long MongockChangeUnitClassesCount = classes.stream()
-                .filter("io.flamingock.examples.dynamodb.standalone.mongock._1_mongockInitialiseTableLegacyChangeUnit"::equals)
-                .count();
-        assertEquals(2, MongockChangeUnitClassesCount);
+        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._1_createUserTable_changeUnit"));
+        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._2_insertUser_changeUnit"));
+        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._3_insertAnotherUser_changeUnit"));
 
-        assertEquals(8, rows.size());
+        assertEquals(3, rows.size());
     }
 
 }

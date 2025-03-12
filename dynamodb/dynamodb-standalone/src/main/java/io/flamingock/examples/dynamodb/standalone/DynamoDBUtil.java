@@ -16,15 +16,32 @@
 
 package io.flamingock.examples.dynamodb.standalone;
 
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public final class DynamoDBUtil {
     public DynamoDBUtil() {
+    }
+
+    public static DynamoDbClient getClient() throws URISyntaxException {
+        return DynamoDbClient.builder()
+                .region(Region.EU_WEST_1) // Set your AWS region
+                .endpointOverride(new URI("http://localhost:8000")) // Set your DynamoDB endpoint
+                .credentialsProvider(
+                        StaticCredentialsProvider.create(
+                                AwsBasicCredentials.create("dummye", "dummye") // Set your AWS credentials
+                        )
+                )
+                .build();
     }
 
     public static List<AttributeDefinition> getAttributeDefinitions(String pkName, String skName, String... vargs) {

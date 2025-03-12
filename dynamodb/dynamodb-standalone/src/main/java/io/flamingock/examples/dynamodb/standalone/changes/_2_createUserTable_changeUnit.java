@@ -29,7 +29,7 @@ import software.amazon.awssdk.services.dynamodb.model.DescribeTableRequest;
 import static java.util.Collections.emptyList;
 
 @ChangeUnit(id = "table-create", order = "2", transactional = false)
-public class _1_createUserTable_changeUnit {
+public class _2_createUserTable_changeUnit {
 
     private DynamoDbEnhancedClient enhancedClient;
     private DynamoDbTable<UserEntity> table;

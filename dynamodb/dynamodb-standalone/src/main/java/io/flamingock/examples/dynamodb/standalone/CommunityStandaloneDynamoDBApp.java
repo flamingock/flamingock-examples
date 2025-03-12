@@ -16,8 +16,10 @@
 
 package io.flamingock.examples.dynamodb.standalone;
 
+import io.flamingock.core.configurator.core.CoreConfiguration;
 import io.flamingock.core.configurator.standalone.FlamingockStandalone;
 import io.flamingock.core.pipeline.Stage;
+import io.flamingock.examples.dynamodb.standalone.mongock.MongockLegacyDataProvisioner;
 import io.flamingock.oss.driver.dynamodb.driver.DynamoDBDriver;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -30,25 +32,21 @@ import java.net.URISyntaxException;
 public class CommunityStandaloneDynamoDBApp {
 
     public static void main(String[] args) throws URISyntaxException {
-        //DynamoDB Client Builder
-        DynamoDbClient client = DynamoDbClient.builder()
-                .region(Region.EU_WEST_1) // Set your AWS region
-                .endpointOverride(new URI("http://localhost:8000")) // Set your DynamoDB endpoint
-                .credentialsProvider(
-                        StaticCredentialsProvider.create(
-                                AwsBasicCredentials.create("dummye", "dummye") // Set your AWS credentials
-                        )
-                )
-                .build();
-
-        new CommunityStandaloneDynamoDBApp().run(client);
+        new CommunityStandaloneDynamoDBApp().run(DynamoDBUtil.getClient());
     }
 
     public void run(DynamoDbClient client) {
+        //This line adds data to simulate previous legacy Mongock executions
+        MongockLegacyDataProvisioner.provisionLegacyMongockData();
+
         //Running flamingock
         FlamingockStandalone.local()
                 .setDriver(new DynamoDBDriver(client))
+                .setMongockImporterConfiguration(CoreConfiguration.MongockImporterConfiguration.withSource("mongockChangeLog"))
                 .addStage(new Stage("stage-name")
+                        //adding mongock legacy changeUnits
+                        .addCodePackage("io.flamingock.examples.dynamodb.standalone.mongock")
+                        //Adding a package for new changeUnits (note that legacy and new changeUnits can coexist in the same package)
                         .addCodePackage("io.flamingock.examples.dynamodb.standalone.changes"))
                 .addDependency(client)
                 .setTransactionEnabled(true)

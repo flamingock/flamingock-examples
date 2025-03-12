@@ -6,7 +6,8 @@ ___
 ## 📖 Example Overview
 
 Welcome to the DynamoDB Standalone Example. This demonstrates how to use Flamingock with DynamoDB in a Java
-standalone application. It highlights key functionalities such as auditing changes using DynamoDB as storage backend.
+standalone application. It highlights key functionalities such as auditing changes using DynamoDB as storage backend and
+importing previous audits from our legacy Mongock Library.
 
 This example has 3 Flamingock Changes:
 1. Creates a new table called *test_table* in DynamoDB.
@@ -44,18 +45,19 @@ purposes.
 ### 2. Running the Main Class
 For this option, you'll need to configure your own DynamoDB connection:
 1. Open the main class file
-2. Configure the DynamoDB client builder with your settings:
+2. Configure the DynamoDB client builder with your settings in DynamoDBUtil class:
 ```java
-//DynamoDB Client Builder
-DynamoDbClient client = DynamoDbClient.builder()
-        .region(Region.EU_WEST_1) // Set your AWS region
-        .endpointOverride(new URI("http://localhost:8000")) // Set your DynamoDB endpoint
-        .credentialsProvider(
-                StaticCredentialsProvider.create(
-                        AwsBasicCredentials.create("dummye", "dummye") // Set your AWS credentials
-                )
-        )
-        .build();
+    public static DynamoDbClient getClient() throws URISyntaxException {
+   return DynamoDbClient.builder()
+           .region(Region.EU_WEST_1) // Set your AWS region
+           .endpointOverride(new URI("http://localhost:8000")) // Set your DynamoDB endpoint
+           .credentialsProvider(
+                   StaticCredentialsProvider.create(
+                           AwsBasicCredentials.create("dummye", "dummye") // Set your AWS credentials
+                   )
+           )
+           .build();
+}
 ```
 3. Run the example:
 ```shell
@@ -66,7 +68,9 @@ DynamoDbClient client = DynamoDbClient.builder()
 
 This example demonstrates the following functionalities:
 1. Auditing Changes with DynamoDB
-    - Demonstrates how to audit changes using DynamoDB as the storage backend.
+   - Demonstrates how to audit changes using DynamoDB as the storage backend.
+2. Importing from Mongock
+   - Illustrates how to setting Flamingock to import legacy Mongock audits.
 
 ___
 

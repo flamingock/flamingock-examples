@@ -16,9 +16,9 @@ This example has 3 Flamingock Changes:
 
 ## Table of Contents
 
-1. [📌 Dependencies]((#📌 Dependencies))
-2. [🛠 How to Run this Example]((#🛠 How to Run this Example))
-3. [✅ Proven Functionalities]((#✅ Proven functionalities))
+1. [📌 Dependencies](#📌-dependencies)
+2. [🛠 How to Run this Example](#🛠-how-to-run-this-example)
+3. [✅ Proven Functionalities](#✅-proven-functionalities)
 
 ---
 

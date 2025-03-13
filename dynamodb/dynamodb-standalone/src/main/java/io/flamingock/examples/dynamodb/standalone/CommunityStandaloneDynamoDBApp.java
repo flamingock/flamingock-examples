@@ -21,8 +21,12 @@ import io.flamingock.core.configurator.standalone.FlamingockStandalone;
 import io.flamingock.core.pipeline.Stage;
 import io.flamingock.examples.dynamodb.standalone.mongock.MongockLegacyDataProvisioner;
 import io.flamingock.oss.driver.dynamodb.driver.DynamoDBDriver;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
+import java.net.URI;
 import java.net.URISyntaxException;
 
 public class CommunityStandaloneDynamoDBApp {

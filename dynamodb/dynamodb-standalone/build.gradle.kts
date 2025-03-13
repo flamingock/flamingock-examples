@@ -3,6 +3,7 @@ import javax.xml.parsers.DocumentBuilderFactory
 
 plugins {
     java
+    application
 }
 
 repositories {
@@ -14,14 +15,18 @@ group = "io.flamingock"
 version = "1.0-SNAPSHOT"
 
 val flamingockVersion = flamingockVersion()
-extra["flamingockVersion"] = flamingockVersion
 
 dependencies {
+//    Flamingock Dependencies
     implementation("io.flamingock:flamingock-core:$flamingockVersion")
     implementation("io.flamingock:dynamodb-driver:$flamingockVersion")
 
+//    DynamoDB dependencies from Amazon
     implementation("software.amazon.awssdk:dynamodb-enhanced:2.25.28")
     implementation("software.amazon.awssdk:url-connection-client:2.24.11")
+
+//    Others dependencies needed for this example
+    implementation("org.slf4j:slf4j-simple:2.0.6")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
@@ -29,8 +34,13 @@ dependencies {
     testImplementation("com.amazonaws:DynamoDBLocal:1.25.0")
 }
 
+application {
+    mainClass = "io.flamingock.examples.dynamodb.standalone.CommunityStandaloneDynamoDBApp"
+}
+
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+    systemProperty("org.slf4j.simpleLogger.logFile", "System.out")
     testLogging {
         events(
             org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,

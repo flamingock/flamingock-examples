@@ -34,14 +34,13 @@ public final class DynamoDBUtil {
 
     public static DynamoDbClient getClient() throws URISyntaxException {
         return DynamoDbClient.builder()
-                .region(Region.EU_WEST_1)
-                .endpointOverride(new URI("http://localhost:8000"))
+                .region(Region.EU_WEST_1) // Set your AWS region
+                .endpointOverride(new URI("http://localhost:8000")) // Set your DynamoDB endpoint
                 .credentialsProvider(
                         StaticCredentialsProvider.create(
-                                AwsBasicCredentials.create("dummye", "dummye")
+                                AwsBasicCredentials.create("dummye", "dummye") // Set your AWS credentials
                         )
                 )
-                //.httpClient(UrlConnectionHttpClient.builder().build())
                 .build();
     }
 
@@ -145,7 +144,4 @@ public final class DynamoDBUtil {
             // Table already exists, continue
         }
     }
-
-
-
 }

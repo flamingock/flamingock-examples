@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 
+//Set Flamingock On
 @EnableFlamingock
 @SpringBootApplication
 @EnableMongoRepositories(basePackageClasses = ClientRepository.class)
@@ -38,9 +39,11 @@ public class CommunitySpringbootMongodbSpringdataApp {
     public final static String CLIENTS_COLLECTION_NAME = "clientCollection";
 
     public static void main(String[] args) {
+//        Run SpringApplication
         SpringApplication.run(CommunitySpringbootMongodbSpringdataApp.class, args);
     }
 
+//    Configure Listeners beans
     @Bean
     public StartedEventListener startFlamingockListener() {
         return new StartedEventListener();

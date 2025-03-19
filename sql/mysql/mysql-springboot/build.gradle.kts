@@ -3,6 +3,8 @@ import javax.xml.parsers.DocumentBuilderFactory
 
 plugins {
     java
+    application
+//    Springboot plugins
     id("org.springframework.boot") version "2.7.12"
     id("io.spring.dependency-management") version "1.1.0"
 }
@@ -16,17 +18,55 @@ group = "io.flamingock"
 version = "1.0-SNAPSHOT"
 
 val flamingockVersion = flamingockVersion()
-extra["flamingockVersion"] = flamingockVersion
+
+val mongodbVersion = "4.3.3"
 
 dependencies {
+//    Flamingock Dependencies
     implementation("io.flamingock:flamingock-springboot-v2-runner:$flamingockVersion")
-    implementation("io.flamingock:mongodb-springdata-v3-driver:$flamingockVersion")
+    implementation("io.flamingock:mongodb-sync-v4-driver:$flamingockVersion")
     implementation("io.flamingock:sql-springboot-template:$flamingockVersion")
 
+//    Springboot dependencies
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+//    MongoDB dependencies
+    implementation("org.mongodb:mongodb-driver-sync:$mongodbVersion")
+    implementation("org.mongodb:mongodb-driver-core:$mongodbVersion")
+    implementation("org.mongodb:bson:$mongodbVersion")
+
+//    MySQL dependency
     implementation("com.mysql:mysql-connector-j:8.2.0")
 
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+//    Others dependencies needed for this example
+    implementation("org.slf4j:slf4j-simple:2.0.6")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+
+//    testImplementation("com.mysql:mysql-connector-j:8.2.0")
+    testImplementation("org.testcontainers:mysql:1.19.3")
+    testImplementation("org.testcontainers:mongodb:1.18.3")
+    testImplementation("org.testcontainers:junit-jupiter:1.18.3")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+application {
+    mainClass = "io.flamingock.examples.mysql.springboot.MysqlSpringbootApp"
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
+    systemProperty("org.slf4j.simpleLogger.logFile", "System.out")
+    testLogging {
+        events(
+            org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
+            org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED,
+            org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
+            org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_OUT,
+        )
+    }
 }
 
 // Get Flamingock version from parameter or last

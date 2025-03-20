@@ -3,6 +3,8 @@ import javax.xml.parsers.DocumentBuilderFactory
 
 plugins {
     java
+    application
+//    Springboot plugins
     id("org.springframework.boot") version "3.1.3"
     id("io.spring.dependency-management") version "1.1.3"
 }
@@ -16,14 +18,20 @@ group = "io.flamingock"
 version = "1.0-SNAPSHOT"
 
 val flamingockVersion = flamingockVersion()
-extra["flamingockVersion"] = flamingockVersion
 
 dependencies {
+//    Flamingock Dependencies
     implementation("io.flamingock:flamingock-springboot-v3-runner:$flamingockVersion")
     implementation("io.flamingock:mongodb-springdata-v4-driver:$flamingockVersion")
 
+//    Springboot dependency
     implementation("org.springframework.boot:spring-boot-starter-web")
+
+//    Springdata for MongoDB dependency
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+
+//    Others dependencies needed for this example
+    implementation("org.slf4j:slf4j-simple:2.0.6")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
@@ -51,8 +59,13 @@ dependencies {
     }
 }
 
+application {
+    mainClass = "io.flamingock.examples.community.CommunitySpringbootMongodbSpringdataApp"
+}
+
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+    systemProperty("org.slf4j.simpleLogger.logFile", "System.out")
     testLogging {
         events(
             org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,

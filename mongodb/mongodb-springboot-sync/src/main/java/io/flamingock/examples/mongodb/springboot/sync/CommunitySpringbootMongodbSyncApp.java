@@ -29,7 +29,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-
+//Set Flamingock On
 @EnableFlamingock
 @SpringBootApplication
 public class CommunitySpringbootMongodbSyncApp {
@@ -41,16 +41,19 @@ public class CommunitySpringbootMongodbSyncApp {
         SpringApplication.run(CommunitySpringbootMongodbSyncApp.class, args);
     }
 
+//    Configure bean for Flamingock Driver to use
     @Bean
     public ConnectionDriver<?> connectionDriver(MongoClient mongoClient) {
         return new MongoSync4Driver(mongoClient, DATABASE_NAME);
     }
 
+//    Configure beans for use in Changes
     @Bean
     public MongoDatabase mongoDatabase(MongoClient mongoClient) {
         return mongoClient.getDatabase(DATABASE_NAME);
     }
 
+//    Configure Listeners beans
     @Bean
     public StartedEventListener startFlamingockListener() {
         return new StartedEventListener();

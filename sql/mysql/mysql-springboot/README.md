@@ -1,4 +1,4 @@
-![Header Image](../../misc/logo-with-text.png)
+![Header Image](../../../misc/logo-with-text.png)
 ___
 
 # MySQL Springboot Example

@@ -16,30 +16,46 @@
 
 package io.flamingock.examples.mysql.springboot;
 
+import com.mongodb.client.MongoClient;
+import io.flamingock.core.engine.local.driver.ConnectionDriver;
+import io.flamingock.oss.driver.mongodb.sync.v4.driver.MongoSync4Driver;
 import io.flamingock.springboot.v2.context.EnableFlamingock;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
+//Set Flamingock On
 @EnableFlamingock
 @SpringBootApplication
 public class MysqlSpringbootApp {
+    public final static String DATABASE_NAME = "test";
 
     public static void main(String[] args) {
         SpringApplication.run(MysqlSpringbootApp.class, args);
     }
 
+    //    Configure bean for Flamingock Driver to use
     @Bean
+    public ConnectionDriver<?> connectionDriver(MongoClient mongoClient) {
+        return new MongoSync4Driver(mongoClient, DATABASE_NAME);
+    }
+
+    @Bean
+    @Profile("!test")
     public Connection mysqlConnection() throws ClassNotFoundException, SQLException {
-        String myDriver = "com.mysql.cj.jdbc.Driver";
-        String myUrl = "jdbc:mysql://localhost/flamingock";
+        String myDriver = "com.mysql.cj.jdbc.Driver"; // Set your driver
+        String myUrl = "jdbc:mysql://localhost/flamingock"; // Set your endpoint
+        String user = "flamingock_user"; // Set your user
+        String pass = "password"; // Set your password
+
         Class.forName(myDriver);
-        return DriverManager.getConnection(myUrl, "flamingock_user", "password");
+        return DriverManager.getConnection(myUrl, user, pass);
     }
 
 }

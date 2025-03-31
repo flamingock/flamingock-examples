@@ -23,9 +23,6 @@ import com.couchbase.client.java.manager.query.QueryIndex;
 import com.couchbase.client.java.query.QueryOptions;
 import com.couchbase.client.java.query.QueryResult;
 import com.couchbase.client.java.query.QueryScanConsistency;
-import io.flamingock.examples.community.couchbase.events.FailureEventListener;
-import io.flamingock.examples.community.couchbase.events.StartedEventListener;
-import io.flamingock.examples.community.couchbase.events.SuccessEventListener;
 import io.flamingock.oss.driver.couchbase.internal.util.N1QLQueryProvider;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -40,8 +37,6 @@ import java.util.List;
 
 import static io.flamingock.core.local.AuditEntryField.KEY_TIMESTAMP;
 import static io.flamingock.oss.driver.couchbase.internal.CouchbaseConstants.DOCUMENT_TYPE_AUDIT_ENTRY;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Testcontainers
@@ -93,13 +88,5 @@ public class SuccessExecutionTest {
         assertEquals("io.flamingock.examples.community.couchbase.changes.IndexInitializerChangeUnit", executionEntry.get("changeLogClass"));
 
         assertEquals(1, flamingockDocuments.size());
-    }
-
-    @Test
-    @DisplayName("SHOULD trigger start and success event WHEN executed IF happy path")
-    void events() {
-        assertTrue(StartedEventListener.executed);
-        assertTrue(SuccessEventListener.executed);
-        assertFalse(FailureEventListener.executed);
     }
 }

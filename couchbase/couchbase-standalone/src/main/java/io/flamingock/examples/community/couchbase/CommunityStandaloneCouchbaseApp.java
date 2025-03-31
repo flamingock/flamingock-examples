@@ -21,9 +21,6 @@ import com.couchbase.client.java.Collection;
 
 import io.flamingock.core.configurator.standalone.FlamingockStandalone;
 import io.flamingock.core.pipeline.Stage;
-import io.flamingock.examples.community.couchbase.events.FailureEventListener;
-import io.flamingock.examples.community.couchbase.events.StartedEventListener;
-import io.flamingock.examples.community.couchbase.events.SuccessEventListener;
 import io.flamingock.oss.driver.couchbase.driver.CouchbaseDriver;
 
 public class CommunityStandaloneCouchbaseApp {
@@ -42,16 +39,9 @@ public class CommunityStandaloneCouchbaseApp {
                         .addCodePackage("io.flamingock.examples.community.couchbase.changes"))
                 .addDependency(cluster)
                 .addDependency(collection)
-                // All of these configurations are optional and set to their default values
-                .setLockAcquiredForMillis(60 * 1000L)// this is just to show how is set. Default value is still 60 * 1000L
-                .setLockQuitTryingAfterMillis(3 * 60 * 1000L)// this is just to show how is set. Default value is still 3 * 60 * 1000L
-                .setLockTryFrequencyMillis(1000L)// this is just to show how is set. Default value is still 1000L
+                // These configurations are optional and set to their default values
                 .setTrackIgnored(true)
                 .disableTransaction()
-                // Set optional Pipeline Listeners
-                .setPipelineStartedListener(new StartedEventListener())
-                .setPipelineCompletedListener(new SuccessEventListener())
-                .setPipelineFailedListener(new FailureEventListener())
                 //Build and Run
                 .build()
                 .run();

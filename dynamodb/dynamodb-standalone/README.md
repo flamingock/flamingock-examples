@@ -24,8 +24,8 @@ This example has 3 Flamingock Changes:
 
 This example requires the following dependencies:
 ### Flamingock Dependencies
-    implementation("io.flamingock:flamingock-core:0.0.30-beta")
-    implementation("io.flamingock:dynamodb-driver:0.0.30-beta")
+    implementation("io.flamingock:flamingock-core:0.0.32-beta")
+    implementation("io.flamingock:dynamodb-driver:0.0.32-beta")
 
 ### DynamoDB Dependencies
     implementation("software.amazon.awssdk:dynamodb-enhanced:2.25.28")

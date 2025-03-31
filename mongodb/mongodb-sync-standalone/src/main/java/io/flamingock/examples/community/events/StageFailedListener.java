@@ -17,7 +17,6 @@
 package io.flamingock.examples.community.events;
 
 import io.flamingock.core.event.model.IStageFailedEvent;
-import io.flamingock.core.event.model.IStageStartedEvent;
 
 import java.util.function.Consumer;
 

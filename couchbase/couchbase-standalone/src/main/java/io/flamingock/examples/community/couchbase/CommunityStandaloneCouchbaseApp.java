@@ -21,9 +21,6 @@ import com.couchbase.client.java.Collection;
 
 import io.flamingock.core.configurator.standalone.FlamingockStandalone;
 import io.flamingock.core.pipeline.Stage;
-import io.flamingock.examples.community.couchbase.events.FailureEventListener;
-import io.flamingock.examples.community.couchbase.events.StartedEventListener;
-import io.flamingock.examples.community.couchbase.events.SuccessEventListener;
 import io.flamingock.oss.driver.couchbase.driver.CouchbaseDriver;
 
 public class CommunityStandaloneCouchbaseApp {
@@ -38,24 +35,21 @@ public class CommunityStandaloneCouchbaseApp {
         Collection collection = cluster.bucket(bucketName).defaultCollection();
         FlamingockStandalone.local()
                 .setDriver(new CouchbaseDriver(cluster, collection))
-                .setLockAcquiredForMillis(60 * 1000L)// this is just to show how is set. Default value is still 60 * 1000L
-                .setLockQuitTryingAfterMillis(3 * 60 * 1000L)// this is just to show how is set. Default value is still 3 * 60 * 1000L
-                .setLockTryFrequencyMillis(1000L)// this is just to show how is set. Default value is still 1000L
-                .addStage(new Stage("stage-name").addCodePackage("io.flamingock.examples.community.couchbase.changes"))
+                .addStage(new Stage("stage-name")
+                        .addCodePackage("io.flamingock.examples.community.couchbase.changes"))
                 .addDependency(cluster)
                 .addDependency(collection)
+                // These configurations are optional and set to their default values
                 .setTrackIgnored(true)
-                .setTransactionEnabled(false)
-                .setPipelineStartedListener(new StartedEventListener())
-                .setPipelineCompletedListener(new SuccessEventListener())
-                .setPipelineFailedListener(new FailureEventListener())
+                .disableTransaction()
+                //Build and Run
                 .build()
                 .run();
     }
 
     private static Cluster connect() {
-        return Cluster.connect("couchbase://localhost:11210",
-                "Administrator",
-                "password");
+        return Cluster.connect("couchbase://localhost:11210", // Set your Couchbase endpoint
+                "Administrator", // Set your Couchbase username
+                "password"); // Set your Couchbase password
     }
 }

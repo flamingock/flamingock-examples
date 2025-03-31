@@ -132,9 +132,9 @@ class SpringData3SuccessExecutionTest {
         assertEquals("io.flamingock.examples.mongodb.springboot.springdata.mongock.MongockLegacyChangeUnit", changeUnitExecutedInMongock.get("changeLogClass"));
 
         Document legacyImporterChangeUnit = flamingockDocuments.get(4);
-        assertEquals("mongock-local-legacy-importer-mongodb-3", legacyImporterChangeUnit.get("changeId"));
+        assertEquals("importer-from-mongock", legacyImporterChangeUnit.get("changeId"));
         assertEquals("EXECUTED", legacyImporterChangeUnit.get("state"));
-        assertEquals("io.flamingock.oss.driver.mongodb.sync.v4.internal.mongock.MongockLocalLegacyImporterChangeUnit", legacyImporterChangeUnit.get("changeLogClass"));
+        assertEquals("io.flamingock.core.engine.audit.importer.changeunit.MongockImporterChangeUnit", legacyImporterChangeUnit.get("changeLogClass"));
 
 
         //8 changes: 3 new changes we are adding plus that come from legacy importer

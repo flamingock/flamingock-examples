@@ -24,10 +24,9 @@ import io.flamingock.core.api.annotations.RollbackExecution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 import java.util.Collections;
 
-@ChangeUnit(id = "index-initializer", order = "1")
+@ChangeUnit(id = "index-initializer", order = "1", transactional = false)
 public class IndexInitializerChangeUnit {
 
     private static final Logger logger = LoggerFactory.getLogger(IndexInitializerChangeUnit.class);

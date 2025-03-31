@@ -3,4 +3,4 @@ flamingock:
     - name: stage1
       code-packages:
         - io.flamingock.examples.community.changes
-  transactionEnabled: true
+  transactionDisabled: false

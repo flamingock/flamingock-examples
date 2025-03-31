@@ -40,6 +40,7 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter:1.18.3")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.flamingock:mongodb-facade:$flamingockVersion")
 
     // Mongock dependency is only included to provide example data for demonstrating how the import works.
     // It is not required for production use.

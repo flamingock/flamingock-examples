@@ -58,7 +58,6 @@ public class CommunityStandaloneMongodbSyncApp {
                 .setLockQuitTryingAfterMillis(3 * 60 * 1000L)
                 .setLockTryFrequencyMillis(1000L)
                 .setTrackIgnored(true)
-                .setTransactionEnabled(true)
                 // Set optional Pipeline Listeners
                 .setPipelineStartedListener(new PipelineStartedListener())
                 .setPipelineCompletedListener(new PipelineCompletedListener())

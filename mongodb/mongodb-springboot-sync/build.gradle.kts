@@ -44,6 +44,7 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter:1.18.3")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.flamingock:mongodb-facade:$flamingockVersion")
 }
 
 application {

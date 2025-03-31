@@ -127,7 +127,7 @@ public class SuccessExecutionTest {
                 .toList();
         assertTrue(classes.contains("io.mongock.runner.core.executor.system.changes.SystemChangeUnit00001"));
         assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.mongock._1_mongockInitialiseTableLegacyChangeUnit"));
-        assertTrue(classes.contains("io.flamingock.oss.driver.dynamodb.internal.mongock.MongockLocalLegacyImporterChangeUnit"));
+        assertTrue(classes.contains("io.flamingock.oss.driver.dynamodb.internal.mongock.MongockImporterChangeUnit"));
         assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._2_createUserTable_changeUnit"));
         assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._3_insertUser_changeUnit"));
         assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._4_insertAnotherUser_changeUnit"));

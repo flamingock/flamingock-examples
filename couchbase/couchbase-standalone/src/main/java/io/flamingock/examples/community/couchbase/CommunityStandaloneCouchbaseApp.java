@@ -38,24 +38,28 @@ public class CommunityStandaloneCouchbaseApp {
         Collection collection = cluster.bucket(bucketName).defaultCollection();
         FlamingockStandalone.local()
                 .setDriver(new CouchbaseDriver(cluster, collection))
+                .addStage(new Stage("stage-name")
+                        .addCodePackage("io.flamingock.examples.community.couchbase.changes"))
+                .addDependency(cluster)
+                .addDependency(collection)
+                // All of these configurations are optional and set to their default values
                 .setLockAcquiredForMillis(60 * 1000L)// this is just to show how is set. Default value is still 60 * 1000L
                 .setLockQuitTryingAfterMillis(3 * 60 * 1000L)// this is just to show how is set. Default value is still 3 * 60 * 1000L
                 .setLockTryFrequencyMillis(1000L)// this is just to show how is set. Default value is still 1000L
-                .addStage(new Stage("stage-name").addCodePackage("io.flamingock.examples.community.couchbase.changes"))
-                .addDependency(cluster)
-                .addDependency(collection)
                 .setTrackIgnored(true)
-                .setTransactionEnabled(false)
+                .disableTransaction()
+                // Set optional Pipeline Listeners
                 .setPipelineStartedListener(new StartedEventListener())
                 .setPipelineCompletedListener(new SuccessEventListener())
                 .setPipelineFailedListener(new FailureEventListener())
+                //Build and Run
                 .build()
                 .run();
     }
 
     private static Cluster connect() {
-        return Cluster.connect("couchbase://localhost:11210",
-                "Administrator",
-                "password");
+        return Cluster.connect("couchbase://localhost:11210", // Set your Couchbase endpoint
+                "Administrator", // Set your Couchbase username
+                "password"); // Set your Couchbase password
     }
 }

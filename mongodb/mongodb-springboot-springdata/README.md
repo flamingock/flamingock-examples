@@ -17,7 +17,7 @@ flamingock:
         code-packages:
            - io.flamingock.examples.mongodb.springboot.springdata.mongock
            - io.flamingock.examples.mongodb.springboot.springdata.changes
-   transactionEnabled: true
+   transactionDisabled: false
    legacy-mongock-changelog-source: mongockChangeLog # setting this for importing Mongock legacy audits
 ```
 
@@ -38,8 +38,8 @@ This example has 3 Flamingock Changes:
 
 This example requires the following dependencies:
 ### Flamingock Dependencies
-    implementation("io.flamingock:flamingock-springboot-v2-runner:0.0.30-beta")
-    implementation("io.flamingock:mongodb-springdata-v3-driver:0.0.30-beta")
+    implementation("io.flamingock:flamingock-springboot-v2-runner:0.0.32-beta")
+    implementation("io.flamingock:mongodb-springdata-v3-driver:0.0.32-beta")
 
 ### Springboot Dependency
     implementation("org.springframework.boot:spring-boot-starter-web")

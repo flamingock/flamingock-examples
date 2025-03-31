@@ -3,7 +3,7 @@ flamingock:
     - name: stage1
       code-packages:
         - io.flamingock.examples.mongodb.springboot.sync.changes
-  transactionEnabled: true
+  transactionDisabled: false
 
 spring:
   profiles:

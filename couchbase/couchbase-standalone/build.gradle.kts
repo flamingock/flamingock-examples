@@ -3,6 +3,7 @@ import javax.xml.parsers.DocumentBuilderFactory
 
 plugins {
     java
+    application
 }
 
 repositories {
@@ -14,15 +15,19 @@ group = "io.flamingock"
 version = "1.0-SNAPSHOT"
 
 val flamingockVersion = flamingockVersion()
-extra["flamingockVersion"] = flamingockVersion
 
 val couchbaseVersion = "3.4.4"
 
 dependencies {
+//    Flamingock Dependencies
     implementation("io.flamingock:flamingock-core:$flamingockVersion")
     implementation("io.flamingock:couchbase-driver:$flamingockVersion")
 
+//    Couchbase dependency
     implementation("com.couchbase.client:java-client:$couchbaseVersion")
+
+//    Others dependencies needed for this example
+    implementation("org.slf4j:slf4j-simple:2.0.6")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
@@ -31,8 +36,13 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter:1.18.3")
 }
 
+application {
+    mainClass = "io.flamingock.examples.community.couchbase.CommunityStandaloneCouchbaseApp"
+}
+
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+    systemProperty("org.slf4j.simpleLogger.logFile", "System.out")
     testLogging {
         events(
             org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,

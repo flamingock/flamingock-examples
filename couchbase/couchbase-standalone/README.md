@@ -1,18 +1,22 @@
 ![Header Image](../../misc/logo-with-text.png)
 ___
 
-# MongoDB Standalone Example
+# Couchbase Standalone Example
 
 ## 📖 Example Overview
 
-Welcome to the MongoDB Standalone Example. This demonstrates how to use Flamingock with MongoDB in a Java
+Welcome to the Couchbase Standalone Example. This demonstrates how to use Flamingock with Couchbase in a Java
 standalone application. It highlights key functionalities such as auditing changes, configuring advanced and optional
 Flamingock Builder options, and implementing Pipeline Listeners.
 
-This example has 3 Flamingock Changes:
-1. Creates a new collection called *clientCollection*.
-2. Adds one document to collection.
-3. Adds another document to collection.
+This example has 1 Flamingock Changes:
+1. Initialize an index in a bucket called *bucket*. With Rollback that drops that bucket.
+```java
+    @RollbackExecution
+    public void rollbackExecution(Cluster cluster) {
+       cluster.queryIndexes().dropIndex("bucket", "idx_standalone_index", DropQueryIndexOptions.dropQueryIndexOptions().ignoreIfNotExists(true));
+    }
+```
 
 ## Table of Contents
 
@@ -27,33 +31,32 @@ This example has 3 Flamingock Changes:
 This example requires the following dependencies:
 ### Flamingock Dependencies
     implementation("io.flamingock:flamingock-core:0.0.32-beta")
-    implementation("io.flamingock:mongodb-sync-v4-driver:0.0.32-beta")
+    implementation("io.flamingock:couchbase-driver:0.0.32-beta")
 
-### MongoDB Dependencies
-    implementation("org.mongodb:mongodb-driver-sync:4.3.3")
-    implementation("org.mongodb:mongodb-driver-core:4.3.3")
-    implementation("org.mongodb:bson:4.3.3")
+### Couchbase dependency
+    implementation("com.couchbase.client:java-client:$couchbaseVersion")
 
 ## 🛠 How to Run this Example
 
 There are two ways to run this example:
 
 ### 1. Run Test (Recomended)
-The recommended method to run this example is by executing the tests, which include a MongoDB TestContainer for testing
+The recommended method to run this example is by executing the tests, which include a Couchbase TestContainer for testing
 purposes.
 ```shell
 ./gradlew test
 ```
 
 ### 2. Run Main Class
-To run the main class, ensure you have MongoDB running. Configure the MongoDB client with your settings:
+To run the main class, ensure you have Couchbase running. Configure the Couchbase client with your settings:
 
 1. Open the main class file
-2. Change the MongoDB endpoint with your own:
+2. Change the Couchbase endpoint with your own:
 ```java
-public static void main(String[] args) {
-    new CommunityStandaloneMongodbSyncApp()
-            .run(getMongoClient("mongodb://localhost:27017/"), DATABASE_NAME); // Set your MongoDB endpoint
+private static Cluster connect() {
+   return Cluster.connect("couchbase://localhost:11210", // Set your Couchbase endpoint
+           "Administrator", // Set your Couchbase username
+           "password"); // Set your Couchbase password
 }
 ```
 3. Run the example:
@@ -64,8 +67,8 @@ public static void main(String[] args) {
 ## ✅ Proven functionalities
 
 This example demonstrates the following functionalities:
-1. Auditing Changes with MongoDB
-   - Demonstrates how to audit changes using MongoDB as the storage backend.
+1. Auditing Changes with Couchbase
+   - Demonstrates how to audit changes using Couchbase as the storage backend.
 2. Configuring advanced and optional Flamingock Builder Options
    - All configurations are optional and set in the example to their default values, providing flexibility for customization.
 3. Implementing Pipeline Listeners

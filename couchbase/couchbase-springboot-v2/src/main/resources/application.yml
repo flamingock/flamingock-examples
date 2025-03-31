@@ -15,4 +15,4 @@ flamingock:
     - name: stage1
       code-packages:
         - io.flamingock.examples.community.couchbase.changes
-  transactionEnabled: false
+  transactionDisabled: true

@@ -15,6 +15,7 @@ group = "io.flamingock"
 version = "1.0-SNAPSHOT"
 
 val flamingockVersion = flamingockVersion()
+val awsSdkVersion = "2.25.28"
 
 dependencies {
 //    Flamingock Dependencies
@@ -22,8 +23,8 @@ dependencies {
     implementation("io.flamingock:dynamodb-driver:$flamingockVersion")
 
 //    DynamoDB dependencies from Amazon
-    implementation("software.amazon.awssdk:dynamodb-enhanced:2.25.28")
-    implementation("software.amazon.awssdk:url-connection-client:2.24.11")
+    implementation("software.amazon.awssdk:dynamodb-enhanced:$awsSdkVersion")
+    implementation("software.amazon.awssdk:url-connection-client:$awsSdkVersion")
 
 //    Others dependencies needed for this example
     implementation("org.slf4j:slf4j-simple:2.0.6")

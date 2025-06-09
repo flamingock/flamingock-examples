@@ -3,6 +3,9 @@
 This project demonstrates how to integrate [Flamingock](https://github.com/mongock/flamingock-project) and 
 GraalVM native image, offering significantly faster startup times and reduced memory footprint compared to traditional JVM applications. It includes examples for both Maven and Gradle.
 
+> **Note**: This is a simplified example to demonstrate Flamingock integration with GraalVM native image. For production applications, please refer to the official GraalVM documentation for comprehensive native image configuration guidelines.
+
+
 ## Why GraalVM with Flamingock?
 
 - **Reduced Startup Time**: GraalVM native images compile your application ahead-of-time into a standalone executable, resulting in near-instant startup times. This is particularly beneficial for cloud-native applications and microservices.

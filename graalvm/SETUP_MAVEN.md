@@ -46,45 +46,53 @@
 </build>
 ```
 
-3. Add the flamingock configuration file to `resource-config.json`
+3. Add the configuration file `resource-config.json` to the following path:
+   ```
+   src/main/resources/META-INF/native-image/${GROUP_ID}/${ARTIFACT_ID}/
+   ```
+   With the following content:
 ```json
 {
   "resources": {
     "includes": [
       {
-        "pattern": "META-INF/flamingock-metadata.json"
+        "pattern": "META-INF/flamingock-metadata.json",
       }
-    ]
-  }
+    ],
+  },
 }
 ```
+GraalVM will automatically detect and use this configuration during native image generation.
 
 4. Build application
 ```shell
 ./mvnw clean package
 ```
 
-5. Create native image
+5Create Native Image
+
+### Native Image Build Parameters
+- `--no-fallback`: Ensures the build fails if native image generation isn't possible, rather than creating a fallback JAR. This is important for catching configuration issues early.
+
+- `--features=io.flamingock.graalvm.RegistrationFeature`: Registers Flamingock's custom feature for native image generation. This feature handles the registration of necessary classes and resources.
+
+- `-H:+ReportExceptionStackTraces`: Enables detailed stack traces in the native image. This is crucial for debugging issues in the native binary.
+
+- `--initialize-at-build-time`: Specifies classes to be initialized during build time rather than at runtime. This improves startup time and reduces runtime initialization complexity.
+
+Here's a minimal setup to build the native image:
+
+
 ```shell
  native-image \
   --no-fallback \
   --features=io.flamingock.graalvm.RegistrationFeature \
-  -H:ResourceConfigurationFiles=resource-config.json \
-  -H:ReflectionConfigurationFiles=reflect-config.json \
   -H:+ReportExceptionStackTraces \
   --initialize-at-build-time=org.slf4j,org.slf4j.impl,org.slf4j.simple \
-  -Dorg.slf4j.simpleLogger.defaultLogLevel=info \
-  -Dorg.slf4j.simpleLogger.showDateTime=true \
-  -Dorg.slf4j.simpleLogger.dateTimeFormat="yyyy-MM-dd HH:mm:ss:SSS Z" \
-  -Dorg.slf4j.simpleLogger.showThreadName=true \
-  -Dorg.slf4j.simpleLogger.showLogName=true \
-  -Dorg.slf4j.simpleLogger.showShortLogName=false \
-  -Dorg.slf4j.simpleLogger.levelInBrackets=false \
-  -Dorg.slf4j.simpleLogger.logFile=System.out \
-  -jar build/libs/flamingock-graalvm-example-0.0.1-SNAPSHOT.jar
-
+  -jar build/libs/graalvm-0.0.1-SNAPSHOT.jar
 ```
-6. Run native image
+
+6Run native image
 ```shell
 ./flamingock-graalvm-example-1.0-SNAPSHOT
 ```

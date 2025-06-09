@@ -2,7 +2,7 @@ plugins {
     id("java")
 }
 
-group = "io.flamingock"
+group = "io.flamingock.examples"
 version = "0.0.1-SNAPSHOT"
 
 repositories {

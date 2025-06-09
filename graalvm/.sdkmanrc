@@ -2,5 +2,5 @@
 # Add key=value pairs of SDKs to use below
 
 
-java=17.0.8-graal
-#java=24.0.1-graal
+#java=17.0.8-graal
+java=24.0.1-graal

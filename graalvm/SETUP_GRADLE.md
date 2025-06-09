@@ -46,8 +46,6 @@ pluginManagement {
  native-image \
   --no-fallback \
   --features=io.flamingock.graalvm.RegistrationFeature \
-  -H:ResourceConfigurationFiles=resource-config.json \
-  -H:ReflectionConfigurationFiles=reflect-config.json \
   -H:+ReportExceptionStackTraces \
   --initialize-at-build-time=org.slf4j,org.slf4j.impl,org.slf4j.simple \
   -Dorg.slf4j.simpleLogger.defaultLogLevel=info \

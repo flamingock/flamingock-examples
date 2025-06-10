@@ -50,13 +50,10 @@ docker logs flamingock-localstack
 ## Validating the Results
 
 After running the example, you can verify that the S3 bucket was successfully created by checking the LocalStack endpoint:
-
-1. Access the bucket information by visiting:
    ```bash
    curl http://localhost:4566/flamingock-test-bucket 
    ```
-
-2. You should see the following XML response, confirming that the bucket exists:
+You should see the following XML response, confirming that the bucket exists:
    ```xml
    <ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
      <IsTruncated>false</IsTruncated>

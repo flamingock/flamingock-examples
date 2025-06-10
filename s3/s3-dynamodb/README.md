@@ -1,113 +1,80 @@
 # Flamingock S3 Example
 
-This example demonstrates how to use Flamingock with AWS S3. It shows how to create a changeUnit that creates an S3 bucket.
+This example demonstrates how to use Flamingock with AWS S3 to manage infrastructure as code. It shows how to create a change unit that creates an S3 bucket in a version-controlled, auditable way.
+
+> **Note**: Flamingock requires an audit repository to maintain its metadata. This example uses the Community compatible edition.
 
 ## Prerequisites
 
-- Java 11 or higher
-- Gradle
-- LocalStack (for local development)
+- Java 8 or higher
+- Gradle 7.x+ or Maven 3.6+
+- Docker (for running LocalStack)
+- LocalStack (for local AWS service emulation)
+- 
+## What This Example Does
+
+This example demonstrates how to use Flamingock to manage changes to AWS S3 infrastructure. It includes:
+
+1. A change unit (`_0001_CreateS3BucketChange.java`) with:
+    - An `@Execution` method that creates a bucket named "flamingock-test-bucket"
+    - A `@RollbackExecution` method that deletes the bucket if execution fails
+
+2. Utility classes:
+    - `S3Util.java`: Configures the AWS S3 client with LocalStack endpoints
+    - `DynamoDBUtil.java`: Configures the DynamoDB client for Flamingock's audit repository
+
+3. Main application class:
+    - `S3FlamingockExample.java`: Initializes Flamingock and executes the change units
+
 
 ## Running the Example
 
-1. Start LocalStack:
+### 1. Start LocalStack
 
+First, start a LocalStack container to emulate AWS services locally:
 ```bash
-docker run -d -p 4566:4566 -p 8000:8000 localstack/localstack
+docker run -d -p 4566:4566 -p 8000:8000 --name flamingock-localstack localstack/localstack
 ```
-
-2. Run the example:
-
+You can verify LocalStack is running properly with:
 ```bash
-./gradlew :s3:s3-standalone:run
+docker logs flamingock-localstack
 ```
 
-## What This Example Does
+### 2. Run the Example
 
-This example demonstrates how to use Flamingock to manage changes to AWS S3. It includes:
-
-1. A changeUnit that creates an S3 bucket
-2. A rollback execution that deletes the bucket if needed
-
-## Code Explanation
-
-The main components of this example are:
-
-### S3Util
-
-A utility class that creates an S3 client for interacting with AWS S3.
-
-```java
-public static S3Client getClient() throws URISyntaxException {
-    return S3Client.builder()
-            .region(Region.EU_WEST_1)
-            .endpointOverride(new URI("http://localhost:4566"))
-            .credentialsProvider(
-                    StaticCredentialsProvider.create(
-                            AwsBasicCredentials.create("dummye", "dummye")
-                    )
-            )
-            .build();
-}
+- Execute the example using **Gradle**:
+```bash
+./gradlew run
 ```
 
-### DynamoDBUtil
+## Validating the Results
 
-A utility class that creates a DynamoDB client for Flamingock to store its metadata. Note that this is only used for Flamingock's internal metadata storage and is not related to the S3 operations.
+After running the example, you can verify that the S3 bucket was successfully created by checking the LocalStack endpoint:
 
-```java
-public static DynamoDbClient getClient() throws URISyntaxException {
-    return DynamoDbClient.builder()
-            .region(Region.EU_WEST_1)
-            .endpointOverride(new URI("http://localhost:8000"))
-            .credentialsProvider(
-                    StaticCredentialsProvider.create(
-                            AwsBasicCredentials.create("dummye", "dummye")
-                    )
-            )
-            .build();
-}
-```
+1. Access the bucket information by visiting:
+   ```bash
+   curl http://localhost:4566/flamingock-test-bucket 
+   ```
 
-> **Note**: Flamingock requires a driver to store its metadata. Currently, there is no S3 driver available, so we use the DynamoDB driver for this purpose. The DynamoDB client is only used for Flamingock's internal metadata storage and is not related to the S3 operations, which use the S3 client.
+2. You should see the following XML response, confirming that the bucket exists:
+   ```xml
+   <ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+     <IsTruncated>false</IsTruncated>
+     <Marker/>
+     <Name>flamingock-test-bucket</Name>
+     <Prefix/>
+     <MaxKeys>1000</MaxKeys>
+   </ListBucketResult>
+   ```
 
-### _0001_CreateS3BucketChange
+## Troubleshooting
 
-A changeUnit that creates an S3 bucket and provides a rollback execution to delete it if needed.
+- **LocalStack Connection Issues**: Make sure LocalStack is running and accessible at localhost:4566
+- **AWS Credential Errors**: The example uses dummy credentials for LocalStack, which is expected
+- **Bucket Already Exists**: If you run the example multiple times, you may see a warning that the bucket already exists
 
-```java
-@ChangeUnit(id = "create-bucket", order = "0001", author = "dev-team")
-public class _0001_CreateS3BucketChange {
+## Additional Resources
 
-  @Execution
-  public void execute(S3Client s3Client) {
-    s3Client.createBucket(CreateBucketRequest.builder()
-        .bucket("flamingock-test-bucket")
-        .build());
-  }
-
-  @RollbackExecution
-  public void rollback(S3Client s3Client) {
-    s3Client.deleteBucket(DeleteBucketRequest.builder()
-        .bucket("flamingock-test-bucket")
-        .build());
-  }
-}
-```
-
-### CommunityS3DynamoDBApp
-
-The main application that configures and runs Flamingock.
-
-```java
-public void run(S3Client s3Client, DynamoDbClient dynamoDbClient) {
-    FlamingockStandalone.local()
-            .setDriver(new DynamoDBDriver(dynamoDbClient))
-            .withImporter(CoreConfiguration.ImporterConfiguration.withSource("mongockChangeLog"))
-            .addStage(new Stage("stage-name")
-                    .addCodePackage("io.flamingock.examples.s3.standalone.changes"))
-            .addDependency(s3Client)
-            .build()
-            .run();
-}
-```
+- [Flamingock Documentation](https://docs.flamingock.io)
+- [AWS S3 SDK Documentation](https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/examples-s3.html)
+- [LocalStack Documentation](https://docs.localstack.cloud)

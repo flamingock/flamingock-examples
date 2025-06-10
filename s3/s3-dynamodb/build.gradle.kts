@@ -42,7 +42,7 @@ dependencies {
 }
 
 application {
-    mainClass = "io.flamingock.examples.s3.standalone.CommunityStandaloneS3App"
+    mainClass = "io.flamingock.examples.s3.S3FlamingockExample"
 }
 
 tasks.withType<Test>().configureEach {

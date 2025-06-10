@@ -14,29 +14,35 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.s3.dynamodb;
+package io.flamingock.examples.s3.util;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.core.client.config.ClientOverrideConfiguration;
 import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.s3.S3Client;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Duration;
 
-public final class DynamoDBUtil {
-    public DynamoDBUtil() {
+public final class S3Util {
+    public S3Util() {
     }
 
-    public static DynamoDbClient getClient() throws URISyntaxException {
-        return DynamoDbClient.builder()
-                .region(Region.EU_WEST_1) // Set your AWS region
-                .endpointOverride(new URI("http://localhost:8000")) // Set your DynamoDB endpoint
+    public static S3Client getClient() throws URISyntaxException {
+        return S3Client.builder()
+                .region(Region.EU_WEST_1)
+                .endpointOverride(new URI("http://127.0.0.1:4566"))
                 .credentialsProvider(
                         StaticCredentialsProvider.create(
-                                AwsBasicCredentials.create("dummye", "dummye") // Set your AWS credentials
+                                AwsBasicCredentials.create("dummye", "dummye")
                         )
                 )
+                .overrideConfiguration(ClientOverrideConfiguration.builder()
+                        .apiCallTimeout(Duration.ofSeconds(30))
+                        .apiCallAttemptTimeout(Duration.ofSeconds(10))
+                        .build())
                 .build();
     }
 }

@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.s3.dynamodb;
+package io.flamingock.examples.s3;
 
-import io.flamingock.core.configurator.core.CoreConfiguration;
 import io.flamingock.core.configurator.standalone.FlamingockStandalone;
 import io.flamingock.core.pipeline.Stage;
+import io.flamingock.examples.s3.util.DynamoDBUtil;
+import io.flamingock.examples.s3.util.S3Util;
 import io.flamingock.oss.driver.dynamodb.driver.DynamoDBDriver;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.s3.S3Client;
 
 import java.net.URISyntaxException;
 
-public class CommunityS3DynamoDBApp {
+public class S3FlamingockExample {
 
     public static void main(String[] args) throws URISyntaxException {
-        new CommunityS3DynamoDBApp().run(S3Util.getClient(), DynamoDBUtil.getClient());
+        new S3FlamingockExample().run(S3Util.getClient(), DynamoDBUtil.getClient());
     }
 
     public void run(S3Client s3Client, DynamoDbClient dynamoDbClient) {
@@ -36,7 +37,7 @@ public class CommunityS3DynamoDBApp {
         FlamingockStandalone.local()
                 .setDriver(new DynamoDBDriver(dynamoDbClient))
                 .addStage(new Stage("stage-name")
-                        .addCodePackage("io.flamingock.examples.s3.standalone.changes"))
+                        .addCodePackage("io.flamingock.examples.s3.changes"))
                 .addDependency(s3Client)
                 .build()
                 .run();

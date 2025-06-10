@@ -1,3 +1,6 @@
+![Header Image](../../misc/logo-with-text.png)
+___
+
 # Flamingock with GraalVM Example
 
 This project demonstrates how to integrate [Flamingock](https://github.com/mongock/flamingock-project) and 

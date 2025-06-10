@@ -46,18 +46,16 @@ ensure a smooth migration process.
 
 ## 📂 Index of Examples
 
-| **Technology**       | **Example Project**                                                                | **Description**                                                                                                    |
-|----------------------|------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
-| **MongoDB**          | **[mongodb-sync-standalone](mongodb/mongodb-sync-standalone)**                     | Example of using Flamingock with the MongoDB synchronous driver in a Java standalone application.                  |
-|                      | **[mongodb-springboot-springdata-2.x](mongodb/mongodb-springboot-springdata-2.x)** | Integration of Flamingock with MongoDB, Spring Boot 2.x, and Spring Data for seamless database migrations.         |
-|                      | **[mongodb-springboot-springdata-3.x](mongodb/mongodb-springboot-springdata-3.x)** | Integration of Flamingock with MongoDB, Spring Boot 3.x, and Spring Data, leveraging the latest Spring features.   |
-|                      | **[mongodb-springboot-sync](mongodb/mongodb-springboot-sync)**                     | Demonstrates Flamingock with MongoDB sync driver and Spring Boot, without relying on Spring Data abstractions.     |
-| **DynamoDB**         | **[dynamodb-standalone](dynamodb/dynamodb-standalone)**                            | Example showcasing Flamingock with DynamoDB in a Java standalone application.                                      |
-| **S3**               | **[s3-dynamodb](s3/s3-dynamodb)**                                                  | Example demonstrating Flamingock with AWS S3 for managing S3 bucket creation in a Java standalone application.     |
-| **Couchbase**        | **[couchbase-standalone](couchbase/couchbase-standalone)**                         | Example of using Flamingock with Couchbase in a Java standalone application.                                       |
-|                      | **[couchbase-springboot-v2](couchbase/couchbase-springboot-v2)**                   | Demonstrates Flamingock with Couchbase and Spring Boot 2.x for database migrations.                                |
-| **MySQL**            | **[mysql-springboot](sql/mysql/mysql-springboot)**                                 | Integration of Flamingock with MySQL and Spring Boot 2.x for database schema migrations.                           |
-| **GraalVM**          | **[graalvm-example](graalvm-example)**                                             | Demonstrates how to use Flamingock with GraalVM native image compilation for building fast, lightweight applications. |
+| **Technology**       | **Example Project**                                                    | **Description**                                                                                                    |
+|----------------------|------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+| **MongoDB**          | **[mongodb-sync-standalone](mongodb/mongodb-sync-standalone/README.md)** | Example of using Flamingock with the MongoDB synchronous driver in a Java standalone application.                  |
+|                      | **[mongodb-springboot-springdata](mongodb/mongodb-springboot-springdata/README.md)** | Integration of Flamingock with MongoDB, Spring Boot 2.x, and Spring Data for seamless database migrations.         |
+|                      | **[mongodb-springboot-sync](mongodb/mongodb-springboot-sync/README.md)**        | Demonstrates Flamingock with MongoDB sync driver and Spring Boot, without relying on Spring Data abstractions.     |
+| **DynamoDB**         | **[dynamodb-standalone](dynamodb/dynamodb-standalone/README.md)**               | Example showcasing Flamingock with DynamoDB in a Java standalone application.                                      |
+| **S3**               | **[s3](s3/README.md)**                                                          | Example demonstrating Flamingock with AWS S3 for managing S3 bucket creation in a Java standalone application.     |
+| **Couchbase**        | **[couchbase-standalone](couchbase/couchbase-standalone/README.md)**            | Example of using Flamingock with Couchbase in a Java standalone application.                                       |
+|                      | **[couchbase-springboot-v2](couchbase/couchbase-springboot-v2/README.md)**      | Demonstrates Flamingock with Couchbase and Spring Boot 2.x for database migrations.                                |
+| **GraalVM**          | **[graalvm](graalvm/README.md)**                                  | Demonstrates how to use Flamingock with GraalVM native image compilation for building fast, lightweight applications. |
 > 🚀 **New examples will be added regularly!** Stay tuned for updates as we expand the repository to cover even more
 > systems and frameworks.
 

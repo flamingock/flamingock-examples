@@ -94,6 +94,6 @@ Here's a minimal setup to build the native image:
 
 6Run native image
 ```shell
-./flamingock-graalvm-example-1.0-SNAPSHOT
+./graalvm-1.0-SNAPSHOT
 ```
 

@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.flamingock</groupId>
-    <artifactId>flamingock-graalvm-example</artifactId>
+    <artifactId>graalvm-\</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Flamingock GraalVM Example</name>
     <description>An example of how to build a GraalVM native image with Flamingock.</description>
-    <url>https://github.com/mongock/flamingock-graalvm-example</url>
+    <url>https://github.com/mongock/graalvm</url>
     <licenses>
         <license>
             <name>Apache License 2.0</name>
@@ -31,7 +31,7 @@
         </developer>
     </developers>
     <scm>
-        <url>https://github.com/mongock/flamingock-graalvm-example.git</url>
+        <url>https://github.com/mongock/graalvm.git</url>
     </scm>
 
     <dependencies>

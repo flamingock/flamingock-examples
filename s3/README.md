@@ -1,3 +1,6 @@
+![Header Image](../../misc/logo-with-text.png)
+___
+
 # Flamingock S3 Example
 
 This example demonstrates how to use Flamingock with AWS S3 to manage infrastructure as code. It shows how to create a change unit that creates an S3 bucket in a version-controlled, auditable way.

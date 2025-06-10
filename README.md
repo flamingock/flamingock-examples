@@ -17,7 +17,7 @@ Cloud offering whilst still retaining existing supported databases such as Mongo
 
 ---
 
-## 📖 Examples Overview
+## Examples Overview
 
 This repository is structured as **Individual Gradle Projects**, with each project demonstrating Flamingock's
 integration with different frameworks, technologies, and use cases. Explore the examples to find the one that matches
@@ -27,7 +27,7 @@ Each example is prepared to run from its own test with all infrastructure (datab
 But you can also  run it with your own infrastructure.
 
 
-## 🐥 Migration from Mongock to Flamingock
+## Migration from Mongock to Flamingock
 
 If you're transitioning from Mongock to Flamingock, we have separate migration guides for each use case:
 
@@ -42,9 +42,7 @@ ensure a smooth migration process.
 
 ---
 
-## 📂 Index of Examples
-
-## 📂 Index of Examples
+## Index of Examples
 
 | **Technology**       | **Example Project**                                                    | **Description**                                                                                                    |
 |----------------------|------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
@@ -61,7 +59,7 @@ ensure a smooth migration process.
 
 ---
 
-## 🛠 How to Run Examples
+## How to Run Examples
 
 **1. Clone this repository:**
 ```shell
@@ -90,13 +88,13 @@ cd mongodb/mongodb-springboot-springdata
 
 ___
 
-## 📢 Contributing
+## Contributing
 We welcome contributions! If you have an idea for a new example or improvement to an existing one, feel free to submit a
 pull request. Check out our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ___
 
-## 🤝 Get Involved
+## Get Involved
 ⭐ Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
 
 🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).
@@ -105,10 +103,10 @@ ___
 
 ___
 
-## 📜 License
+## License
 This repository is licensed under the [Apache License 2.0](LICENSE.md).
 
 ___
 
-## 🔥 Explore, experiment, and empower your projects with Flamingock!
+## Explore, experiment, and empower your projects with Flamingock!
 Let us know what you think or where you’d like to see Flamingock used next.

@@ -1,83 +1,59 @@
-import java.net.URL
-import javax.xml.parsers.DocumentBuilderFactory
-
 plugins {
     java
     application
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}
+
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral() // Fallback for other dependencies
 }
 
 group = "io.flamingock"
 version = "1.0-SNAPSHOT"
 
-val flamingockVersion = flamingockVersion()
+val flamingockVersion = "0.0.34-beta"
 val awsSdkVersion = "2.25.28"
 
 dependencies {
-    // Flamingock Dependencies
-    implementation("io.flamingock:flamingock-core:$flamingockVersion")
-    implementation("io.flamingock:dynamodb-driver:$flamingockVersion")
+    // Import the flamingock BOM
+    implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
 
-    // AWS SDK Dependencies
-    implementation("software.amazon.awssdk:s3:$awsSdkVersion")
-    implementation("software.amazon.awssdk:apache-client:${awsSdkVersion}")
-    implementation("software.amazon.awssdk:dynamodb:$awsSdkVersion")  // Add this line
+    // AWS SDK dependencies with explicit versions
     implementation("software.amazon.awssdk:dynamodb-enhanced:$awsSdkVersion")
     implementation("software.amazon.awssdk:url-connection-client:$awsSdkVersion")
 
-    // Others dependencies needed for this example
+    // Other dependencies
+    implementation("org.slf4j:slf4j-api:2.0.6")
     implementation("org.slf4j:slf4j-simple:2.0.6")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
-    testImplementation("org.assertj:assertj-core:3.24.2")
-    testImplementation("org.testcontainers:testcontainers:1.19.3")
-    testImplementation("org.testcontainers:junit-jupiter:1.19.3")
-    testImplementation("org.testcontainers:localstack:1.19.3")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 }
 
 application {
-    mainClass = "io.flamingock.examples.s3.S3FlamingockExample"
+    mainClass = "io.flamingock.examples.dynamodb.standalone.CommunityStandaloneDynamoDBApp"
 }
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
-    systemProperty("org.slf4j.simpleLogger.logFile", "System.out")
-    testLogging {
-        events(
-            org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
-            org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED,
-            org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-            org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_OUT,
-        )
-    }
 }
 
-// Get Flamingock version from parameter or last
-fun flamingockVersion(): String {
-    var passedAsParameter = false
-    val flamingockVersionAsParameter: String? = project.findProperty("flamingockVersion")?.toString()
-    val flamingockVersion: String =  if(flamingockVersionAsParameter != null) {
-        passedAsParameter = true
-        flamingockVersionAsParameter
-    } else {
-        //using "release.latest" doesn't play nice with intellij
-        val metadataUrl = "https://repo.maven.apache.org/maven2/io/flamingock/flamingock-core/maven-metadata.xml"
-        try {
-            val metadata = URL(metadataUrl).readText()
-            val documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-            val inputStream = metadata.byteInputStream()
-            val document = documentBuilder.parse(inputStream)
-            document.getElementsByTagName("latest").item(0).textContent
-        } catch (e: Exception) {
-            throw RuntimeException("Cannot obtain Flamingock's latest version")
+// Optional task to verify dependency versions
+tasks.register("printDependencyVersions") {
+    doLast {
+        configurations.compileClasspath.get().resolvedConfiguration.lenientConfiguration.allModuleDependencies.forEach {
+            if (it.moduleGroup == "io.flamingock") {
+                println("${it.moduleGroup}:${it.moduleName}:${it.moduleVersion}")
+            }
         }
     }
-    logger.lifecycle("Building with flamingock version${if(passedAsParameter)"[from parameter]" else ""}: $flamingockVersion")
-    return flamingockVersion
 }

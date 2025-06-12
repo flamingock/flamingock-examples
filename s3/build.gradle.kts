@@ -3,14 +3,6 @@ plugins {
     application
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
-    }
-}
-
 repositories {
     mavenLocal()
     mavenCentral() // Fallback for other dependencies
@@ -26,9 +18,20 @@ dependencies {
     // Import the flamingock BOM
     implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
 
+    // Dependencies managed by the BOM
+    implementation("io.flamingock:flamingock-core")
+    implementation("io.flamingock:flamingock-core-api")
+    implementation("io.flamingock:flamingock-ce-dynamodb")
+    implementation("io.flamingock:flamingock-ce-commons")
+
     // AWS SDK dependencies with explicit versions
-    implementation("software.amazon.awssdk:dynamodb-enhanced:$awsSdkVersion")
-    implementation("software.amazon.awssdk:url-connection-client:$awsSdkVersion")
+    implementation(platform("software.amazon.awssdk:bom:$awsSdkVersion"))
+    implementation("software.amazon.awssdk:s3")                        // Add S3 client
+    implementation("software.amazon.awssdk:dynamodb")                  // Base DynamoDB client
+    implementation("software.amazon.awssdk:dynamodb-enhanced")         // Enhanced DynamoDB client
+    implementation("software.amazon.awssdk:url-connection-client")     // HTTP client implementation
+
+    annotationProcessor("io.flamingock:flamingock-core:$flamingockVersion")
 
     // Other dependencies
     implementation("org.slf4j:slf4j-api:2.0.6")
@@ -40,20 +43,9 @@ dependencies {
 }
 
 application {
-    mainClass = "io.flamingock.examples.dynamodb.standalone.CommunityStandaloneDynamoDBApp"
+    mainClass = "io.flamingock.examples.s3.S3FlamingockExample"
 }
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
-}
-
-// Optional task to verify dependency versions
-tasks.register("printDependencyVersions") {
-    doLast {
-        configurations.compileClasspath.get().resolvedConfiguration.lenientConfiguration.allModuleDependencies.forEach {
-            if (it.moduleGroup == "io.flamingock") {
-                println("${it.moduleGroup}:${it.moduleName}:${it.moduleVersion}")
-            }
-        }
-    }
 }

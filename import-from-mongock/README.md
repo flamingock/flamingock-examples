@@ -15,11 +15,25 @@ The migration process involves copying your existing Mongock change units to the
 
 ## Table of contents
 
-1. [Migration overview](#migration-overview)
-2. [Change unit migration](#change-unit-migration)
-3. [Pipeline configuration](#pipeline-configuration)
-4. [How to run this example](#how-to-run-this-example)
-5. [Proven functionalities](#proven-functionalities)
+1. [Migration steps](#migration-steps)
+2. [Migration overview](#migration-overview)
+3. [Step 1: Adapt change units](#step-1-adapt-change-units)
+4. [Step 2: Create system stage](#step-2-create-system-stage)
+5. [Step 3: Configure pipeline](#step-3-configure-pipeline)
+6. [Run and validate](#run-and-validate)
+7. [Proven functionalities](#proven-functionalities)
+
+---
+
+## Migration steps
+
+Migrating from Mongock to Flamingock is straightforward and requires minimal changes:
+
+1. **[Adapt change units](#step-1-adapt-change-units)** - Update your existing change units by replacing Mongock package imports with Flamingock equivalents (only 3 simple import changes)
+2. **[Create system stage](#step-2-create-system-stage)** - Add one YAML file to handle the migration of audit logs
+3. **[Configure pipeline](#step-3-configure-pipeline)** - Set up the pipeline.yaml with legacy and new stages
+
+**That's it!** Your migration is complete and you can start leveraging Flamingock's advanced features.
 
 ---
 
@@ -40,7 +54,7 @@ This example demonstrates migrating from Mongock to Flamingock with:
 - **New Change Units**: Template-based change units for MongoDB (could be for any technology like S3, Kafka, etc.)
 - **Pipeline Configuration**: `resources/flamingock/pipeline.yaml`
 
-## Change unit migration
+## Step 1: Adapt change units
 
 ### Required package import changes
 
@@ -104,7 +118,25 @@ public class ClientInitializer {
 }
 ```
 
-## Pipeline configuration
+## Step 2: Create system stage
+
+You must create a template-based change unit in the system stage package to handle the migration from Mongock. Create a YAML file (e.g., `_0001_migration_from_mongock.yaml`) with the following structure:
+
+```yaml
+id: migration-from-mongock
+order: 0001
+template: MongoDbImporterChangeTemplate
+configuration:
+  origin: mongockChangeLog
+```
+
+**Configuration parameters:**
+- **id**: Choose how you want to identify this change unit
+- **order**: Should be the first one (0001) as this is typically the first system stage change unit
+- **template**: Must be `MongoDbImporterChangeTemplate`
+- **origin**: The collection/table where Mongock's audit log is stored (typically `mongockChangeLog`)
+
+## Step 3: Configure pipeline
 
 The Flamingock pipeline configuration (`resources/flamingock/pipeline.yaml`) requires two key stages:
 
@@ -127,24 +159,17 @@ pipeline:
 2. **Legacy Stage**: Contains your migrated change units from Mongock (type: "legacy")
 3. **Regular Stages**: For new Flamingock-native change units
 
-## How to run this example
+## Run and validate
 
-### 1. Run Mongock legacy project
+### Running the migration
+
 ```shell
-cd mongock-legacy
-./gradlew test
+./gradlew run
 ```
 
-### 2. Run Flamingock imported project
-```shell
-cd flamingock-imported
-./gradlew test
-```
+### Expected output
 
-### 3. Compare results
-Both projects should produce the same database changes, demonstrating successful migration.
-
-After running the Flamingock project, you should see output similar to:
+After running Flamingock, you should see output similar to:
 ```
 Stage: flamingock-system-stage
 	0001) id: migration-from-mongock 
@@ -162,6 +187,30 @@ Stage: New MongoDB changes
 		Executed			✅ - OK
 		Audited[execution]	        ✅ - OK
 ```
+
+### Validation checklist
+
+- ✅ System stage executes the migration change unit successfully
+- ✅ Legacy change units from Mongock execute without errors
+- ✅ New Flamingock change units execute as expected
+- ✅ All audit logs are properly created in Flamingock format
+- ✅ Database changes match the expected results
+
+### Example comparison
+
+To validate the migration worked correctly, you can compare with the original Mongock project:
+
+```shell
+# Run original Mongock project
+cd mongock-legacy
+./gradlew test
+
+# Run migrated Flamingock project  
+cd ../flamingock-imported
+./gradlew test
+```
+
+Both should produce the same database changes, demonstrating successful migration.
 
 ## Proven functionalities
 
@@ -201,4 +250,5 @@ This repository is licensed under the [Apache License 2.0](../LICENSE.md).
 ---
 
 ### Explore, experiment, and empower your projects with Flamingock!
+Let us know what you think or where you'd like to see Flamingock used next. your projects with Flamingock!
 Let us know what you think or where you'd like to see Flamingock used next.

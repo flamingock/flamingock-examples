@@ -16,7 +16,7 @@
 
 package io.flamingock.examples.mongodb.springboot.springdata.events;
 
-import io.flamingock.springboot.v2.event.SpringPipelineFailedEvent;
+import io.flamingock.springboot.event.SpringPipelineFailedEvent;
 import org.springframework.context.ApplicationListener;
 
 public class PipelineFailedListener implements ApplicationListener<SpringPipelineFailedEvent> {

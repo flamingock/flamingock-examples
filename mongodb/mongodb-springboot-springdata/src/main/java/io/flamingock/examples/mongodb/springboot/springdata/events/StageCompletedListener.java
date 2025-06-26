@@ -16,7 +16,7 @@
 
 package io.flamingock.examples.mongodb.springboot.springdata.events;
 
-import io.flamingock.springboot.v2.event.SpringStageCompletedEvent;
+import io.flamingock.springboot.event.SpringStageCompletedEvent;
 import org.springframework.context.ApplicationListener;
 
 public class StageCompletedListener implements ApplicationListener<SpringStageCompletedEvent> {

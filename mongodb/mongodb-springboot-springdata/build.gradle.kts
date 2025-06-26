@@ -5,8 +5,8 @@ plugins {
     java
     application
 //    Springboot plugins
-    id("org.springframework.boot") version "2.7.12"
-    id("io.spring.dependency-management") version "1.1.0"
+    id("org.springframework.boot") version "3.1.3"
+    id("io.spring.dependency-management") version "1.1.3"
 }
 
 repositories {
@@ -21,8 +21,10 @@ val flamingockVersion = flamingockVersion()
 
 dependencies {
 //    Flamingock Dependencies
-    implementation("io.flamingock:flamingock-springboot-v2-runner:$flamingockVersion")
-    implementation("io.flamingock:mongodb-springdata-v3-driver:$flamingockVersion")
+    implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
+    implementation ("io.flamingock:flamingock-ce-mongodb-springdata:$flamingockVersion") //TODO: remove $flamingockVersion
+    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion") //TODO: remove $flamingockVersion
+    implementation("io.flamingock:flamingock-springboot-integration:$flamingockVersion") //TODO: remove $flamingockVersion
 
 //    Springboot dependency
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -40,12 +42,6 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter:1.18.3")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("io.flamingock:mongodb-facade:$flamingockVersion")
-
-    // Mongock dependency is only included to provide example data for demonstrating how the import works.
-    // It is not required for production use.
-    implementation("io.mongock:mongock-standalone:5.5.0")
-    implementation("io.mongock:mongodb-sync-v4-driver:5.5.0")
 }
 
 application {

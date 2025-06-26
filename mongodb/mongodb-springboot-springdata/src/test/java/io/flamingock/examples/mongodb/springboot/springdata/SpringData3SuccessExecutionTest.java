@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import static io.flamingock.oss.driver.common.mongodb.MongoDBDriverConfiguration.DEFAULT_MIGRATION_REPOSITORY_NAME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -89,7 +88,7 @@ class SpringData3SuccessExecutionTest {
     @Test
     @DisplayName("SHOULD insert the Flamingock change history for all, code and templated changeUnits")
     void flamingockLogsTest() {
-        ArrayList<Document> flamingockDocuments = mongoTemplate.getCollection(DEFAULT_MIGRATION_REPOSITORY_NAME)
+        ArrayList<Document> flamingockDocuments = mongoTemplate.getCollection("flamingockAuditLogs")
                 .find()
                 .into(new ArrayList<>());
 

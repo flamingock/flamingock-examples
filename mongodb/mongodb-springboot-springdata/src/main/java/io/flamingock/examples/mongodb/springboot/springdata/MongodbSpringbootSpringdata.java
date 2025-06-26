@@ -16,6 +16,10 @@
 
 package io.flamingock.examples.mongodb.springboot.springdata;
 
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import io.flamingock.examples.mongodb.springboot.springdata.client.ClientRepository;
 import io.flamingock.examples.mongodb.springboot.springdata.events.PipelineCompletedListener;
 import io.flamingock.examples.mongodb.springboot.springdata.events.PipelineFailedListener;
@@ -23,8 +27,7 @@ import io.flamingock.examples.mongodb.springboot.springdata.events.PipelineStart
 import io.flamingock.examples.mongodb.springboot.springdata.events.StageCompletedListener;
 import io.flamingock.examples.mongodb.springboot.springdata.events.StageFailedListener;
 import io.flamingock.examples.mongodb.springboot.springdata.events.StageStartedListener;
-import io.flamingock.examples.mongodb.springboot.springdata.mongock.MongockExecutor;
-import io.flamingock.springboot.v2.context.EnableFlamingock;
+import io.flamingock.springboot.EnableFlamingock;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -41,8 +44,6 @@ public class MongodbSpringbootSpringdata {
     public final static String CLIENTS_COLLECTION_NAME = "clientCollection";
 
     public static void main(String[] args) {
-//        This line adds data to simulate previous legacy Mongock executions
-        MongockExecutor.addMongockLegacyData("mongodb://localhost:27017/", DATABASE_NAME);
 //        Run SpringApplication
         SpringApplication.run(MongodbSpringbootSpringdata.class, args);
     }

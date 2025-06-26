@@ -1,0 +1,10 @@
+pipeline:
+  systemStage:
+    sourcesPackage: "io.flamingock.examples.importer.flamingock.system"
+  stages:
+    - name: "Legacy changes from Mongock"
+      type: "legacy"
+      sourcesPackage: "io.flamingock.examples.importer.flamingock.legacy"
+    - name: "New MongoDB changes"
+      description: "Changes to MongoDB"
+      sourcesPackage: "io.flamingock.examples.importer.flamingock.mongodb"

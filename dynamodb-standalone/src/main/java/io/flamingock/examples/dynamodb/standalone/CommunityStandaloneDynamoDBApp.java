@@ -16,12 +16,8 @@
 
 package io.flamingock.examples.dynamodb.standalone;
 
-import io.flamingock.core.configurator.core.CoreConfiguration;
-import io.flamingock.core.configurator.standalone.FlamingockStandalone;
-import io.flamingock.core.pipeline.Stage;
-import io.flamingock.examples.dynamodb.standalone.mongock.MongockLegacyDataProvisioner;
-import io.flamingock.oss.driver.dynamodb.driver.DynamoDBDriver;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import io.flamingock.community.Flamingock;
 
 import java.net.URISyntaxException;
 
@@ -32,18 +28,9 @@ public class CommunityStandaloneDynamoDBApp {
     }
 
     public void run(DynamoDbClient client) {
-        //This line adds data to simulate previous legacy Mongock executions
-        MongockLegacyDataProvisioner.provisionLegacyMongockData();
 
         //Running flamingock
-        FlamingockStandalone.local()
-                .setDriver(new DynamoDBDriver(client))
-                .withImporter(CoreConfiguration.ImporterConfiguration.withSource("mongockChangeLog"))
-                .addStage(new Stage("stage-name")
-                        //adding mongock legacy changeUnits
-                        .addCodePackage("io.flamingock.examples.dynamodb.standalone.mongock")
-                        //Adding a package for new changeUnits (note that legacy and new changeUnits can coexist in the same package)
-                        .addCodePackage("io.flamingock.examples.dynamodb.standalone.changes"))
+        Flamingock.builder()
                 .addDependency(client)
                 .build()
                 .run();

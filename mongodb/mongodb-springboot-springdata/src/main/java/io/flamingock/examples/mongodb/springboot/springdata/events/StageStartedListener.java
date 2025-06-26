@@ -16,7 +16,7 @@
 
 package io.flamingock.examples.mongodb.springboot.springdata.events;
 
-import io.flamingock.springboot.v2.event.SpringStageStartedEvent;
+import io.flamingock.springboot.event.SpringStageStartedEvent;
 import org.springframework.context.ApplicationListener;
 
 public class StageStartedListener implements ApplicationListener<SpringStageStartedEvent> {

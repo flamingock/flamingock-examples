@@ -16,8 +16,8 @@
 
 package io.flamingock.examples.mongodb.springboot.springdata.changes;
 
-import io.flamingock.core.api.annotations.ChangeUnit;
-import io.flamingock.core.api.annotations.Execution;
+import io.flamingock.api.annotations.ChangeUnit;
+import io.flamingock.api.annotations.Execution;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 @ChangeUnit(id = "create-collection", order = "2", transactional = false)

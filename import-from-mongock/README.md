@@ -18,10 +18,11 @@ The migration process involves copying your existing Mongock change units to the
 1. [Migration steps](#migration-steps)
 2. [Migration overview](#migration-overview)
 3. [Step 1: Adapt change units](#step-1-adapt-change-units)
-4. [Step 2: Create system stage](#step-2-create-system-stage)
-5. [Step 3: Configure pipeline](#step-3-configure-pipeline)
-6. [Run and validate](#run-and-validate)
-7. [Proven functionalities](#proven-functionalities)
+4. [Step 2: Update application code](#step-2-update-application-code)
+5. [Step 3: Create system stage](#step-3-create-system-stage)
+6. [Step 4: Configure pipeline](#step-4-configure-pipeline)
+7. [Run and validate](#run-and-validate)
+8. [Proven functionalities](#proven-functionalities)
 
 ---
 
@@ -30,8 +31,9 @@ The migration process involves copying your existing Mongock change units to the
 Migrating from Mongock to Flamingock is straightforward and requires minimal changes:
 
 1. **[Adapt change units](#step-1-adapt-change-units)** - Update your existing change units by replacing Mongock package imports with Flamingock equivalents (only 3 simple import changes)
-2. **[Create system stage](#step-2-create-system-stage)** - Add one YAML file to handle the migration of audit logs
-3. **[Configure pipeline](#step-3-configure-pipeline)** - Set up the pipeline.yaml with legacy and new stages
+2. **[Update application code](#step-2-update-application-code)** - Replace Mongock API with Flamingock SDK in your main application
+3. **[Create system stage](#step-3-create-system-stage)** - Add one YAML file to handle the migration of audit logs
+4. **[Configure pipeline](#step-4-configure-pipeline)** - Set up the pipeline.yaml with legacy and new stages
 
 **That's it!** Your migration is complete and you can start leveraging Flamingock's advanced features.
 
@@ -118,7 +120,64 @@ public class ClientInitializer {
 }
 ```
 
-## Step 2: Create system stage
+## Step 2: Update application code
+
+Replace your Mongock API usage with Flamingock SDK in your main application class:
+
+**Original Mongock application:**
+```java
+public static void main(String[] args) {
+    MongoClientSettings build = MongoClientSettings.builder()
+            .applyConnectionString(new ConnectionString("mongodb://localhost:27017/")).build();
+
+    try(MongoClient mongoClient = MongoClients.create(build)) {
+        MongockStandalone.builder()
+                .setDriver(MongoSync4Driver.withDefaultLock(mongoClient, "test"))
+                .addMigrationScanPackage("legacy.mongock.changes")
+                .buildRunner()
+                .execute();
+    }
+}
+```
+
+**Migrated Flamingock application:**
+```java
+package io.flamingock.examples.importer;
+
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import io.flamingock.community.Flamingock;
+
+public class FlamingockApplication {
+
+    public static void main(String[] args) {
+        MongoClientSettings build = MongoClientSettings.builder()
+                .applyConnectionString(new ConnectionString("mongodb://localhost:27017/")).build();
+
+        try (MongoClient mongoClient = MongoClients.create(build)) {
+            Flamingock.builder()
+                    .addDependency(mongoClient)
+                    .addDependency(mongoClient.getDatabase("test"))
+                    .setProperty("mongodb.databaseName", "test")
+                    .build()
+                    .run();
+        }
+    }
+}
+```
+
+**Key changes:**
+- Replace `MongockStandalone` with `Flamingock.builder()`
+- Remove driver configuration - Flamingock handles this automatically
+- Remove package scanning - Flamingock uses pipeline configuration instead
+- Add dependencies directly using `.addDependency()`
+
+**Advanced integrations:**
+For [Spring Boot]((https://docs.flamingock.io/docs/springboot-integration/introduction)) and other advanced integrations, visit [Flamingock's official documentation](https://docs.flamingock.io).
+
+## Step 3: Create system stage
 
 You must create a template-based change unit in the system stage package to handle the migration from Mongock. Create a YAML file (e.g., `_0001_migration_from_mongock.yaml`) with the following structure:
 
@@ -136,7 +195,7 @@ configuration:
 - **template**: Must be `MongoDbImporterChangeTemplate`
 - **origin**: The collection/table where Mongock's audit log is stored (typically `mongockChangeLog`)
 
-## Step 3: Configure pipeline
+## Step 4: Configure pipeline
 
 The Flamingock pipeline configuration (`resources/flamingock/pipeline.yaml`) requires two key stages:
 
@@ -203,11 +262,11 @@ To validate the migration worked correctly, you can compare with the original Mo
 ```shell
 # Run original Mongock project
 cd mongock-legacy
-./gradlew test
+./gradlew run
 
 # Run migrated Flamingock project  
 cd ../flamingock-imported
-./gradlew test
+./gradlew run
 ```
 
 Both should produce the same database changes, demonstrating successful migration.

@@ -16,8 +16,8 @@
 
 package io.flamingock.examples.dynamodb.standalone.changes;
 
-import io.flamingock.core.api.annotations.ChangeUnit;
-import io.flamingock.core.api.annotations.Execution;
+import io.flamingock.api.annotations.ChangeUnit;
+import io.flamingock.api.annotations.Execution;
 import io.flamingock.examples.dynamodb.standalone.DynamoDBUtil;
 import io.flamingock.examples.dynamodb.standalone.UserEntity;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
@@ -28,8 +28,8 @@ import software.amazon.awssdk.services.dynamodb.model.DescribeTableRequest;
 
 import static java.util.Collections.emptyList;
 
-@ChangeUnit(id = "table-create", order = "2", transactional = false)
-public class _2_createUserTable_changeUnit {
+@ChangeUnit(id = "table-create", order = "0002", transactional = false)
+public class _0002_createUserTable_changeUnit {
 
     private DynamoDbEnhancedClient enhancedClient;
     private DynamoDbTable<UserEntity> table;

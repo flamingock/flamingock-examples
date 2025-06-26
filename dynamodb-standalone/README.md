@@ -1,4 +1,4 @@
-![Header Image](../../misc/logo-with-text.png)
+![Header Image](../misc/logo-with-text.png)
 ___
 
 # DynamoDB Standalone Example
@@ -6,8 +6,7 @@ ___
 ## 📖 Example Overview
 
 Welcome to the DynamoDB Standalone Example. This demonstrates how to use Flamingock with DynamoDB in a Java
-standalone application. It highlights key functionalities such as auditing changes using DynamoDB as storage backend and
-importing previous audits from our legacy Mongock Library.
+standalone application. It highlights key functionalities such as auditing changes using DynamoDB as storage backend.
 
 This example has 3 Flamingock Changes:
 1. Creates a new table called *test_table* in DynamoDB.
@@ -24,8 +23,7 @@ This example has 3 Flamingock Changes:
 
 This example requires the following dependencies:
 ### Flamingock Dependencies
-    implementation("io.flamingock:flamingock-core:0.0.32-beta")
-    implementation("io.flamingock:dynamodb-driver:0.0.32-beta")
+    implementation("io.flamingock:flamingock-ce-dynamodb:$flamingockVersion")
 
 ### DynamoDB Dependencies
     implementation("software.amazon.awssdk:dynamodb-enhanced:2.25.28")
@@ -69,14 +67,12 @@ For this option, you'll need to configure your own DynamoDB connection:
 This example demonstrates the following functionalities:
 1. Auditing Changes with DynamoDB
    - Demonstrates how to audit changes using DynamoDB as the storage backend.
-2. Importing from Mongock
-   - Illustrates how to setting Flamingock to import legacy Mongock audits.
 
 ___
 
 ### 📢 Contributing
 We welcome contributions! If you have an idea for a new example or improvement to an existing one, feel free to submit a
-pull request. Check out our [CONTRIBUTING.md](../../CONTRIBUTING.md) for guidelines.
+pull request. Check out our [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
 
 ___
 
@@ -90,7 +86,7 @@ ___
 ___
 
 ### 📜 License
-This repository is licensed under the [Apache License 2.0](../../LICENSE.md).
+This repository is licensed under the [Apache License 2.0](../LICENSE.md).
 
 ___
 

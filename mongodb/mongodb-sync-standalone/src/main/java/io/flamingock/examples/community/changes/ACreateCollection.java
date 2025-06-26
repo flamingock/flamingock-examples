@@ -17,10 +17,10 @@
 package io.flamingock.examples.community.changes;
 
 import com.mongodb.client.MongoDatabase;
-import io.flamingock.core.api.annotations.ChangeUnit;
-import io.flamingock.core.api.annotations.Execution;
+import io.flamingock.api.annotations.ChangeUnit;
+import io.flamingock.api.annotations.Execution;
 
-@ChangeUnit( id="create-collection" , order = "1", transactional = false)
+@ChangeUnit( id="create-collection" , order = "0001", transactional = false)
 public class ACreateCollection {
 
     @Execution

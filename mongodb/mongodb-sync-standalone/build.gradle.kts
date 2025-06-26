@@ -16,12 +16,13 @@ version = "1.0-SNAPSHOT"
 
 val flamingockVersion = flamingockVersion()
 
-val mongodbVersion = "4.3.3"
+val mongodbVersion = "5.2.0" //TODO: we need to support previous versions too
 
 dependencies {
 //    Flamingock Dependencies
-    implementation("io.flamingock:flamingock-core:$flamingockVersion")
-    implementation("io.flamingock:mongodb-sync-v4-driver:$flamingockVersion")
+    implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
+    implementation ("io.flamingock:flamingock-ce-mongodb-sync:$flamingockVersion") //TODO: remove $flamingockVersion
+    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion") //TODO: remove $flamingockVersion
 
 //    MongoDB dependencies
     implementation("org.mongodb:mongodb-driver-sync:$mongodbVersion")
@@ -36,8 +37,6 @@ dependencies {
 
     testImplementation("org.testcontainers:mongodb:1.18.3")
     testImplementation("org.testcontainers:junit-jupiter:1.18.3")
-
-    testImplementation("io.flamingock:mongodb-facade:$flamingockVersion")
 }
 
 application {

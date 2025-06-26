@@ -21,15 +21,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
-import io.flamingock.core.configurator.standalone.FlamingockStandalone;
-import io.flamingock.core.pipeline.Stage;
-import io.flamingock.examples.community.events.PipelineFailedListener;
-import io.flamingock.examples.community.events.PipelineStartedListener;
-import io.flamingock.examples.community.events.PipelineCompletedListener;
-import io.flamingock.examples.community.events.StageCompletedListener;
-import io.flamingock.examples.community.events.StageFailedListener;
-import io.flamingock.examples.community.events.StageStartedListener;
-import io.flamingock.oss.driver.mongodb.sync.v4.driver.MongoSync4Driver;
+import io.flamingock.community.Flamingock;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -48,23 +40,10 @@ public class CommunityStandaloneMongodbSyncApp {
 
 
     public  void run(MongoClient mongoClient, String databaseName) {
-        FlamingockStandalone.local()
-                .setDriver(new MongoSync4Driver(mongoClient, databaseName))
-                .addStage(new Stage("stage-name")
-                        .addCodePackage("io.flamingock.examples.community.changes"))
+        Flamingock.builder()
+                .addDependency(mongoClient)
+                .addDependency("mongodb.databaseName", databaseName)
                 .addDependency(mongoClient.getDatabase(databaseName))
-                // All of these configurations are optional and set to their default values
-                .setLockAcquiredForMillis(60 * 1000L)
-                .setLockQuitTryingAfterMillis(3 * 60 * 1000L)
-                .setLockTryFrequencyMillis(1000L)
-                .setTrackIgnored(true)
-                // Set optional Pipeline Listeners
-                .setPipelineStartedListener(new PipelineStartedListener())
-                .setPipelineCompletedListener(new PipelineCompletedListener())
-                .setPipelineFailedListener(new PipelineFailedListener())
-                .setStageStartedListener(new StageStartedListener())
-                .setStageCompletedListener(new StageCompletedListener())
-                .setStageFailedListener(new StageFailedListener())
                 //Build and Run
                 .build()
                 .run();

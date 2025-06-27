@@ -29,7 +29,7 @@ But you can also  run it with your own infrastructure.
 
 ## Migration from Mongock to Flamingock
 
-If you're transitioning from Mongock to Flamingock, we have a [dedicated project](import-from-mongock/README.md) to guide you. 
+If you're transitioning from Mongock to Flamingock, we have a [dedicated project](import-from-mongock/README_2.md) to guide you. 
 
 ---
 
@@ -45,7 +45,7 @@ If you're transitioning from Mongock to Flamingock, we have a [dedicated project
 | **Couchbase**         | **[couchbase-standalone](couchbase/couchbase-standalone/README.md)**                 | Example of using Flamingock with Couchbase in a Java standalone application.                                                                              |
 |                       | **[couchbase-springboot-v2](couchbase/couchbase-springboot-v2/README.md)**           | Demonstrates Flamingock with Couchbase and Spring Boot 2.x for database migrations.                                                                       |
 | **GraalVM**           | **[graalvm](graalvm/README.md)**                                                     | Demonstrates how to use Flamingock with GraalVM native image compilation for building fast, lightweight applications.                                     |
-| **Mongock Migration** | **[import-from-mongock](import-from-mongock/README.md)**                             | Example of migrating an existing Mongock project to Flamingock, preserving your existing change units while leveraging Flamingock's enhanced capabilities |
+| **Mongock Migration** | **[import-from-mongock](import-from-mongock/README_2.md)**                             | Example of migrating an existing Mongock project to Flamingock, preserving your existing change units while leveraging Flamingock's enhanced capabilities |
 > 🚀 **New examples will be added regularly!** Stay tuned for updates as we expand the repository to cover even more
 > systems and frameworks.
 

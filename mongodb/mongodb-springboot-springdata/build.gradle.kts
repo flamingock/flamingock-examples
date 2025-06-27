@@ -29,9 +29,11 @@ dependencies {
 
 //    Springdata for MongoDB dependency
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+//    implementation("org.mongodb:mongodb-driver-sync:[4.8.0,5.0.0)")//this filters the broader range in flamingock-ce-mongodb-sync
+//    implementation("org.springframework.data:spring-data-mongodb:[4.0.0,5.0.0)")
 
 //    Others dependencies needed for this example
-    implementation("org.slf4j:slf4j-simple:2.0.6")
+//    implementation("org.slf4j:slf4j-simple:2.0.6")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")

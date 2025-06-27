@@ -1,4 +1,4 @@
-package legacy.mongock.changes;
+package com.yourapp.changes.legacy;
 
 import io.mongock.api.annotations.ChangeUnit;
 import io.mongock.api.annotations.Execution;

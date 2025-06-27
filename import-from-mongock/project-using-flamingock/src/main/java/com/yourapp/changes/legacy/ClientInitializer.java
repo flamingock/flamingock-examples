@@ -1,4 +1,4 @@
-package io.flamingock.examples.importer.flamingock.legacy;
+package com.yourapp.changes.legacy;
 
 
 //import io.mongock.api.annotations.ChangeUnit;

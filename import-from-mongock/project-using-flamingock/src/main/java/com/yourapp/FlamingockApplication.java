@@ -1,10 +1,12 @@
-package io.flamingock.examples.importer;
+package com.yourapp;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import io.flamingock.community.Flamingock;
+
+
 
 public class FlamingockApplication {
 

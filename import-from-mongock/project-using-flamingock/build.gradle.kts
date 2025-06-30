@@ -45,7 +45,7 @@ dependencies {
 }
 
 application {
-    mainClass = "io.flamingock.examples.community.CommunityStandaloneMongodbSyncApp"
+    mainClass = "com.yourapp.YourApp"
 }
 
 tasks.withType<Test>().configureEach {

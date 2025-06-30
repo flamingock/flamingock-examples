@@ -4,11 +4,22 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import io.flamingock.api.annotations.Pipeline;
+import io.flamingock.api.annotations.SystemStage;
+import io.flamingock.api.annotations.Stage;
 import io.flamingock.community.Flamingock;
 
+import static io.flamingock.api.StageType.LEGACY;
 
 
-public class FlamingockApplication {
+@Pipeline(
+        systemStage = @SystemStage(sourcesPackage = "com.yourapp.changes.system"),
+        stages = {
+                @Stage(name = "legacy-stage", type = LEGACY, sourcesPackage = "com.yourapp.changes.mongock"),
+                @Stage(name = "New MongoDB changes", sourcesPackage = "com.yourapp.changes.mongodb")
+        }
+)
+public class YourApplication {
 
     public static void main(String[] args) {
         MongoClientSettings build = MongoClientSettings.builder()

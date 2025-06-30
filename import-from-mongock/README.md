@@ -58,7 +58,8 @@ The same codebase after upgrading:
 
 - Flamingock dependency, e.g.:
   ```groovy
-  implementation("io.flamingock:flamingock-ce-mongodb-sync4:${flamingockVersion}")
+    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
+    implementation("io.flamingock:flamingock-ce-mongodb-sync:$flamingockVersion")
   ```
 - ChangeUnits now import `io.flamingock.api.annotations.*`
 - Pipeline configuration in `resources/flamingock/pipeline.yaml`
@@ -85,7 +86,7 @@ The same codebase after upgrading:
 
 **Before (project-using-mongock):**
 ```java
-package com.yourapp.change.legacy;
+package com.yourapp.mongock;
 
 import io.mongock.api.annotations.ChangeUnit;
 import io.mongock.api.annotations.Execution;
@@ -109,7 +110,7 @@ public class ClientInitializer {
 - Just changing the annotation packages
 
 ```java
-package com.yourapp.changes.legacy;
+package com.yourapp.mongock;
 
 import io.flamingock.api.annotations.ChangeUnit;
 import io.flamingock.api.annotations.Execution;
@@ -137,6 +138,13 @@ Replace your Mongock API usage with Flamingock SDK in your main application clas
 
 **Original Mongock application:**
 ```java
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import io.mongock.driver.mongodb.sync.v4.driver.MongoSync4Driver;
+import io.mongock.runner.standalone.MongockStandalone;
+
 public static void main(String[] args) {
     MongoClientSettings build = MongoClientSettings.builder()
             .applyConnectionString(new ConnectionString("mongodb://localhost:27017/")).build();
@@ -153,8 +161,6 @@ public static void main(String[] args) {
 
 **Updated Flamingock application:**
 ```java
-package io.flamingock.examples.importer;
-
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
@@ -224,7 +230,7 @@ pipeline:
 ### Key configuration elements:
 
 1. **System Stage**: Contains framework-provided ChangeUnits—like the importer that reads Mongock’s legacy changelog and replays it into Flamingock’s audit store.
-2. **Legacy Stage**: Hosts your migrated Mongock ChangeUnits (marked type: "legacy") with only the import paths updated, preserving their original logic. Flamingock will execute each legacy ChangeUnit only if it hasn't already been applied under Mongock, preventing duplicate runs.
+2. **Legacy Stage**: Hosts your existing ChangeUnits(initially created with Mongock) with only the import paths updated, preserving their original logic. Flamingock will execute each legacy ChangeUnit only if it hasn't already been applied under Mongock, preventing duplicate runs.
 3. **Regular Stages**: Contains your new Flamingock change units. In this example we’ve dedicated a stage to MongoDB changes, but you could similarly add stages for Kafka, S3, or bundle multiple systems into a single stage—choose the organization that best fits your project
 
 ## Run and validate
@@ -239,7 +245,7 @@ After you’ve updated your project and pipeline, run Flamingock as usual:
 
 - **System stage**: Flamingock first executes the system ChangeUnit (migration-from-mongock) to import any outstanding Mongoock audit entries into the Flamingock store.
 
-- **Legacy stage**: Next, Flamingock runs each migrated Mongock ChangeUnit (marked type: "legacy").
+- **Legacy stage**: Next, Flamingock runs each existing ChangeUnits(initially created with Mongock).
   - Since these ChangeUnits have already been applied under Mongock, none will re-execute.
   - If for any reason a legacy ChangeUnit was never applied, Flamingock will pick it up and execute it now—ensuring nothing is missed.
 
@@ -296,9 +302,8 @@ Both should produce the same database changes, demonstrating successful migratio
 This example demonstrates:
 
 1. **Seamless Migration**: Existing Mongock change units work in Flamingock with minimal changes
-2. **Backward Compatibility**: Legacy Mongock annotations are supported
-3. **Pipeline Configuration**: Proper setup for migrated and new change units
-4. **System Stage Integration**: Automatic migration of Mongock change logs to Flamingock audit logs
+2**Pipeline Configuration**: Proper setup for migrated and new change units
+3**System Stage Integration**: Automatic upgrade of Mongock change logs to Flamingock audit logs
 
 ---
 

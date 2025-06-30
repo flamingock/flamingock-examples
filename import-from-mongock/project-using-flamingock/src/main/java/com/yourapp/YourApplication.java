@@ -13,10 +13,10 @@ import static io.flamingock.api.StageType.LEGACY;
 
 
 @Pipeline(
-        systemStage = @SystemStage(sourcesPackage = "com.yourapp.changes.system"),
+        systemStage = @SystemStage(sourcesPackage = "com.yourapp.flamingock.system"),
         stages = {
-                @Stage(name = "legacy-stage", type = LEGACY, sourcesPackage = "com.yourapp.changes.mongock"),
-                @Stage(name = "New MongoDB changes", sourcesPackage = "com.yourapp.changes.mongodb")
+                @Stage(name = "legacy-stage", type = LEGACY, sourcesPackage = "com.yourapp.mongock"),
+                @Stage(name = "New MongoDB changes", sourcesPackage = "com.yourapp.flamingock.mongodb")
         }
 )
 public class YourApplication {

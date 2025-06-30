@@ -196,7 +196,7 @@ For [Spring Boot]((https://docs.flamingock.io/docs/springboot-integration/introd
 ## Step 3: Create system stage
 
 Create a package where the flamingock system changeUnits will be placed(for now only the import changeUnit).
-This package is the one you will specify in the pipeline descriptor. In this case we'll use `com.yourapp.changes.system`
+This package is the one you will specify in the pipeline descriptor. In this case we'll use `com.yourapp.flamingock.system`
 ```yaml
 id: migration-from-mongock
 order: 0001
@@ -213,25 +213,25 @@ configuration:
 
 ## Step 4: Configure pipeline
 
-The Flamingock pipeline configuration (`resources/flamingock/pipeline.yaml`) requires two key stages:
+Configure the Flamingock pipeline using the `@Pipeline` annotation on any class in your project:
 
-```yaml
-pipeline:
-  systemStage:
-    sourcesPackage: "com.yourapp.changes.system"
-  stages:
-    - name: "legacy-stage"
-      type: "legacy"
-      sourcesPackage: "com.yourapp.changes.legacy"
-    - name: "New MongoDB changes"
-      sourcesPackage: "com.yourapp.changes.mongodb"
+```java
+@Pipeline(
+  systemStage = @SystemStage(sourcesPackage = "com.yourapp.flamingock.system"),
+  stages = {
+    @Stage(name = "legacy-stage", type = LEGACY, sourcesPackage = "com.yourapp.mongock"),
+    @Stage(name = "New MongoDB changes", sourcesPackage = "com.yourapp.flamingock.mongodb")
+  }
+)
+public class AnyClassInYourProject {
+}
 ```
 
 ### Key configuration elements:
-
-1. **System Stage**: Contains framework-provided ChangeUnits—like the importer that reads Mongock’s legacy changelog and replays it into Flamingock’s audit store.
-2. **Legacy Stage**: Hosts your existing ChangeUnits(initially created with Mongock) with only the import paths updated, preserving their original logic. Flamingock will execute each legacy ChangeUnit only if it hasn't already been applied under Mongock, preventing duplicate runs.
-3. **Regular Stages**: Contains your new Flamingock change units. In this example we’ve dedicated a stage to MongoDB changes, but you could similarly add stages for Kafka, S3, or bundle multiple systems into a single stage—choose the organization that best fits your project
+- Add this annotation to any class (configuration class, main class, or test class)
+- The **System Stage** contains framework-provided ChangeUnits—like the importer that reads Mongock’s legacy changelog and replays it into Flamingock’s audit store.
+- The **Legacy Stage** hosts your existing ChangeUnits(initially created with Mongock) with only the import paths updated, preserving their original logic. Flamingock will execute each legacy ChangeUnit only if it hasn't already been applied under Mongock, preventing duplicate runs.
+- The **Regular Stages** Contains your new Flamingock change units. In this example we’ve dedicated a stage to MongoDB changes, but you could similarly add stages for Kafka, S3, or bundle multiple systems into a single stage—choose the organization that best fits your project
 
 ## Run and validate
 

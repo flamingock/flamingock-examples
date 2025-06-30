@@ -1,11 +1,11 @@
 ![Header Image](../misc/logo-with-text.png)
 ___
 
-# DynamoDB Standalone Example
+# DynamoDB Example
 
-## 📖 Example Overview
+## 📖 Example overview
 
-Welcome to the DynamoDB Standalone Example. This demonstrates how to use Flamingock with DynamoDB in a Java
+Welcome to the DynamoDB Example. This demonstrates how to use Flamingock with DynamoDB in a Java
 standalone application. It highlights key functionalities such as auditing changes using DynamoDB as storage backend.
 
 This example has 3 Flamingock Changes:
@@ -16,31 +16,33 @@ This example has 3 Flamingock Changes:
 ## Table of Contents
 
 1. [📌 Dependencies](#-dependencies)
-2. [🛠 How to Run this Example](#-how-to-run-this-example)
-3. [✅ Proven Functionalities](#-proven-functionalities)
+2. [🛠 How to run this example](#-how-to-run-this-example)
+3. [✅ Proven functionalities](#-proven-functionalities)
 
 ## 📌 Dependencies
 
 This example requires the following dependencies:
-### Flamingock Dependencies
-    implementation("io.flamingock:flamingock-ce-dynamodb:$flamingockVersion")
+### Flamingock dependencies
+    implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
+    implementation("io.flamingock:flamingock-ce-dynamodb")
+    annotationProcessor("io.flamingock:flamingock-processor")
 
-### DynamoDB Dependencies
+### DynamoDB dependencies
     implementation("software.amazon.awssdk:dynamodb-enhanced:2.25.28")
     implementation("software.amazon.awssdk:url-connection-client:2.24.11")
 
-## 🛠 How to Run this Example
+## 🛠 How to run this example
 
 There are two ways to run this example:
 
-### 1. Running Tests (Recomended)
+### 1. Running tests (Recomended)
 The recommended method to run this example is by executing the tests, which include a DynamoDB Local Service for testing
 purposes.
 ```shell
 ./gradlew test
 ```
 
-### 2. Running the Main Class
+### 2. Running the main class
 For this option, you'll need to configure your own DynamoDB connection:
 1. Open the main class file
 2. Configure the DynamoDB client builder with your settings in DynamoDBUtil class:
@@ -76,7 +78,7 @@ pull request. Check out our [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines
 
 ___
 
-### 🤝 Get Involved
+### 🤝 Get involved
 ⭐ Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
 
 🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).

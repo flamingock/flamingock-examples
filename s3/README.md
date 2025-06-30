@@ -1,38 +1,47 @@
 ![Header Image](../misc/logo-with-text.png)
 ___
 
-# Flamingock S3 Example
+# AWS S3 Example
 
-This example demonstrates how to use Flamingock with AWS S3 to manage infrastructure as code. It shows how to create a change unit that creates an S3 bucket in a version-controlled, auditable way.
+## 📖 Example Overview
 
-> **Note**: Flamingock requires an audit repository to maintain its metadata. This example uses the Community compatible edition.
+Welcome to the AWS S3 Example. This demonstrates how to use Flamingock with AWS S3 to manage infrastructure as code.
+It highlights key functionalities such as using ChangeUnits to configure a S3 bucket in a version-controlled, auditable way.
 
-## Prerequisites
+This example has 1 Flamingock Changes:
+1. Creates a new bucked called `flamingock-test-bucket`.
 
-- Java 8 or higher
-- Gradle 7.x+ or Maven 3.6+
+## Table of Contents
+
+1. [⚙️ Prerequisites](#-prerequisites)
+2. [📌 Dependencies](#-dependencies)
+3. [🛠 How to run this example](#-how-to-run-this-example)
+4. [✅ Proven functionalities](#-proven-functionalities)
+
+> **Note**: Flamingock requires a backend to maintain its metadata. This example uses the Flamingock CE with DynamoDB as backend.
+
+## ⚙️ Prerequisites
+
 - Docker (for running LocalStack)
 - LocalStack (for local AWS service emulation)
-- 
-## What This Example Does
 
-This example demonstrates how to use Flamingock to manage changes to AWS S3 infrastructure. It includes:
+## 📌 Dependencies
 
-1. A change unit (`_0001_CreateS3BucketChange.java`) with:
-    - An `@Execution` method that creates a bucket named "flamingock-test-bucket"
-    - A `@RollbackExecution` method that deletes the bucket if execution fails
+This example requires the following dependencies:
+### Flamingock dependencies
+    implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
+    implementation("io.flamingock:flamingock-ce-dynamodb")
+    annotationProcessor("io.flamingock:flamingock-processor")
 
-2. Utility classes:
-    - `S3Util.java`: Configures the AWS S3 client with LocalStack endpoints
-    - `DynamoDBUtil.java`: Configures the DynamoDB client for Flamingock's audit repository
+### AWS SDK dependencies
+    implementation("software.amazon.awssdk:s3:$awsSdkVersion")
+    implementation("software.amazon.awssdk:apache-client:${awsSdkVersion}")
+    implementation("software.amazon.awssdk:dynamodb:$awsSdkVersion")
+    implementation("software.amazon.awssdk:dynamodb-enhanced:$awsSdkVersion")
 
-3. Main application class:
-    - `S3FlamingockExample.java`: Initializes Flamingock and executes the change units
+## 🛠 How to run this example
 
-
-## Running the Example
-
-### 1. Start LocalStack
+### 1. Start localStack
 
 First, start a LocalStack container to emulate AWS services locally:
 ```bash
@@ -43,14 +52,12 @@ You can verify LocalStack is running properly with:
 docker logs flamingock-localstack
 ```
 
-### 2. Run the Example
-
-- Execute the example using **Gradle**:
+### 2. Run the example
 ```bash
 ./gradlew run
 ```
 
-## Validating the Results
+### 3. Validating the results
 
 After running the example, you can verify that the S3 bucket was successfully created by checking the LocalStack endpoint:
    ```bash
@@ -67,14 +74,33 @@ You should see the following XML response, confirming that the bucket exists:
    </ListBucketResult>
    ```
 
-## Troubleshooting
+## ✅ Proven functionalities
 
-- **LocalStack Connection Issues**: Make sure LocalStack is running and accessible at localhost:4566
-- **AWS Credential Errors**: The example uses dummy credentials for LocalStack, which is expected
-- **Bucket Already Exists**: If you run the example multiple times, you may see a warning that the bucket already exists
+This example demonstrates the following functionalities:
+1. Configure an external piece of infrastructure
+   - Demonstrates how to audit changes configuring an external piece of your infrastructure.
 
-## Additional Resources
+___
 
-- [Flamingock Documentation](https://docs.flamingock.io)
-- [AWS S3 SDK Documentation](https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/examples-s3.html)
-- [LocalStack Documentation](https://docs.localstack.cloud)
+### 📢 Contributing
+We welcome contributions! If you have an idea for a new example or improvement to an existing one, feel free to submit a
+pull request. Check out our [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
+
+___
+
+### 🤝 Get involved
+⭐ Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
+
+🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).
+
+💬 Join the discussion in the [Flamingock community](https://github.com/mongock/flamingock-project/discussions).
+
+___
+
+### 📜 License
+This repository is licensed under the [Apache License 2.0](../LICENSE.md).
+
+___
+
+### 🔥 Explore, experiment, and empower your projects with Flamingock!
+Let us know what you think or where you’d like to see Flamingock used next.

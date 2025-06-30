@@ -1,13 +1,12 @@
 ![Header Image](../misc/logo-with-text.png)
 ___
 
-# Couchbase Standalone Example
+# Couchbase Example
 
-## 📖 Example Overview
+## 📖 Example overview
 
-Welcome to the Couchbase Standalone Example. This demonstrates how to use Flamingock with Couchbase in a Java
-standalone application. It highlights key functionalities such as auditing changes, configuring advanced and optional
-Flamingock Builder options, and implementing Pipeline Listeners.
+Welcome to the Couchbase Example. This demonstrates how to use Flamingock with Couchbase in a Java
+standalone application. It highlights key functionalities such as auditing changes using Couchbase as storage backend.
 
 This example has 1 Flamingock Changes:
 1. Initialize an index in a bucket called *bucket*. With Rollback that drops that bucket.
@@ -21,33 +20,34 @@ This example has 1 Flamingock Changes:
 ## Table of Contents
 
 1. [📌 Dependencies](#-dependencies)
-2. [🛠 How to Run this Example](#-how-to-run-this-example)
-3. [✅ Proven Functionalities](#-proven-functionalities)
+2. [🛠 How to run this example](#-how-to-run-this-example)
+3. [✅ Proven functionalities](#-proven-functionalities)
 
 ---
 
 ## 📌 Dependencies
 
 This example requires the following dependencies:
-### Flamingock Dependencies
-    implementation("io.flamingock:flamingock-core:0.0.32-beta")
-    implementation("io.flamingock:couchbase-driver:0.0.32-beta")
+### Flamingock dependencies
+    implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
+    implementation("io.flamingock:flamingock-ce-couchbase")
+    annotationProcessor("io.flamingock:flamingock-processor")
 
 ### Couchbase dependency
     implementation("com.couchbase.client:java-client:$couchbaseVersion")
 
-## 🛠 How to Run this Example
+## 🛠How to run this example
 
 There are two ways to run this example:
 
-### 1. Run Test (Recomended)
+### 1. Running tests (Recomended)
 The recommended method to run this example is by executing the tests, which include a Couchbase TestContainer for testing
 purposes.
 ```shell
 ./gradlew test
 ```
 
-### 2. Run Main Class
+### 2. Running the main class
 To run the main class, ensure you have Couchbase running. Configure the Couchbase client with your settings:
 
 1. Open the main class file
@@ -69,10 +69,6 @@ private static Cluster connect() {
 This example demonstrates the following functionalities:
 1. Auditing Changes with Couchbase
    - Demonstrates how to audit changes using Couchbase as the storage backend.
-2. Configuring advanced and optional Flamingock Builder Options
-   - All configurations are optional and set in the example to their default values, providing flexibility for customization.
-3. Implementing Pipeline Listeners
-   - Illustrates the use of Pipeline Listeners for additional functionality and customization.
 
 ___
 
@@ -82,7 +78,7 @@ pull request. Check out our [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines
 
 ___
 
-### 🤝 Get Involved
+### 🤝 Get involved
 ⭐ Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
 
 🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).

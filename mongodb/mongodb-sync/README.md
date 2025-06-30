@@ -1,13 +1,12 @@
 ![Header Image](../../misc/logo-with-text.png)
 ___
 
-# MongoDB Standalone Example
+# MongoDB Example
 
 ## 📖 Example Overview
 
 Welcome to the MongoDB Standalone Example. This demonstrates how to use Flamingock with MongoDB in a Java
-standalone application. It highlights key functionalities such as auditing changes, configuring advanced and optional
-Flamingock Builder options, and implementing Pipeline Listeners.
+standalone application. It highlights key functionalities such as auditing changes using MongoDB as storage backend.
 
 This example has 3 Flamingock Changes:
 1. Creates a new collection called *clientCollection*.
@@ -17,37 +16,37 @@ This example has 3 Flamingock Changes:
 ## Table of Contents
 
 1. [📌 Dependencies](#-dependencies)
-2. [🛠 How to Run this Example](#-how-to-run-this-example)
-3. [✅ Proven Functionalities](#-proven-functionalities)
+2. [🛠 How to run this example](#-how-to-run-this-example)
+3. [✅ Proven functionalities](#-proven-functionalities)
 
 ---
 
 ## 📌 Dependencies
 
 This example requires the following dependencies:
-### Flamingock Dependencies
-    implementation("io.flamingock:flamingock-core:0.0.32-beta")
-    implementation("io.flamingock:mongodb-sync-v4-driver:0.0.32-beta")
+### Flamingock dependencies
+    implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
+    implementation ("io.flamingock:flamingock-ce-mongodb-sync")
+    annotationProcessor("io.flamingock:flamingock-processor")
 
-### MongoDB Dependencies
-    implementation("org.mongodb:mongodb-driver-sync:4.3.3")
-    implementation("org.mongodb:mongodb-driver-core:4.3.3")
-    implementation("org.mongodb:bson:4.3.3")
+### MongoDB dependencies
+    implementation("org.mongodb:mongodb-driver-sync:5.2.0")
+    implementation("org.mongodb:mongodb-driver-core:5.2.0")
+    implementation("org.mongodb:bson:5.2.0")
 
-## 🛠 How to Run this Example
+## 🛠 How to run this example
 
 There are two ways to run this example:
 
-### 1. Run Test (Recomended)
+### 1. Running tests (Recomended)
 The recommended method to run this example is by executing the tests, which include a MongoDB TestContainer for testing
 purposes.
 ```shell
 ./gradlew test
 ```
 
-### 2. Run Main Class
+### 2. Running the main class
 To run the main class, ensure you have MongoDB running. Configure the MongoDB client with your settings:
-
 1. Open the main class file
 2. Change the MongoDB endpoint with your own:
 ```java
@@ -66,10 +65,6 @@ public static void main(String[] args) {
 This example demonstrates the following functionalities:
 1. Auditing Changes with MongoDB
    - Demonstrates how to audit changes using MongoDB as the storage backend.
-2. Configuring advanced and optional Flamingock Builder Options
-   - All configurations are optional and set in the example to their default values, providing flexibility for customization.
-3. Implementing Pipeline Listeners
-   - Illustrates the use of Pipeline Listeners for additional functionality and customization.
 
 ___
 
@@ -79,7 +74,7 @@ pull request. Check out our [CONTRIBUTING.md](../../CONTRIBUTING.md) for guideli
 
 ___
 
-### 🤝 Get Involved
+### 🤝 Get involved
 ⭐ Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
 
 🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).

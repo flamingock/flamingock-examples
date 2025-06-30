@@ -1,30 +1,34 @@
 # Steeps for GraalVM support
 
-1. Add graalVM dependency and annotation processor
+## 1. Add graalVM dependency and annotation processor
 ```xml
+<dependencyManagement>
+   <dependencies>
+      <dependency>
+         <groupId>io.flamingock</groupId>
+         <artifactId>flamingock-ce-bom</artifactId>
+         <version>${flamingockVersion}</version>
+         <type>pom</type>
+         <scope>import</scope>
+      </dependency>
+   </dependencies>
+</dependencyManagement>
+
 <dependencies>
     <dependency>
         <groupId>io.flamingock</groupId>
-        <artifactId>mongodb-sync-v4-driver</artifactId>
-        <version>${flamingock.version}</version>
-    </dependency>
-
-    <dependency>
-        <groupId>io.flamingock</groupId>
-        <artifactId>flamingock-core</artifactId>
-        <version>${flamingock.version}</version>
+        <artifactId>flamingock-ce-mongodb-sync</artifactId>
     </dependency>
 
     <dependency>
         <groupId>io.flamingock</groupId>
         <artifactId>flamingock-graalvm</artifactId>
-        <version>${flamingock.version}</version>
     </dependency>
 </dependencies>
 
 ```
 
-2. Add annotation processor
+## 2. Add annotation processor
 ```xml
 <build>
     <plugins>
@@ -36,7 +40,7 @@
                 <annotationProcessorPaths>
                     <path>
                         <groupId>io.flamingock</groupId>
-                        <artifactId>flamingock-core</artifactId>
+                        <artifactId>flamingock-processor</artifactId>
                         <version>${flamingock.version}</version>
                     </path>
                 </annotationProcessorPaths>
@@ -46,7 +50,7 @@
 </build>
 ```
 
-3. Add the configuration file `resource-config.json` to the following path:
+## 3. Add the configuration file `resource-config.json` to the following path:
    ```
    src/main/resources/META-INF/native-image/${GROUP_ID}/${ARTIFACT_ID}/
    ```
@@ -64,14 +68,14 @@
 ```
 GraalVM will automatically detect and use this configuration during native image generation.
 
-4. Build application
+## 4. Build application
 ```shell
 ./mvnw clean package
 ```
 
-5Create Native Image
+## 5. Create Native Image
 
-### Native Image Build Parameters
+### Native image build parameters
 - `--no-fallback`: Ensures the build fails if native image generation isn't possible, rather than creating a fallback JAR. This is important for catching configuration issues early.
 
 - `--features=io.flamingock.graalvm.RegistrationFeature`: Registers Flamingock's custom feature for native image generation. This feature handles the registration of necessary classes and resources.
@@ -92,7 +96,7 @@ Here's a minimal setup to build the native image:
   -jar build/libs/graalvm-0.0.1-SNAPSHOT.jar
 ```
 
-6Run native image
+## 6. Run native image
 ```shell
 ./graalvm-1.0-SNAPSHOT
 ```

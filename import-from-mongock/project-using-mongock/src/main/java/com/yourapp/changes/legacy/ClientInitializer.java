@@ -1,4 +1,4 @@
-package legacy.mongock.changes;
+package com.yourapp.changes.legacy;
 
 
 import com.mongodb.client.MongoDatabase;

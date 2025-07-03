@@ -1,4 +1,4 @@
-package legacy.mongock;
+package com.yourapp;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -16,7 +16,7 @@ public class MongockApplication {
         try(MongoClient mongoClient = MongoClients.create(build)) {
             MongockStandalone.builder()
                     .setDriver(MongoSync4Driver.withDefaultLock(mongoClient, "test"))
-                    .addMigrationScanPackage("legacy.mongock.changes")
+                    .addMigrationScanPackage("com.yourapp.changes.legacy")
                     .buildRunner()
                     .execute();
         }

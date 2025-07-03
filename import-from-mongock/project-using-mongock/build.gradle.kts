@@ -20,11 +20,11 @@ val mongodbVersion = "5.2.0"
 
 dependencies {
 
-//    Mongock BOM
+//    Mongock
     implementation(platform("io.mongock:mongock-bom:5.5.0"))
     implementation("io.mongock:mongock-standalone")
     implementation("io.mongock:mongodb-sync-v4-driver")
-    implementation("io.mongock:mongock-standalone")
+
 
 
 //    MongoDB dependencies

@@ -22,7 +22,7 @@ The migration process involves copying your existing Mongock change units to the
 5. [Step 3: Create system stage](#step-3-create-system-stage)
 6. [Step 4: Configure pipeline](#step-4-configure-pipeline)
 7. [Run and validate](#run-and-validate)
-8. [Proven functionalities](#proven-functionalities)
+8. [Proven functionalities](#-proven-functionalities)
 
 ---
 
@@ -271,7 +271,7 @@ cd ../flamingock-imported
 
 Both should produce the same database changes, demonstrating successful migration.
 
-## Proven functionalities
+## ✅ Proven functionalities
 
 This example demonstrates:
 
@@ -288,26 +288,25 @@ For detailed migration instructions, visit our [technical documentation on Mongo
 
 ---
 
-### Contributing
+### 📢 Contributing
 We welcome contributions! If you have an idea for a new example or improvement to an existing one, feel free to submit a
 pull request. Check out our [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
 
----
+___
 
-### Get involved
-Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
+### 🤝 Get involved
+⭐ Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
 
-Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).
+🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).
 
-Join the discussion in the [Flamingock community](https://github.com/mongock/flamingock-project/discussions).
+💬 Join the discussion in the [Flamingock community](https://github.com/mongock/flamingock-project/discussions).
 
----
+___
 
-### License
+### 📜 License
 This repository is licensed under the [Apache License 2.0](../LICENSE.md).
 
----
+___
 
-### Explore, experiment, and empower your projects with Flamingock!
-Let us know what you think or where you'd like to see Flamingock used next. your projects with Flamingock!
-Let us know what you think or where you'd like to see Flamingock used next.
+### 🔥 Explore, experiment, and empower your projects with Flamingock!
+Let us know what you think or where you’d like to see Flamingock used next.

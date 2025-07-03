@@ -26,7 +26,7 @@ dependencies {
     // AWS SDK Dependencies
     implementation("software.amazon.awssdk:s3:$awsSdkVersion")
     implementation("software.amazon.awssdk:apache-client:${awsSdkVersion}")
-    implementation("software.amazon.awssdk:dynamodb:$awsSdkVersion")  // Add this line
+    implementation("software.amazon.awssdk:dynamodb:$awsSdkVersion")
     implementation("software.amazon.awssdk:dynamodb-enhanced:$awsSdkVersion")
     implementation("software.amazon.awssdk:url-connection-client:$awsSdkVersion")
 

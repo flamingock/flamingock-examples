@@ -1,18 +1,18 @@
 # Steeps for GraalVM support with Gradle
 
-1. Add flamingock dependencies 
+## 1. Add flamingock dependencies 
 ```kotlin
-implementation("io.flamingock:mongodb-sync-v4-driver:$flamingockVersion")
-implementation("io.flamingock:flamingock-core:$flamingockVersion")
-implementation("io.flamingock:flamingock-graalvm:$flamingockVersion")
+implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
+implementation ("io.flamingock:flamingock-ce-mongodb-sync")
+implementation("io.flamingock:flamingock-graalvm")
 ```
 
-2. Add flamingock annotation processor
+## 2. Add flamingock annotation processor
 ```kotlin
-annotationProcessor("io.flamingock:flamingock-core:$flamingockVersion")
+annotationProcessor("io.flamingock:flamingock-processor")
 ```
 
-3. Add plugin manager to `settings.gradle.kts`
+## 3. Add plugin manager to `settings.gradle.kts`
 ```kotlin
 pluginManagement {
     repositories {
@@ -23,7 +23,7 @@ pluginManagement {
 }
 ```
 
-4. Add the configuration file `resource-config.json` to the following path:
+## 4. Add the configuration file `resource-config.json` to the following path:
    ```
    src/main/resources/META-INF/native-image/${GROUP_ID}/${ARTIFACT_ID}/
    ```
@@ -42,12 +42,12 @@ pluginManagement {
    GraalVM will automatically detect and use this configuration during native image generation.
 
 
-5. Build application
+## 5. Build application
 ```shell
 ./gradlew clean build
 ```
 
-6. Create Native Image
+## 6. Create Native Image
 
 ### Native Image Build Parameters
 - `--no-fallback`: Ensures the build fails if native image generation isn't possible, rather than creating a fallback JAR. This is important for catching configuration issues early.
@@ -70,7 +70,7 @@ Here's a minimal setup to build the native image:
   -jar build/libs/graalvm-0.0.1-SNAPSHOT.jar
 ```
 
-7. Run native image
+## 7. Run native image
 ```shell
 ./flamingock-graalvm--1.0-SNAPSHOT
 ```

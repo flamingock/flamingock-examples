@@ -62,9 +62,7 @@ public static void main(String[] args) {
 
 ## Proven functionalities
 
-This example demonstrates the following functionalities:
-1. Auditing Changes with MongoDB
-   - Demonstrates how to audit changes using MongoDB as the storage backend.
+This example demonstrates how to audit Changes with MongoDB as the storage backend.
 
 ___
 

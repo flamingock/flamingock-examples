@@ -66,9 +66,7 @@ For this option, you'll need to configure your own DynamoDB connection:
 
 ## Proven functionalities
 
-This example demonstrates the following functionalities:
-1. Auditing Changes with DynamoDB
-   - Demonstrates how to audit changes using DynamoDB as the storage backend.
+This example demonstrates how to audit changes using DynamoDB as the storage backend.
 
 ___
 

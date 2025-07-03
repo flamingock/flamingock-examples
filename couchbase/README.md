@@ -66,9 +66,7 @@ private static Cluster connect() {
 
 ## Proven functionalities
 
-This example demonstrates the following functionalities:
-1. Auditing Changes with Couchbase
-   - Demonstrates how to audit changes using Couchbase as the storage backend.
+This example demonstrates how to audit changes using Couchbase as the storage backend.
 
 ___
 

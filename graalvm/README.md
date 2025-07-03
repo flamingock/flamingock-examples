@@ -92,9 +92,7 @@ Refer to the setup instructions for your chosen build tool:
 
 ## Proven functionalities
 
-This example demonstrates the following functionalities:
-1. Using Flamingock in a Graalvm project
-  - Demonstrates how integrate Flamingock in a project that uses Graalvm.
+This example demonstrates how to use Flamingock in a Graalvm project.
 
 ___
 

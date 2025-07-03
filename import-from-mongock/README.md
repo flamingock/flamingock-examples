@@ -251,17 +251,17 @@ After you’ve updated your project and pipeline, run Flamingock as usual:
 After running Flamingock, you should see output similar to:
 ```
 Stage: flamingock-system-stage
-	0001) id: migration-from-mongock 
+	0001) id: migration-from-mongock
 		Started				✅ - OK
 		Executed			✅ - OK
 		Audited[execution]	        ✅ - OK
-	
+
 Stage: New MongoDB changes
-	0001) id: create-users-collection-with-index 
+	0001) id: create-users-collection-with-index
 		Started				✅ - OK
 		Executed			✅ - OK
 		Audited[execution]	        ✅ - OK
-	0002) id: seed-users 
+	0002) id: seed-users
 		Started				✅ - OK
 		Executed			✅ - OK
 		Audited[execution]	        ✅ - OK
@@ -284,7 +284,7 @@ To validate the migration worked correctly, you can compare with the original Mo
 cd mongock-legacy
 ./gradlew run
 
-# Run migrated Flamingock project  
+# Run migrated Flamingock project
 cd ../flamingock-imported
 ./gradlew run
 ```

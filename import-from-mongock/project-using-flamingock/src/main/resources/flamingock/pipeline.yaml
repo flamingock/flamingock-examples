@@ -1,9 +1,0 @@
-pipeline:
-  systemStage:
-    sourcesPackage: "com.yourapp.changes.system"
-  stages:
-    - name: "legacy-stage"
-      type: "legacy"
-      sourcesPackage: "com.yourapp.changes.legacy"
-    - name: "New MongoDB changes"
-      sourcesPackage: "com.yourapp.changes.mongodb"

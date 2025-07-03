@@ -7,7 +7,7 @@ import com.mongodb.client.MongoClients;
 import io.mongock.driver.mongodb.sync.v4.driver.MongoSync4Driver;
 import io.mongock.runner.standalone.MongockStandalone;
 
-public class MongockApplication {
+public class YourApplication {
 
     public static void main(String[] args) {
         MongoClientSettings build = MongoClientSettings.builder()
@@ -16,7 +16,7 @@ public class MongockApplication {
         try(MongoClient mongoClient = MongoClients.create(build)) {
             MongockStandalone.builder()
                     .setDriver(MongoSync4Driver.withDefaultLock(mongoClient, "test"))
-                    .addMigrationScanPackage("com.yourapp.changes.legacy")
+                    .addMigrationScanPackage("com.yourapp.mongock")
                     .buildRunner()
                     .execute();
         }

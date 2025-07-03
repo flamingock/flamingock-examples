@@ -1,4 +1,4 @@
-package com.yourapp.changes.legacy;
+package com.yourapp.mongock;
 
 
 //import io.mongock.api.annotations.ChangeUnit;

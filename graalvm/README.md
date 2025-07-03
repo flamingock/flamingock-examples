@@ -3,15 +3,15 @@ ___
 
 # Flamingock with GraalVM Example
 
-## 📖 Example Overview
+## Example Overview
 
-This project demonstrates how to integrate [Flamingock](https://github.com/mongock/flamingock-project) and 
+This project demonstrates how to integrate [Flamingock](https://github.com/mongock/flamingock-project) and
 GraalVM native image, offering significantly faster startup times and reduced memory footprint compared to traditional JVM applications. It includes examples for both Maven and Gradle.
 
 > **Note**: This is a simplified example to demonstrate Flamingock integration with GraalVM native image. For production applications, please refer to the official GraalVM documentation for comprehensive native image configuration guidelines.
 
 
-## 🤔 Why GraalVM with Flamingock?
+## Why GraalVM with Flamingock?
 
 - **Reduced Startup Time**: GraalVM native images compile your application ahead-of-time into a standalone executable, resulting in near-instant startup times. This is particularly beneficial for cloud-native applications and microservices.
 - **Lower Memory Footprint**: Native images typically consume less memory compared to JVM-based applications, allowing for more efficient resource utilization.
@@ -19,13 +19,13 @@ GraalVM native image, offering significantly faster startup times and reduced me
 
 ## Table of Contents
 
-1. [⚙️ Prerequisites](#-prerequisites)
-2. [📌 Installation](#-installation)
-3. [🛠 Setup](#-setup)
-4. [🤕 Common issues and solutions](#-common-issues-and-solutions)
-5. [✅ Proven functionalities](#-proven-functionalities)
+1. [Prerequisites](#prerequisites)
+2. [Installation](#installation)
+3. [Setup](#setup)
+4. [Common issues and solutions](#common-issues-and-solutions)
+5. [Proven functionalities](#proven-functionalities)
 
-## ⚙️ Prerequisites
+## Prerequisites
 
 Before you start, ensure you have the following installed:
 
@@ -35,7 +35,7 @@ Before you start, ensure you have the following installed:
 - **Maven and Gradle**: Both are supported, and you can choose your preferred build tool.
 - **Docker**: If you plan to use a Docker-based native image build.
 
-## 📌 Installation
+## Installation
 
 ### 1. Install GraalVM using SDKMAN (Recommended)
 
@@ -70,13 +70,13 @@ gu install native-image
 native-image --version
 ```
 
-## 🛠 Setup
+## Setup
 Refer to the setup instructions for your chosen build tool:
 
 - [Maven Setup](SETUP_MAVEN.md)
 - [Gradle Setup](SETUP_GRADLE.md)
 
-## 🤕 Common issues and solutions
+## Common issues and solutions
 
 - **`java.lang.UnsupportedClassVersionError`**:
   - **Problem**: This error typically occurs when the class file is compiled with a newer JDK version than the one used at runtime.
@@ -90,7 +90,7 @@ Refer to the setup instructions for your chosen build tool:
   - **Problem**: Native image generation may fail due to various reasons, such as unsupported features or incorrect configurations.
   - **Solution**: Consult the GraalVM documentation and error messages for guidance. Ensure that your application is compatible with native image compilation.
 
-## ✅ Proven functionalities
+## Proven functionalities
 
 This example demonstrates the following functionalities:
 1. Using Flamingock in a Graalvm project
@@ -98,13 +98,13 @@ This example demonstrates the following functionalities:
 
 ___
 
-### 📢 Contributing
+### Contributing
 We welcome contributions! If you have an idea for a new example or improvement to an existing one, feel free to submit a
 pull request. Check out our [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
 
 ___
 
-### 🤝 Get involved
+### Get involved
 ⭐ Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
 
 🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).
@@ -113,10 +113,10 @@ ___
 
 ___
 
-### 📜 License
+### License
 This repository is licensed under the [Apache License 2.0](../LICENSE.md).
 
 ___
 
-### 🔥 Explore, experiment, and empower your projects with Flamingock!
+### Explore, experiment, and empower your projects with Flamingock!
 Let us know what you think or where you’d like to see Flamingock used next.

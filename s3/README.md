@@ -3,7 +3,7 @@ ___
 
 # AWS S3 Example
 
-## 📖 Example Overview
+## Example Overview
 
 Welcome to the AWS S3 Example. This demonstrates how to use Flamingock with AWS S3 to manage infrastructure as code.
 It highlights key functionalities such as using ChangeUnits to configure a S3 bucket in a version-controlled, auditable way.
@@ -13,19 +13,19 @@ This example has 1 Flamingock Changes:
 
 ## Table of Contents
 
-1. [⚙️ Prerequisites](#-prerequisites)
-2. [📌 Dependencies](#-dependencies)
-3. [🛠 How to run this example](#-how-to-run-this-example)
-4. [✅ Proven functionalities](#-proven-functionalities)
+1. [Prerequisites](#prerequisites)
+2. [Dependencies](#dependencies)
+3. [How to run this example](#how-to-run-this-example)
+4. [Proven functionalities](#proven-functionalities)
 
 > **Note**: Flamingock requires a backend to maintain its metadata. This example uses the Flamingock CE with DynamoDB as backend.
 
-## ⚙️ Prerequisites
+## Prerequisites
 
 - Docker (for running LocalStack)
 - LocalStack (for local AWS service emulation)
 
-## 📌 Dependencies
+## Dependencies
 
 This example requires the following dependencies:
 ### Flamingock dependencies
@@ -39,7 +39,7 @@ This example requires the following dependencies:
     implementation("software.amazon.awssdk:dynamodb:$awsSdkVersion")
     implementation("software.amazon.awssdk:dynamodb-enhanced:$awsSdkVersion")
 
-## 🛠 How to run this example
+## How to run this example
 
 ### 1. Start localStack
 
@@ -61,7 +61,7 @@ docker logs flamingock-localstack
 
 After running the example, you can verify that the S3 bucket was successfully created by checking the LocalStack endpoint:
    ```bash
-   curl http://localhost:4566/flamingock-test-bucket 
+   curl http://localhost:4566/flamingock-test-bucket
    ```
 You should see the following XML response, confirming that the bucket exists:
    ```xml
@@ -74,7 +74,7 @@ You should see the following XML response, confirming that the bucket exists:
    </ListBucketResult>
    ```
 
-## ✅ Proven functionalities
+## Proven functionalities
 
 This example demonstrates the following functionalities:
 1. Configure an external piece of infrastructure
@@ -82,13 +82,13 @@ This example demonstrates the following functionalities:
 
 ___
 
-### 📢 Contributing
+### Contributing
 We welcome contributions! If you have an idea for a new example or improvement to an existing one, feel free to submit a
 pull request. Check out our [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
 
 ___
 
-### 🤝 Get involved
+### Get involved
 ⭐ Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
 
 🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).
@@ -97,10 +97,10 @@ ___
 
 ___
 
-### 📜 License
+### License
 This repository is licensed under the [Apache License 2.0](../LICENSE.md).
 
 ___
 
-### 🔥 Explore, experiment, and empower your projects with Flamingock!
+### Explore, experiment, and empower your projects with Flamingock!
 Let us know what you think or where you’d like to see Flamingock used next.

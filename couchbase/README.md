@@ -3,7 +3,7 @@ ___
 
 # Couchbase Example
 
-## 📖 Example overview
+## Example overview
 
 Welcome to the Couchbase Example. This demonstrates how to use Flamingock with Couchbase in a Java
 standalone application. It highlights key functionalities such as auditing changes using Couchbase as storage backend.
@@ -19,13 +19,13 @@ This example has 1 Flamingock Changes:
 
 ## Table of Contents
 
-1. [📌 Dependencies](#-dependencies)
-2. [🛠 How to run this example](#-how-to-run-this-example)
-3. [✅ Proven functionalities](#-proven-functionalities)
+1. [Dependencies](#dependencies)
+2. [How to run this example](#how-to-run-this-example)
+3. [Proven functionalities](#proven-functionalities)
 
 ---
 
-## 📌 Dependencies
+## Dependencies
 
 This example requires the following dependencies:
 ### Flamingock dependencies
@@ -36,7 +36,7 @@ This example requires the following dependencies:
 ### Couchbase dependency
     implementation("com.couchbase.client:java-client:$couchbaseVersion")
 
-## 🛠How to run this example
+## How to run this example
 
 There are two ways to run this example:
 
@@ -64,7 +64,7 @@ private static Cluster connect() {
 ./gradlew run
 ```
 
-## ✅ Proven functionalities
+## Proven functionalities
 
 This example demonstrates the following functionalities:
 1. Auditing Changes with Couchbase
@@ -72,13 +72,13 @@ This example demonstrates the following functionalities:
 
 ___
 
-### 📢 Contributing
+### Contributing
 We welcome contributions! If you have an idea for a new example or improvement to an existing one, feel free to submit a
 pull request. Check out our [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
 
 ___
 
-### 🤝 Get involved
+### Get involved
 ⭐ Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
 
 🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).
@@ -87,10 +87,10 @@ ___
 
 ___
 
-### 📜 License
+### License
 This repository is licensed under the [Apache License 2.0](../LICENSE.md).
 
 ___
 
-### 🔥 Explore, experiment, and empower your projects with Flamingock!
+### Explore, experiment, and empower your projects with Flamingock!
 Let us know what you think or where you’d like to see Flamingock used next.

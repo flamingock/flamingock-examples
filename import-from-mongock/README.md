@@ -176,7 +176,7 @@ public class FlamingockApplication {
         try (MongoClient mongoClient = MongoClients.create(build)) {
             Flamingock.builder()
                     .addDependency(mongoClient)
-                    .addDependency(mongoClient.getDatabase("test"))
+                    .addDependency(mongoDatabase)
                     .build()
                     .run();
         }

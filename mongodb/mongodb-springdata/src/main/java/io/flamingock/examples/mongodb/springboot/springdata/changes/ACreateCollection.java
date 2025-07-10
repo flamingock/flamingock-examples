@@ -20,7 +20,7 @@ import io.flamingock.api.annotations.ChangeUnit;
 import io.flamingock.api.annotations.Execution;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-@ChangeUnit(id = "create-collection", order = "2", transactional = false)
+@ChangeUnit(id = "create-collection", order = "0001", transactional = false)
 public class ACreateCollection {
 
     @Execution

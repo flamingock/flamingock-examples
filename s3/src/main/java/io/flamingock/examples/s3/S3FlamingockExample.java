@@ -16,6 +16,8 @@
 
 package io.flamingock.examples.s3;
 
+import io.flamingock.api.annotations.EnableFlamingock;
+import io.flamingock.api.annotations.Stage;
 import io.flamingock.community.Flamingock;
 import io.flamingock.examples.s3.util.DynamoDBUtil;
 import io.flamingock.examples.s3.util.S3Util;
@@ -24,6 +26,11 @@ import software.amazon.awssdk.services.s3.S3Client;
 
 import java.net.URISyntaxException;
 
+@EnableFlamingock(
+    stages = {
+        @Stage(name = "s3-initialisation", location = "io.flamingock.examples.s3.changes")
+    }
+)
 public class S3FlamingockExample {
 
     public static void main(String[] args) throws URISyntaxException {

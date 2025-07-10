@@ -9,18 +9,17 @@ group = "io.flamingock.examples"
 version = "0.0.1-SNAPSHOT"
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
 }
 
-val mongodbVersion = "5.2.0" //TODO: we need to support previous versions too
+val mongodbVersion = "5.2.0"
 val flamingockVersion = flamingockVersion()
 dependencies {
     implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
-    implementation ("io.flamingock:flamingock-ce-mongodb-sync:${flamingockVersion}") //TODO: remove $flamingockVersion
-    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion") //TODO: remove $flamingockVersion
-    implementation("io.flamingock:flamingock-graalvm:$flamingockVersion") //TODO: remove $flamingockVersion
-
+    implementation ("io.flamingock:flamingock-ce-mongodb-sync")
+    implementation("io.flamingock:flamingock-graalvm")
+    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
 
     implementation("org.mongodb:mongodb-driver-sync:$mongodbVersion")
 

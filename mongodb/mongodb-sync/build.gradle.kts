@@ -7,8 +7,8 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
 }
 
 group = "io.flamingock"
@@ -16,13 +16,13 @@ version = "1.0-SNAPSHOT"
 
 val flamingockVersion = flamingockVersion()
 
-val mongodbVersion = "5.2.0" //TODO: we need to support previous versions too
+val mongodbVersion = "5.2.0"
 
 dependencies {
 //    Flamingock Dependencies
     implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
-    implementation ("io.flamingock:flamingock-ce-mongodb-sync:$flamingockVersion") //TODO: remove $flamingockVersion
-    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion") //TODO: remove $flamingockVersion
+    implementation("io.flamingock:flamingock-ce-mongodb-sync")
+    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
 
 //    MongoDB dependencies
     implementation("org.mongodb:mongodb-driver-sync:$mongodbVersion")

@@ -7,8 +7,8 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
 }
 
 group = "io.flamingock"
@@ -21,7 +21,7 @@ dependencies {
 //    Flamingock Dependencies
     implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
     implementation("io.flamingock:flamingock-ce-dynamodb")
-    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion") //TODO: remove $flamingockVersion
+    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
 
 //    DynamoDB dependencies from Amazon
     implementation("software.amazon.awssdk:dynamodb-enhanced:$awsSdkVersion")

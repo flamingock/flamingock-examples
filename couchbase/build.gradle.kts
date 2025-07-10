@@ -7,8 +7,8 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
 }
 
 group = "io.flamingock"
@@ -22,7 +22,7 @@ dependencies {
 //    Flamingock Dependencies
     implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
     implementation("io.flamingock:flamingock-ce-couchbase")
-    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion") //TODO: remove $flamingockVersion
+    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
 
 //    Couchbase dependency
     implementation("com.couchbase.client:java-client:$couchbaseVersion")

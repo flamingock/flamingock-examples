@@ -10,8 +10,8 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
 }
 
 group = "io.flamingock"
@@ -22,9 +22,9 @@ val flamingockVersion = flamingockVersion()
 dependencies {
 //    Flamingock Dependencies
     implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
-    implementation ("io.flamingock:flamingock-ce-mongodb-springdata:$flamingockVersion") //TODO: remove $flamingockVersion
-    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion") //TODO: remove $flamingockVersion
-    implementation("io.flamingock:flamingock-springboot-integration:$flamingockVersion") //TODO: remove $flamingockVersion
+    implementation("io.flamingock:flamingock-ce-mongodb-springdata")
+    implementation("io.flamingock:flamingock-springboot-integration")
+    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
 
 //    Springboot dependency
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -35,8 +35,6 @@ dependencies {
 //    implementation("org.springframework.data:spring-data-mongodb:[4.0.0,5.0.0)")
 
 //    Others dependencies needed for this example
-//    implementation("org.slf4j:slf4j-simple:2.0.6")
-
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 

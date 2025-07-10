@@ -7,8 +7,8 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
 }
 
 group = "io.flamingock"
@@ -20,11 +20,10 @@ val mongodbVersion = "5.2.0"
 
 dependencies {
     //Flamingock dependencies
-    //Core
+    implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
+    implementation("io.flamingock:flamingock-ce-mongodb-sync")
+    implementation("io.flamingock:flamingock-mongodb-sync-template")
     annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
-    implementation("io.flamingock:flamingock-ce-mongodb-sync:$flamingockVersion")
-    //extras
-    implementation("io.flamingock:flamingock-mongodb-sync-template:$flamingockVersion")
 
 
 //    MongoDB dependencies
@@ -45,7 +44,7 @@ dependencies {
 }
 
 application {
-    mainClass = "com.yourapp.YourApp"
+    mainClass = "com.yourapp.YourApplication"
 }
 
 tasks.withType<Test>().configureEach {

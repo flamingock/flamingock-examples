@@ -50,17 +50,14 @@
 </build>
 ```
 
-## 3. Add the configuration file `resource-config.json` to the following path:
-   ```
-   src/main/resources/META-INF/native-image/${GROUP_ID}/${ARTIFACT_ID}/
-   ```
+## 3. Add the configuration file `resource-config.json` in your project root:
    With the following content:
 ```json
 {
   "resources": {
     "includes": [
       {
-        "pattern": "META-INF/flamingock-metadata.json",
+        "pattern": "META-INF/flamingock/metadata.json"
       }
     ],
   },

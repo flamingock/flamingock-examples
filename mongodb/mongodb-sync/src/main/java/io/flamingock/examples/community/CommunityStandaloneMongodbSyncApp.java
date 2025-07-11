@@ -21,6 +21,8 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
+import io.flamingock.api.annotations.EnableFlamingock;
+import io.flamingock.api.annotations.Stage;
 import io.flamingock.community.Flamingock;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
@@ -29,6 +31,11 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
+@EnableFlamingock(
+    stages = {
+        @Stage(name = "mongodb-initialisation", location = "io.flamingock.examples.community.changes")
+    }
+)
 public class CommunityStandaloneMongodbSyncApp {
 
 
@@ -42,7 +49,6 @@ public class CommunityStandaloneMongodbSyncApp {
     public  void run(MongoClient mongoClient, String databaseName) {
         Flamingock.builder()
                 .addDependency(mongoClient)
-                .addDependency("mongodb.databaseName", databaseName)
                 .addDependency(mongoClient.getDatabase(databaseName))
                 //Build and Run
                 .build()

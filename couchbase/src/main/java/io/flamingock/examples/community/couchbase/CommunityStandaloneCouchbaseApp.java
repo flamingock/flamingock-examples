@@ -18,8 +18,15 @@ package io.flamingock.examples.community.couchbase;
 
 import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.Collection;
+import io.flamingock.api.annotations.EnableFlamingock;
+import io.flamingock.api.annotations.Stage;
 import io.flamingock.community.Flamingock;
 
+@EnableFlamingock(
+    stages = {
+        @Stage(name = "couchbase-initialisation", location = "io.flamingock.examples.community.couchbase.changes")
+    }
+)
 public class CommunityStandaloneCouchbaseApp {
 
     private static final String BUCKET_NAME = "bucket";
@@ -34,7 +41,6 @@ public class CommunityStandaloneCouchbaseApp {
                 .addDependency(cluster)
                 .addDependency(collection)
                 // These configurations are optional and set to their default values
-                .setTrackIgnored(true)
                 .disableTransaction()
                 //Build and Run
                 .build()

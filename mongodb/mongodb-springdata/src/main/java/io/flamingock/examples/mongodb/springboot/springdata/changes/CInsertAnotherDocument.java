@@ -21,7 +21,7 @@ import io.flamingock.api.annotations.Execution;
 import io.flamingock.examples.mongodb.springboot.springdata.client.Client;
 import io.flamingock.examples.mongodb.springboot.springdata.client.ClientRepository;
 
-@ChangeUnit( id="insert-another-document" , order = "4")
+@ChangeUnit( id="insert-another-document" , order = "0003")
 public class CInsertAnotherDocument {
 
     @Execution

@@ -16,10 +16,8 @@
 
 package io.flamingock.examples.mongodb.springboot.springdata;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
+import io.flamingock.api.annotations.EnableFlamingock;
+import io.flamingock.api.annotations.Stage;
 import io.flamingock.examples.mongodb.springboot.springdata.client.ClientRepository;
 import io.flamingock.examples.mongodb.springboot.springdata.events.PipelineCompletedListener;
 import io.flamingock.examples.mongodb.springboot.springdata.events.PipelineFailedListener;
@@ -27,7 +25,6 @@ import io.flamingock.examples.mongodb.springboot.springdata.events.PipelineStart
 import io.flamingock.examples.mongodb.springboot.springdata.events.StageCompletedListener;
 import io.flamingock.examples.mongodb.springboot.springdata.events.StageFailedListener;
 import io.flamingock.examples.mongodb.springboot.springdata.events.StageStartedListener;
-import io.flamingock.springboot.EnableFlamingock;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +32,11 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 
 //Set Flamingock On
-@EnableFlamingock
+@EnableFlamingock(
+    stages = {
+        @Stage(name = "mongodb-initialisation", location = "io.flamingock.examples.mongodb.springboot.springdata.changes")
+    }
+)
 @SpringBootApplication
 @EnableMongoRepositories(basePackageClasses = ClientRepository.class)
 public class MongodbSpringbootSpringdata {

@@ -17,10 +17,17 @@
 package io.flamingock.examples.dynamodb.standalone;
 
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import io.flamingock.api.annotations.EnableFlamingock;
+import io.flamingock.api.annotations.Stage;
 import io.flamingock.community.Flamingock;
 
 import java.net.URISyntaxException;
 
+@EnableFlamingock(
+    stages = {
+        @Stage(name = "dynamodb-initialisation", location = "io.flamingock.examples.dynamodb.standalone.changes")
+    }
+)
 public class CommunityStandaloneDynamoDBApp {
 
     public static void main(String[] args) throws URISyntaxException {

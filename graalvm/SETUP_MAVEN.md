@@ -75,7 +75,7 @@ GraalVM will automatically detect and use this configuration during native image
 ### Native image build parameters
 - `--no-fallback`: Ensures the build fails if native image generation isn't possible, rather than creating a fallback JAR. This is important for catching configuration issues early.
 
-- `--features=io.flamingock.graalvm.RegistrationFeature`: Registers Flamingock's custom feature for native image generation. This feature handles the registration of necessary classes and resources. Add more feature classes comma‑separated if you need  build configuration across components.
+- `--features=io.flamingock.graalvm.RegistrationFeature`: [,OtherFeature,...] – Enables Flamingock’s Native Image integration (performs required class & resource registrations). Append additional Graal Feature classes, comma‑separated, to extend Native Image configuration for your own components.
 
 - `-H:+ReportExceptionStackTraces`: Enables detailed stack traces in the native image. This is crucial for debugging issues in the native binary.
 

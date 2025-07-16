@@ -23,7 +23,6 @@ dependencies {
 
     implementation("org.mongodb:mongodb-driver-sync:$mongodbVersion")
 
-    implementation("org.slf4j", "slf4j-api", "2.0.6")
     implementation("org.slf4j:slf4j-simple:2.0.6")
 
 }
@@ -111,3 +110,4 @@ fun flamingockVersion(): String {
     logger.lifecycle("Building with flamingock version${if(passedAsParameter)"[from parameter]" else ""}: $flamingockVersion")
     return flamingockVersion
 }
+

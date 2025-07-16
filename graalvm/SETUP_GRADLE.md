@@ -63,7 +63,7 @@ Here's a minimal setup to build the native image:
   --no-fallback \
   --features=io.flamingock.graalvm.RegistrationFeature \
   -H:+ReportExceptionStackTraces \
-  --initialize-at-build-time=org.slf4j,org.slf4j.impl,org.slf4j.simple \
+  --initialize-at-build-time=org.slf4j.impl,org.slf4j.simple \
   -jar build/libs/graalvm-0.0.1-SNAPSHOT.jar
 ```
 

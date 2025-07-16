@@ -79,17 +79,16 @@ GraalVM will automatically detect and use this configuration during native image
 
 - `-H:+ReportExceptionStackTraces`: Enables detailed stack traces in the native image. This is crucial for debugging issues in the native binary.
 
-- `--initialize-at-build-time`: Run the listed classes’ static initializers while building the image; bake their static state into the binary for faster start & to avoid early runtime reflection/I/O. (Skip for classes needing dynamic runtime config.)
+- `--initialize-at-build-time`: – **Optional**. Build‑time init for listed classes/packages (freeze static state; faster start; avoids early reflection/I/O). Flamingock does not require specific entries. Use only if a library benefits (e.g., logging). Example: --initialize-at-build-time=org.slf4j.impl,org.slf4j.simple. Omit if unsure.
 
-Here's a minimal setup to build the native image:
-
+Here's a minimal setup to build the native image: 
 
 ```shell
  native-image \
   --no-fallback \
   --features=io.flamingock.graalvm.RegistrationFeature \
   -H:+ReportExceptionStackTraces \
-  --initialize-at-build-time=org.slf4j.impl,org.slf4j.simple \
+  --initialize-at-build-time=org.slf4j.simple \
   -jar build/libs/graalvm-0.0.1-SNAPSHOT.jar
 ```
 

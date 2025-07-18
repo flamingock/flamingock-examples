@@ -16,7 +16,7 @@ version = "1.0-SNAPSHOT"
 
 val flamingockVersion = flamingockVersion()
 
-val mongodbVersion = "5.2.0"
+val mongodbVersion = "5.5.1"
 
 dependencies {
 //    Flamingock Dependencies
@@ -35,8 +35,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 
-    testImplementation("org.testcontainers:mongodb:1.18.3")
-    testImplementation("org.testcontainers:junit-jupiter:1.18.3")
+    testImplementation("org.testcontainers:mongodb:1.21.3")
+    testImplementation("org.testcontainers:junit-jupiter:1.21.3")
 }
 
 application {

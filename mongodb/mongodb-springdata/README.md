@@ -39,8 +39,8 @@ This example requires the following dependencies:
 
 Also, it requieres the following plugins:
 ### Springboot plugins
-    id("org.springframework.boot") version "2.7.12"
-    id("io.spring.dependency-management") version "1.1.0"
+    id("org.springframework.boot") version "3.5.3"
+    id("io.spring.dependency-management") version "1.1.7"
 
 ## How to run this example
 

@@ -9,11 +9,12 @@ import io.flamingock.api.annotations.Stage;
 import io.flamingock.community.Flamingock;
 
 import static io.flamingock.api.StageType.LEGACY;
+import static io.flamingock.api.StageType.SYSTEM;
 
 
 @EnableFlamingock(
-        systemStage = "com.yourapp.flamingock.system",
         stages = {
+                @Stage(name = "system-state", type = SYSTEM, location = "com.yourapp.flamingock.system"),
                 @Stage(name = "legacy-stage", type = LEGACY, location = "com.yourapp.mongock"),
                 @Stage(name = "New MongoDB changes", location = "com.yourapp.flamingock.mongodb")
         }

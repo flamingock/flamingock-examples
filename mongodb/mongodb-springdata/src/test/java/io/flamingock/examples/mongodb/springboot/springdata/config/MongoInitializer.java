@@ -31,7 +31,7 @@ import java.util.List;
 public class MongoInitializer  implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     @Container
-    public static final MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:4.0.10"));
+    public static final MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:6"));
 
     @Override
     public void initialize(ConfigurableApplicationContext context) {

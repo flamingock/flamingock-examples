@@ -30,9 +30,9 @@ This example requires the following dependencies:
     annotationProcessor("io.flamingock:flamingock-processor")
 
 ### MongoDB dependencies
-    implementation("org.mongodb:mongodb-driver-sync:5.2.0")
-    implementation("org.mongodb:mongodb-driver-core:5.2.0")
-    implementation("org.mongodb:bson:5.2.0")
+    implementation("org.mongodb:mongodb-driver-sync:5.5.1")
+    implementation("org.mongodb:mongodb-driver-core:5.5.1")
+    implementation("org.mongodb:bson:5.5.1")
 
 ## How to run this example
 

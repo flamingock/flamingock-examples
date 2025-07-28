@@ -21,6 +21,7 @@ dependencies {
     //Flamingock dependencies
     implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
     implementation("io.flamingock:flamingock-ce-mongodb-sync")
+    implementation("io.flamingock:flamingock-mongodb-sync-template")
     implementation("io.flamingock:flamingock-graalvm")
     annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
 

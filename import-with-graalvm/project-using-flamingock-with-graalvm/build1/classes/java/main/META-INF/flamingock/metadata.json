@@ -1,0 +1,127 @@
+{
+  "pipeline" : {
+    "systemStage" : {
+      "name" : "SystemStage",
+      "type" : "SYSTEM",
+      "description" : "Dedicated stage for system-level changes",
+      "sourcesPackage" : "com.yourapp.flamingock.system",
+      "tasks" : [ {
+        "type" : "templatePreviewChangeUnit",
+        "id" : "migration-from-mongock",
+        "order" : "0001",
+        "source" : "MongoDbImporterChangeTemplate",
+        "runAlways" : false,
+        "transactional" : true,
+        "system" : false,
+        "fileName" : "_0001_migration_from_mongock.yaml",
+        "profiles" : [ ],
+        "configuration" : {
+          "origin" : "mongockChangeLog"
+        },
+        "templateName" : "MongoDbImporterChangeTemplate",
+        "sortable" : true
+      } ],
+      "parallel" : false
+    },
+    "stages" : [ {
+      "name" : "legacy-stage",
+      "type" : "LEGACY",
+      "sourcesPackage" : "com.yourapp.mongock",
+      "tasks" : [ {
+        "type" : "codePreviewChangeUnit",
+        "id" : "client-initializer",
+        "order" : "1",
+        "source" : "com.yourapp.mongock.ClientInitializer",
+        "runAlways" : false,
+        "transactional" : true,
+        "system" : false,
+        "executionMethodName" : {
+          "name" : "execution",
+          "parameterTypes" : [ "com.mongodb.client.MongoDatabase" ]
+        },
+        "rollbackMethodName" : {
+          "name" : "rollback",
+          "parameterTypes" : [ ]
+        },
+        "beforeExecutionMethodName" : {
+          "name" : "before",
+          "parameterTypes" : [ ]
+        },
+        "rollbackBeforeExecutionMethodName" : {
+          "name" : "beforeRollback",
+          "parameterTypes" : [ ]
+        },
+        "sortable" : true
+      }, {
+        "type" : "codePreviewChangeUnit",
+        "id" : "client-updater",
+        "order" : "2",
+        "source" : "com.yourapp.mongock.ClientUpdater",
+        "runAlways" : false,
+        "transactional" : true,
+        "system" : false,
+        "executionMethodName" : {
+          "name" : "execution",
+          "parameterTypes" : [ ]
+        },
+        "rollbackMethodName" : {
+          "name" : "rollback",
+          "parameterTypes" : [ ]
+        },
+        "sortable" : true
+      } ],
+      "parallel" : false
+    }, {
+      "name" : "New MongoDB changes",
+      "type" : "DEFAULT",
+      "sourcesPackage" : "com.yourapp.flamingock.mongodb",
+      "tasks" : [ {
+        "type" : "templatePreviewChangeUnit",
+        "id" : "create-users-collection-with-index",
+        "order" : "0001",
+        "source" : "MongoChangeTemplate",
+        "runAlways" : false,
+        "transactional" : true,
+        "system" : false,
+        "fileName" : "_0001_create_users_collections.yaml",
+        "profiles" : [ ],
+        "execution" : {
+          "type" : "createCollection",
+          "collection" : "users"
+        },
+        "templateName" : "MongoChangeTemplate",
+        "sortable" : true
+      }, {
+        "type" : "templatePreviewChangeUnit",
+        "id" : "seed-users",
+        "order" : "0002",
+        "source" : "MongoChangeTemplate",
+        "runAlways" : false,
+        "transactional" : true,
+        "system" : false,
+        "fileName" : "_0002_seed_users.yaml",
+        "profiles" : [ ],
+        "execution" : {
+          "type" : "insert",
+          "collection" : "users",
+          "parameters" : {
+            "documents" : [ {
+              "name" : "Admin",
+              "email" : "admin@company.com",
+              "roles" : [ "superuser" ]
+            }, {
+              "name" : "Backup",
+              "email" : "backup@company.com",
+              "roles" : [ "readonly" ]
+            } ]
+          }
+        },
+        "templateName" : "MongoChangeTemplate",
+        "sortable" : true
+      } ],
+      "parallel" : false
+    } ]
+  },
+  "setup" : "DEFAULT",
+  "pipelineFile" : ""
+}

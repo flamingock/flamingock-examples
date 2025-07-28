@@ -1,0 +1,2 @@
+com.yourapp.mongock.ClientInitializer
+com.yourapp.mongock.ClientUpdater

@@ -81,12 +81,13 @@ GraalVM will automatically detect and use this configuration during native image
 
 - `--initialize-at-build-time`: – **Optional**. Build‑time init for listed classes/packages (freeze static state; faster start; avoids early reflection/I/O). Flamingock does not require specific entries. Use only if a library benefits (e.g., logging). Example: --initialize-at-build-time=org.slf4j.impl,org.slf4j.simple. Omit if unsure.
 
-Here's a minimal setup to build the native image: 
+Here's a minimal setup to build the native image:
 
 ```shell
  native-image \
   --no-fallback \
   --features=io.flamingock.graalvm.RegistrationFeature \
+  -H:ResourceConfigurationFiles=resource-config.json \
   -H:+ReportExceptionStackTraces \
   --initialize-at-build-time=org.slf4j.simple \
   -jar build/libs/graalvm-0.0.1-SNAPSHOT.jar

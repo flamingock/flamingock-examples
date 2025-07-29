@@ -14,9 +14,9 @@ import static io.flamingock.api.StageType.SYSTEM;
 
 @EnableFlamingock(
         stages = {
-                @Stage(name = "system-state", type = SYSTEM, location = "com.yourapp.flamingock.system"),
+                @Stage(name = "system-stage", type = SYSTEM, location = "com.yourapp.flamingock.system"),
                 @Stage(name = "legacy-stage", type = LEGACY, location = "com.yourapp.mongock"),
-                @Stage(name = "New MongoDB changes", location = "com.yourapp.flamingock.mongodb")
+                @Stage(name = "business-rules", location = "com.yourapp.flamingock.mongodb")
         }
 )
 public class YourApplication {

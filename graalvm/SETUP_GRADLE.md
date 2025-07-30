@@ -1,6 +1,6 @@
 # Steeps for GraalVM support with Gradle
 
-## 1. Add flamingock dependencies 
+## 1. Add flamingock dependencies
 ```kotlin
 implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
 implementation ("io.flamingock:flamingock-ce-mongodb-sync")
@@ -63,6 +63,7 @@ Here's a minimal setup to build the native image:
  native-image \
   --no-fallback \
   --features=io.flamingock.graalvm.RegistrationFeature \
+  -H:ResourceConfigurationFiles=resource-config.json \
   -H:+ReportExceptionStackTraces \
   --initialize-at-build-time=org.slf4j.simple \
   -jar build/libs/graalvm-0.0.1-SNAPSHOT.jar

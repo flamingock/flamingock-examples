@@ -10,7 +10,7 @@ This guide demonstrates how to upgrade an existing project from Mongock to Flami
 - **project-using-mongock**: Your original project configured with Mongock and existing ChangeUnits.
 - **project-using-flamingock**: The same project after upgrading dependencies and configuration to Flamingock, now leveraging Flamingock’s enhanced capabilities.
 
-Throughout this guide you’ll update your current project’s ChangeUnits and configuration.
+Throughout this guide, you’ll update your current project’s ChangeUnits and configuration.
 
 ## Table of contents
 
@@ -32,7 +32,7 @@ Upgrading from Mongock to Flamingock is simple and requires minimal code changes
 1. **[Adapt change units](#step-1-adapt-change-units)** – update imports from `io.mongock` to `io.flamingock`.
 2. **[Update application code](#step-2-update-application-code)** – replace the Mongock API calls with the Flamingock builder.
 3. **[Create system stage](#step-3-create-system-stage)** – add a template-based ChangeUnit to import legacy audit entries.
-4. **[Configure pipeline](#step-4-configure-pipeline)** – define your stages in `resources/flamingock/pipeline.yaml`.
+4. **[Configure pipeline](#step-4-configure-pipeline)** – define your stages using `@EnableFlamingock`.
 
 **That’s it!** Your project is now running on Flamingock and ready for advanced features.
 
@@ -195,7 +195,7 @@ For [Spring Boot]((https://docs.flamingock.io/docs/springboot-integration/introd
 
 ## Step 3: Create system stage
 
-Create a package where the flamingock system changeUnits will be placed(for now only the import changeUnit).
+Create a package where the Flamingock system changeUnits will be placed(for now only the import changeUnit).
 This package is the one you will specify in the pipeline descriptor. In this case we'll use `com.yourapp.flamingock.system`
 ```yaml
 id: migration-from-mongock
@@ -206,32 +206,31 @@ configuration:
 ```
 
 **Configuration parameters:**
-- **id**: Choose how you want to identify this change unit
+- **id**: Choose how you want to identify this ChangeUnit
 - **order**: Should be the first one (0001) as this is typically the first system stage change unit
 - **template**: Must be `MongoDbImporterChangeTemplate`
 - **origin**: The collection/table where Mongock's audit log is stored (typically `mongockChangeLog`)
 
 ## Step 4: Configure pipeline
 
-Configure the Flamingock pipeline using the `@Pipeline` annotation on any class in your project:
+Stages in Flamingock are **technology-agnostic**. Use them to organize ChangeUnits by logical migration steps, business domains, or any grouping that fits your project. You can mix ChangeUnits for different technologies within the same stage.
 
 ```java
-@Pipeline(
-  systemStage = @SystemStage(sourcesPackage = "com.yourapp.flamingock.system"),
-  stages = {
-    @Stage(name = "legacy-stage", type = LEGACY, sourcesPackage = "com.yourapp.mongock"),
-    @Stage(name = "New MongoDB changes", sourcesPackage = "com.yourapp.flamingock.mongodb")
-  }
+@EnableFlamingock(
+        stages = {
+                @Stage(name = "system-stage", type = SYSTEM, location = "com.yourapp.flamingock.system"),
+                @Stage(name = "legacy-stage", type = LEGACY, location = "com.yourapp.mongock"),
+                @Stage(name = "business-rules", location = "com.yourapp.flamingock.mongodb")
+        }
 )
-public class AnyClassInYourProject {
-}
+public class AnyClassInYourProject {}
 ```
 
 ### Key configuration elements:
-- Add this annotation to any class (configuration class, main class, or test class)
+- Add `EnableFlamingock` annotation to any class (configuration class, main class, or test class)
 - The **System Stage** contains framework-provided ChangeUnits—like the importer that reads Mongock’s legacy changelog and replays it into Flamingock’s audit store.
 - The **Legacy Stage** hosts your existing ChangeUnits(initially created with Mongock) with only the import paths updated, preserving their original logic. Flamingock will execute each legacy ChangeUnit only if it hasn't already been applied under Mongock, preventing duplicate runs.
-- The **Regular Stages** Contains your new Flamingock change units. In this example we’ve dedicated a stage to MongoDB changes, but you could similarly add stages for Kafka, S3, or bundle multiple systems into a single stage—choose the organization that best fits your project
+- The **Standard Stages** Contains new Flamingock ChangeUnits. In this example we’ve dedicated a stage to MongoDB changes, but you could similarly add stages for Kafka, S3, or bundle multiple systems into a single stage—organize stages according to your project's needs.
 
 ## Run and validate
 
@@ -245,8 +244,8 @@ After you’ve updated your project and pipeline, run Flamingock as usual:
 
 - **System stage**: Flamingock first executes the system ChangeUnit (migration-from-mongock) to import any outstanding Mongoock audit entries into the Flamingock store.
 
-- **Legacy stage**: Next, Flamingock runs each existing ChangeUnits(initially created with Mongock).
-  - Since these ChangeUnits have already been applied under Mongock, none will re-execute.
+- **Legacy stage**: Next, Flamingock runs each existing ChangeUnits (initially created with Mongock).
+  - Since these ChangeUnits have already been applied under Mongock, none of them will re-execute.
   - If for any reason a legacy ChangeUnit was never applied, Flamingock will pick it up and execute it now—ensuring nothing is missed.
 
 - **Regular stages**: Finally, Flamingock applies your new, native ChangeUnits—in this example, the MongoDB-specific changes.
@@ -262,7 +261,7 @@ Stage: flamingock-system-stage
 		Executed			✅ - OK
 		Audited[execution]	        ✅ - OK
 
-Stage: New MongoDB changes
+Stage: business-rules
 	0001) id: create-users-collection-with-index
 		Started				✅ - OK
 		Executed			✅ - OK
@@ -302,14 +301,14 @@ Both should produce the same database changes, demonstrating successful migratio
 This example demonstrates:
 
 1. **Seamless Migration**: Existing Mongock change units work in Flamingock with minimal changes
-2**Pipeline Configuration**: Proper setup for migrated and new change units
-3**System Stage Integration**: Automatic upgrade of Mongock change logs to Flamingock audit logs
+2. **Pipeline Configuration**: Proper setup for migrated and new change units
+3. **System Stage Integration**: Automatic upgrade of Mongock change logs to Flamingock audit logs
 
 ---
 
 ### Additional resources
 
-For detailed migration instructions, visit our [technical documentation on Mongock migration](https://docs.flamingock.io/migration/mongock).
+For detailed migration instructions, visit our [technical documentation on Mongock migration](https://docs.flamingock.io/docs/resources/upgrade-from-mongock).
 
 ---
 
@@ -320,11 +319,11 @@ pull request. Check out our [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines
 ---
 
 ### Get involved
-Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
+Star the [Flamingock repository](https://github.com/flamingock/flamingock-project) to show your support!
 
-Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).
+Report issues or suggest features in the [Flamingock issue tracker](https://github.com/flamingock/flamingock-project/issues).
 
-Join the discussion in the [Flamingock community](https://github.com/mongock/flamingock-project/discussions).
+Join the discussion in the [Flamingock community](https://github.com/flamingock/flamingock-project/discussions).
 
 ---
 
@@ -334,5 +333,4 @@ This repository is licensed under the [Apache License 2.0](../LICENSE.md).
 ---
 
 ### Explore, experiment, and empower your projects with Flamingock!
-Let us know what you think or where you'd like to see Flamingock used next. your projects with Flamingock!
 Let us know what you think or where you'd like to see Flamingock used next.

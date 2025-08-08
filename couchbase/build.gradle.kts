@@ -16,7 +16,7 @@ version = "1.0-SNAPSHOT"
 
 val flamingockVersion = flamingockVersion()
 
-val couchbaseVersion = "3.4.4"
+val couchbaseVersion = "3.7.3"
 
 dependencies {
 //    Flamingock Dependencies
@@ -33,8 +33,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
     
-    testImplementation("org.testcontainers:couchbase:1.18.3")
-    testImplementation("org.testcontainers:junit-jupiter:1.18.3")
+    testImplementation("org.testcontainers:couchbase:1.21.3")
+    testImplementation("org.testcontainers:junit-jupiter:1.21.3")
 }
 
 application {

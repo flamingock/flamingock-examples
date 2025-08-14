@@ -39,7 +39,7 @@ public class CommunityStandaloneCouchbaseApp {
                 .addDependency(cluster)
                 .addDependency(cluster.bucket(bucketName))
                 // These configurations are optional and set to their default values
-                .disableTransaction()
+                .setRelaxTargetSystemValidation(true)
                 //Build and Run
                 .build()
                 .run();

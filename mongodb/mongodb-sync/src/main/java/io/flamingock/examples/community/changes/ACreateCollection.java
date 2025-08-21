@@ -19,8 +19,10 @@ package io.flamingock.examples.community.changes;
 import com.mongodb.client.MongoDatabase;
 import io.flamingock.api.annotations.ChangeUnit;
 import io.flamingock.api.annotations.Execution;
+import io.flamingock.api.annotations.TargetSystem;
 
 @ChangeUnit( id="create-collection" , order = "0001", transactional = false)
+@TargetSystem(id = "mongodb-ts")
 public class ACreateCollection {
 
     @Execution

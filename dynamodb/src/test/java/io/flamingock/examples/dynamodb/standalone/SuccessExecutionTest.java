@@ -18,7 +18,6 @@ package io.flamingock.examples.dynamodb.standalone;
 
 import com.amazonaws.services.dynamodbv2.local.main.ServerRunner;
 import com.amazonaws.services.dynamodbv2.local.server.DynamoDBProxyServer;
-import io.flamingock.community.dynamodb.internal.entities.AuditEntryEntity;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -31,9 +30,14 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.ScanRequest;
+import software.amazon.awssdk.services.dynamodb.model.ScanResponse;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -101,30 +105,43 @@ public class SuccessExecutionTest {
     @Test
     @DisplayName("SHOULD insert the Flamingock change history")
     void flamingockLogsTest() {
-        List<AuditEntryEntity> rows = enhancedClient
-                .table("flamingockAuditLogs", TableSchema.fromBean(AuditEntryEntity.class))
-                .scan().items().stream()
+        ScanRequest scanRequest = ScanRequest.builder()
+                .tableName("flamingockAuditLogs")
+                .build();
+
+        ScanResponse response = client.scan(scanRequest);
+
+        List<Map<String, AttributeValue>> items = response.items();
+        for (Map<String, AttributeValue> item : items) {
+            System.out.println("Item: " + item);
+        }
+        List<String> taskIds = items.stream()
+                .map((Map<String, AttributeValue> item) -> item.get("changeId"))
+                .filter(Objects::nonNull)
+                .map(AttributeValue::s)
                 .toList();
 
-        List<String> taskIds = rows.stream()
-                .map(AuditEntryEntity::getTaskId)
-                .toList();
         assertTrue(taskIds.contains("table-create"));
         assertTrue(taskIds.contains("insert-user"));
         assertTrue(taskIds.contains("insert-another-user"));
 
-        rows.stream()
-                .map(AuditEntryEntity::getState)
-                .forEach(state -> assertEquals("EXECUTED", state));
+        items.stream()
+                .map((Map<String, AttributeValue> item) -> item.get("state").s())
+                .forEach(state -> assertTrue(
+                        state.equals("STARTED") || state.equals("EXECUTED"),
+                        "State should be STARTED or EXECUTED but was: " + state
+                ));
 
-        List<String> classes = rows.stream()
-                .map(AuditEntryEntity::getClassName)
+        List<String> classes = items.stream()
+                .map((Map<String, AttributeValue> item) -> item.get("changeUnitClass"))
+                .filter(Objects::nonNull)
+                .map(AttributeValue::s)
                 .toList();
         assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0002_createUserTable_changeUnit"));
         assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0003_insertUser_changeUnit"));
         assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0004_insertAnotherUser_changeUnit"));
 
-        assertEquals(3, rows.size());
+        assertEquals(6, items.size());
     }
 
 }

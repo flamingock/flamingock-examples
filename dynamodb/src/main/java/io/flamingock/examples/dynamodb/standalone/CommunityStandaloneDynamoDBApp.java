@@ -16,6 +16,8 @@
 
 package io.flamingock.examples.dynamodb.standalone;
 
+import io.flamingock.community.dynamodb.driver.DynamoDBAuditStore;
+import io.flamingock.targetsystem.dynamodb.DynamoDBTargetSystem;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import io.flamingock.api.annotations.EnableFlamingock;
 import io.flamingock.api.annotations.Stage;
@@ -34,11 +36,15 @@ public class CommunityStandaloneDynamoDBApp {
         new CommunityStandaloneDynamoDBApp().run(DynamoDBUtil.getClient());
     }
 
-    public void run(DynamoDbClient client) {
+    public void run(DynamoDbClient client) throws URISyntaxException {
+
+        DynamoDBTargetSystem dynamoDbTargetSystem = new DynamoDBTargetSystem("dynamodb-target-system").withDynamoDBClient(DynamoDBUtil.getClient());
 
         //Running flamingock
         Flamingock.builder()
                 .addDependency(client)
+                .addTargetSystem(dynamoDbTargetSystem)
+                .setAuditStore(new DynamoDBAuditStore())
                 .build()
                 .run();
     }

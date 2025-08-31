@@ -18,6 +18,7 @@ package io.flamingock.examples.dynamodb.standalone.changes;
 
 import io.flamingock.api.annotations.ChangeUnit;
 import io.flamingock.api.annotations.Execution;
+import io.flamingock.api.annotations.TargetSystem;
 import io.flamingock.examples.dynamodb.standalone.UserEntity;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
@@ -26,6 +27,7 @@ import software.amazon.awssdk.enhanced.dynamodb.model.TransactWriteItemsEnhanced
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 @ChangeUnit(id = "insert-another-user", order = "0004")
+@TargetSystem(id = "dynamodb-target-system")
 public class _0004_insertAnotherUser_changeUnit {
 
     @Execution

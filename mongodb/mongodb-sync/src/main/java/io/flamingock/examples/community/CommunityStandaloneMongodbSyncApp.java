@@ -24,6 +24,8 @@ import com.mongodb.client.MongoClients;
 import io.flamingock.api.annotations.EnableFlamingock;
 import io.flamingock.api.annotations.Stage;
 import io.flamingock.community.Flamingock;
+import io.flamingock.community.mongodb.sync.driver.MongoSyncAuditStore;
+import io.flamingock.targetystem.mongodb.sync.MongoSyncTargetSystem;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -47,9 +49,14 @@ public class CommunityStandaloneMongodbSyncApp {
 
 
     public  void run(MongoClient mongoClient, String databaseName) {
+
+        MongoSyncTargetSystem mongoTargetSystem = new MongoSyncTargetSystem("mongodb-target-system").withMongoClient(mongoClient).withDatabase(mongoClient.getDatabase(databaseName));
+
         Flamingock.builder()
                 .addDependency(mongoClient)
                 .addDependency(mongoClient.getDatabase(databaseName))
+                .addTargetSystem(mongoTargetSystem)
+                .setAuditStore(new MongoSyncAuditStore())
                 //Build and Run
                 .build()
                 .run();

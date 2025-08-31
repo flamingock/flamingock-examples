@@ -22,7 +22,7 @@ import io.flamingock.api.annotations.Execution;
 import io.flamingock.api.annotations.TargetSystem;
 
 @ChangeUnit( id="create-collection" , order = "0001", transactional = false)
-@TargetSystem(id = "mongodb-ts")
+@TargetSystem(id = "mongodb-target-system")
 public class ACreateCollection {
 
     @Execution

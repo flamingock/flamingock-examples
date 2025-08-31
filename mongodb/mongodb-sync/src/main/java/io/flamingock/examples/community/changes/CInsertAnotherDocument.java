@@ -25,7 +25,7 @@ import io.flamingock.api.annotations.TargetSystem;
 import org.bson.Document;
 
 @ChangeUnit( id="insert-another-document" , order = "0004")
-@TargetSystem(id = "mongodb-ts")
+@TargetSystem(id = "mongodb-target-system")
 public class CInsertAnotherDocument {
 
     @Execution

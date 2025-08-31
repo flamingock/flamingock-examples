@@ -50,7 +50,7 @@ public class CommunityStandaloneMongodbSyncApp {
 
     public  void run(MongoClient mongoClient, String databaseName) {
 
-        MongoSyncTargetSystem mongoTargetSystem = new MongoSyncTargetSystem("mongodb-ts").withMongoClient(mongoClient).withDatabase(mongoClient.getDatabase(databaseName));
+        MongoSyncTargetSystem mongoTargetSystem = new MongoSyncTargetSystem("mongodb-target-system").withMongoClient(mongoClient).withDatabase(mongoClient.getDatabase(databaseName));
 
         Flamingock.builder()
                 .addDependency(mongoClient)

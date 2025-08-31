@@ -77,22 +77,29 @@ public class SuccessExecutionTest {
                 .find()
                 .into(new ArrayList<>());
 
-        Document aCreateCollection = flamingockDocuments.get(0);
-        assertEquals("create-collection", aCreateCollection.get("changeId"));
-        assertEquals("EXECUTED", aCreateCollection.get("state"));
-        assertEquals("io.flamingock.examples.community.changes.ACreateCollection", aCreateCollection.get("changeUnitClass"));
+        assertEquals(6, flamingockDocuments.size());
 
-        Document bInsertDocument = flamingockDocuments.get(1);
-        assertEquals("insert-document", bInsertDocument.get("changeId"));
-        assertEquals("EXECUTED", bInsertDocument.get("state"));
-        assertEquals("io.flamingock.examples.community.changes.BInsertDocument", bInsertDocument.get("changeUnitClass"));
+        verifyChangeExecution(flamingockDocuments, 0, 1,
+                "create-collection", "io.flamingock.examples.community.changes.ACreateCollection");
 
-        Document cInsertAnotherDocument = flamingockDocuments.get(2);
-        assertEquals("insert-another-document", cInsertAnotherDocument.get("changeId"));
-        assertEquals("EXECUTED", cInsertAnotherDocument.get("state"));
-        assertEquals("io.flamingock.examples.community.changes.CInsertAnotherDocument", cInsertAnotherDocument.get("changeUnitClass"));
+        verifyChangeExecution(flamingockDocuments, 2, 3,
+                "insert-document", "io.flamingock.examples.community.changes.BInsertDocument");
 
-        assertEquals(3, flamingockDocuments.size());
+        verifyChangeExecution(flamingockDocuments, 4, 5,
+                "insert-another-document", "io.flamingock.examples.community.changes.CInsertAnotherDocument");
+    }
+
+    private void verifyChangeExecution(ArrayList<Document> documents, int startedIndex, int executedIndex,
+                                       String expectedChangeId, String expectedChangeUnitClass) {
+        Document startedDocument = documents.get(startedIndex);
+        assertEquals(expectedChangeId, startedDocument.get("changeId"));
+        assertEquals("STARTED", startedDocument.get("state"));
+        assertEquals(expectedChangeUnitClass, startedDocument.get("changeUnitClass"));
+
+        Document executedDocument = documents.get(executedIndex);
+        assertEquals(expectedChangeId, executedDocument.get("changeId"));
+        assertEquals("EXECUTED", executedDocument.get("state"));
+        assertEquals(expectedChangeUnitClass, executedDocument.get("changeUnitClass"));
     }
 
 }

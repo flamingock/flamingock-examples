@@ -17,7 +17,6 @@
 package io.flamingock.examples.community.couchbase;
 
 import com.couchbase.client.java.Cluster;
-import com.couchbase.client.java.Collection;
 import io.flamingock.api.annotations.EnableFlamingock;
 import io.flamingock.api.annotations.Stage;
 import io.flamingock.community.Flamingock;
@@ -36,12 +35,11 @@ public class CommunityStandaloneCouchbaseApp {
     }
 
     public void run(Cluster cluster, String bucketName) {
-        Collection collection = cluster.bucket(bucketName).defaultCollection();
         Flamingock.builder()
                 .addDependency(cluster)
-                .addDependency(collection)
+                .addDependency(cluster.bucket(bucketName))
                 // These configurations are optional and set to their default values
-                .disableTransaction()
+                .setRelaxTargetSystemValidation(true)
                 //Build and Run
                 .build()
                 .run();

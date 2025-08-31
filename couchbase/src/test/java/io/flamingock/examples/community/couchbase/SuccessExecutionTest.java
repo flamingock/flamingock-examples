@@ -23,7 +23,7 @@ import com.couchbase.client.java.manager.query.QueryIndex;
 import com.couchbase.client.java.query.QueryOptions;
 import com.couchbase.client.java.query.QueryResult;
 import com.couchbase.client.java.query.QueryScanConsistency;
-import io.flamingock.community.couchbase.internal.util.N1QLQueryProvider;
+import io.flamingock.internal.core.community.Constants;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,10 +32,10 @@ import org.testcontainers.couchbase.CouchbaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.time.Duration;
 import java.util.Comparator;
 import java.util.List;
 
-import static io.flamingock.community.couchbase.internal.CouchbaseConstants.DOCUMENT_TYPE_AUDIT_ENTRY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Testcontainers
@@ -44,14 +44,20 @@ public class SuccessExecutionTest {
     private static final String BUCKET_NAME = "bucket";
 
     @Container
-    public static final CouchbaseContainer container = new CouchbaseContainer("couchbase/server").withBucket(new BucketDefinition(BUCKET_NAME));
+    public static final CouchbaseContainer couchbaseContainer = new CouchbaseContainer("couchbase/server")
+            .withBucket(new BucketDefinition(BUCKET_NAME));
 
     private static Cluster cluster;
 
     @BeforeAll
     static void beforeAll() {
-        cluster = Cluster.connect(container.getConnectionString(), container.getUsername(), container.getPassword());
-        new CommunityStandaloneCouchbaseApp().run(cluster, BUCKET_NAME);
+        couchbaseContainer.start();
+        cluster = Cluster.connect(
+                couchbaseContainer.getConnectionString(),
+                couchbaseContainer.getUsername(),
+                couchbaseContainer.getPassword());
+        cluster.bucket(BUCKET_NAME).waitUntilReady(Duration.ofSeconds(10));
+            new CommunityStandaloneCouchbaseApp().run(cluster, BUCKET_NAME);
     }
 
     @Test
@@ -71,8 +77,8 @@ public class SuccessExecutionTest {
     @DisplayName("SHOULD insert the Flamingock change history")
     void flamingockLogsTest() {
         QueryResult result = cluster.query(
-                N1QLQueryProvider.selectAllChangesQuery(BUCKET_NAME, CollectionIdentifier.DEFAULT_SCOPE, CollectionIdentifier.DEFAULT_COLLECTION),
-                QueryOptions.queryOptions().parameters(JsonObject.create().put("p", DOCUMENT_TYPE_AUDIT_ENTRY))
+                String.format("SELECT `%s`.* FROM `%s`.`%s`.`%s`", Constants.DEFAULT_AUDIT_STORE_NAME, BUCKET_NAME, CollectionIdentifier.DEFAULT_SCOPE, Constants.DEFAULT_AUDIT_STORE_NAME),
+                QueryOptions.queryOptions()
                         .scanConsistency(QueryScanConsistency.REQUEST_PLUS));
 
         List<JsonObject> flamingockDocuments = result
@@ -81,11 +87,11 @@ public class SuccessExecutionTest {
                 .sorted(Comparator.comparing(o -> o.getLong("timestamp")))
                 .toList();
 
+        assertEquals(1, flamingockDocuments.size());
+
         JsonObject executionEntry = flamingockDocuments.get(0);
         assertEquals("index-initializer", executionEntry.get("changeId"));
         assertEquals("EXECUTED", executionEntry.get("state"));
         assertEquals("io.flamingock.examples.community.couchbase.changes.IndexInitializerChangeUnit", executionEntry.get("changeUnitClass"));
-
-        assertEquals(1, flamingockDocuments.size());
     }
 }

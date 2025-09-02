@@ -20,7 +20,7 @@ val awsSdkVersion = "2.25.28"
 dependencies {
     // Flamingock Dependencies
     implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
-    implementation("io.flamingock:flamingock-ce-dynamodb")
+    implementation("io.flamingock:flamingock-community")
     annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
 
     // AWS SDK Dependencies

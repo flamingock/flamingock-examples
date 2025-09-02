@@ -20,6 +20,8 @@ import com.couchbase.client.java.Cluster;
 import io.flamingock.api.annotations.EnableFlamingock;
 import io.flamingock.api.annotations.Stage;
 import io.flamingock.community.Flamingock;
+import io.flamingock.community.couchbase.driver.CouchbaseAuditStore;
+import io.flamingock.targetsystem.couchbase.CouchbaseTargetSystem;
 
 @EnableFlamingock(
     stages = {
@@ -35,11 +37,15 @@ public class CommunityStandaloneCouchbaseApp {
     }
 
     public void run(Cluster cluster, String bucketName) {
+        CouchbaseTargetSystem couchbaseTargetSystem = new CouchbaseTargetSystem("couchbase-target-system")
+                .withCluster(cluster)
+                .withBucket(cluster.bucket(bucketName));
+
         Flamingock.builder()
                 .addDependency(cluster)
                 .addDependency(cluster.bucket(bucketName))
-                // These configurations are optional and set to their default values
-                .setRelaxTargetSystemValidation(true)
+                .addTargetSystem(couchbaseTargetSystem)
+                .setAuditStore(new CouchbaseAuditStore())
                 //Build and Run
                 .build()
                 .run();

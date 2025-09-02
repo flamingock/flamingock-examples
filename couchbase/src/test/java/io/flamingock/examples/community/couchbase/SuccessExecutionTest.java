@@ -23,7 +23,6 @@ import com.couchbase.client.java.manager.query.QueryIndex;
 import com.couchbase.client.java.query.QueryOptions;
 import com.couchbase.client.java.query.QueryResult;
 import com.couchbase.client.java.query.QueryScanConsistency;
-import io.flamingock.internal.core.community.Constants;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,9 +41,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SuccessExecutionTest {
 
     private static final String BUCKET_NAME = "bucket";
+    private static final String DEFAULT_AUDIT_STORE_NAME = "flamingockAuditLogs";
 
     @Container
-    public static final CouchbaseContainer couchbaseContainer = new CouchbaseContainer("couchbase/server")
+    public static final CouchbaseContainer couchbaseContainer = new CouchbaseContainer("couchbase/server:7.2.4")
             .withBucket(new BucketDefinition(BUCKET_NAME));
 
     private static Cluster cluster;
@@ -77,7 +77,7 @@ public class SuccessExecutionTest {
     @DisplayName("SHOULD insert the Flamingock change history")
     void flamingockLogsTest() {
         QueryResult result = cluster.query(
-                String.format("SELECT `%s`.* FROM `%s`.`%s`.`%s`", Constants.DEFAULT_AUDIT_STORE_NAME, BUCKET_NAME, CollectionIdentifier.DEFAULT_SCOPE, Constants.DEFAULT_AUDIT_STORE_NAME),
+                String.format("SELECT `%s`.* FROM `%s`.`%s`.`%s`", DEFAULT_AUDIT_STORE_NAME, BUCKET_NAME, CollectionIdentifier.DEFAULT_SCOPE, DEFAULT_AUDIT_STORE_NAME),
                 QueryOptions.queryOptions()
                         .scanConsistency(QueryScanConsistency.REQUEST_PLUS));
 

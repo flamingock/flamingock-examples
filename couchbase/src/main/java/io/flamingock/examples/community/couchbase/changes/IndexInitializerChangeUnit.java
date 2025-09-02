@@ -21,12 +21,14 @@ import com.couchbase.client.java.manager.query.DropQueryIndexOptions;
 import io.flamingock.api.annotations.ChangeUnit;
 import io.flamingock.api.annotations.Execution;
 import io.flamingock.api.annotations.RollbackExecution;
+import io.flamingock.api.annotations.TargetSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 
 @ChangeUnit(id = "index-initializer", order = "0001", transactional = false)
+@TargetSystem(id = "couchbase-target-system")
 public class IndexInitializerChangeUnit {
 
     private static final Logger logger = LoggerFactory.getLogger(IndexInitializerChangeUnit.class);

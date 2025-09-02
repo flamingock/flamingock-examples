@@ -19,8 +19,11 @@ package io.flamingock.examples.s3;
 import io.flamingock.api.annotations.EnableFlamingock;
 import io.flamingock.api.annotations.Stage;
 import io.flamingock.community.Flamingock;
+import io.flamingock.community.dynamodb.driver.DynamoDBAuditStore;
 import io.flamingock.examples.s3.util.DynamoDBUtil;
 import io.flamingock.examples.s3.util.S3Util;
+import io.flamingock.internal.core.targets.DefaultTargetSystem;
+import io.flamingock.targetsystem.dynamodb.DynamoDBTargetSystem;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.s3.S3Client;
 
@@ -39,9 +42,12 @@ public class S3FlamingockExample {
 
     public void run(S3Client s3Client, DynamoDbClient dynamoDbClient) {
 
+        DefaultTargetSystem defaultTargetSystem = new DefaultTargetSystem("default-target-system");
         Flamingock.builder()
                 .addDependency(dynamoDbClient)
                 .addDependency(s3Client)
+                .addTargetSystem(defaultTargetSystem)
+                .setAuditStore(new DynamoDBAuditStore())
                 .build()
                 .run();
     }

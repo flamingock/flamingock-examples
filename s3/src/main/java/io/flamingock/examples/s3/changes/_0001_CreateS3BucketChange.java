@@ -19,11 +19,13 @@ package io.flamingock.examples.s3.changes;
 import io.flamingock.api.annotations.ChangeUnit;
 import io.flamingock.api.annotations.Execution;
 import io.flamingock.api.annotations.RollbackExecution;
+import io.flamingock.api.annotations.TargetSystem;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
 import software.amazon.awssdk.services.s3.model.DeleteBucketRequest;
 
 @ChangeUnit(id = "create-bucket", order = "0001", author = "dev-team")
+@TargetSystem(id = "default-target-system")
 public class _0001_CreateS3BucketChange {
 
   @Execution

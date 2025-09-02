@@ -42,11 +42,11 @@ public class S3FlamingockExample {
 
     public void run(S3Client s3Client, DynamoDbClient dynamoDbClient) {
 
-        DefaultTargetSystem defaultTargetSystem = new DefaultTargetSystem("default-target-system");
+        DefaultTargetSystem s3TargetSystem = new DefaultTargetSystem("s3-target-system");
         Flamingock.builder()
                 .addDependency(dynamoDbClient)
                 .addDependency(s3Client)
-                .addTargetSystem(defaultTargetSystem)
+                .addTargetSystem(s3TargetSystem)
                 .setAuditStore(new DynamoDBAuditStore())
                 .build()
                 .run();

@@ -25,7 +25,7 @@ import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
 import software.amazon.awssdk.services.s3.model.DeleteBucketRequest;
 
 @ChangeUnit(id = "create-bucket", order = "0001", author = "dev-team")
-@TargetSystem(id = "default-target-system")
+@TargetSystem(id = "s3-target-system")
 public class _0001_CreateS3BucketChange {
 
   @Execution

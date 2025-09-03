@@ -18,10 +18,12 @@ package io.flamingock.examples.mongodb.springboot.springdata.changes;
 
 import io.flamingock.api.annotations.ChangeUnit;
 import io.flamingock.api.annotations.Execution;
+import io.flamingock.api.annotations.TargetSystem;
 import io.flamingock.examples.mongodb.springboot.springdata.client.Client;
 import io.flamingock.examples.mongodb.springboot.springdata.client.ClientRepository;
 
 @ChangeUnit( id="insert-another-document" , order = "0003")
+@TargetSystem(id = "mongo-target-system")
 public class CInsertAnotherDocument {
 
     @Execution

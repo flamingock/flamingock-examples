@@ -22,6 +22,7 @@ val flamingockVersion = flamingockVersion()
 dependencies {
 //    Flamingock Dependencies
     implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
+    implementation("io.flamingock:flamingock-community")
     implementation("io.flamingock:flamingock-ce-mongodb-springdata")
     implementation("io.flamingock:flamingock-springboot-integration")
     annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")

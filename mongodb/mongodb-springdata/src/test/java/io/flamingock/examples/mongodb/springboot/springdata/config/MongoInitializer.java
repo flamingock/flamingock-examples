@@ -16,10 +16,20 @@
 
 package io.flamingock.examples.mongodb.springboot.springdata.config;
 
+import com.mongodb.ReadConcern;
+import com.mongodb.ReadPreference;
+import com.mongodb.WriteConcern;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoDatabase;
+import io.flamingock.community.mongodb.springdata.driver.SpringDataMongoAuditStore;
+import io.flamingock.community.mongodb.sync.driver.MongoSyncAuditStore;
+import io.flamingock.targetystem.mongodb.sync.MongoSyncTargetSystem;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.utility.DockerImageName;
@@ -44,6 +54,51 @@ public class MongoInitializer  implements ApplicationContextInitializer<Configur
         String[] urlChunks = replicaSetUrl.split("/");
         String database = urlChunks[urlChunks.length - 1 ];
         String mongoHost = urlChunks[urlChunks.length - 2 ];
+    }
+
+    @Bean
+    @Primary
+    public WriteConcern writeConcern() {
+        return WriteConcern.MAJORITY.withJournal(true);
+    }
+
+    @Bean
+    @Primary
+    public ReadConcern readConcern() {
+        return ReadConcern.MAJORITY;
+    }
+
+    @Bean
+    @Primary
+    public ReadPreference readPreference() {
+        return ReadPreference.primary();
+    }
+
+    @Bean
+    @Primary
+    public MongoDatabase mongoDatabase(MongoClient mongoClient) {
+        return mongoClient.getDatabase("test");
+    }
+
+    @Bean
+    @Primary
+    public MongoSyncTargetSystem mongoSyncTargetSystem(MongoClient mongoClient,
+                                                             MongoDatabase mongoDatabase,
+                                                             WriteConcern writeConcern,
+                                                             ReadConcern readConcern,
+                                                             ReadPreference readPreference) {
+        return new MongoSyncTargetSystem("mongo-target-system")
+                .withMongoClient(mongoClient)
+                .withDatabase(mongoDatabase)
+                .withWriteConcern(writeConcern)
+                .withReadConcern(readConcern)
+                .withReadPreference(readPreference);
+    }
+
+    @Bean
+    @Primary
+    public MongoSyncAuditStore auditStore() {
+        return new MongoSyncAuditStore();
     }
 }
 

@@ -22,7 +22,7 @@ import io.flamingock.api.annotations.TargetSystem;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 @ChangeUnit(id = "create-collection", order = "0001", transactional = false)
-@TargetSystem(id = "mongo-target-system")
+@TargetSystem(id = "mongo-springdata-target-system")
 public class ACreateCollection {
 
     @Execution

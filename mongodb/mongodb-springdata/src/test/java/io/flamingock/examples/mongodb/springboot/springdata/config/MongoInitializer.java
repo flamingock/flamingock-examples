@@ -22,14 +22,15 @@ import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import io.flamingock.community.mongodb.springdata.driver.SpringDataMongoAuditStore;
-import io.flamingock.community.mongodb.sync.driver.MongoSyncAuditStore;
-import io.flamingock.targetystem.mongodb.sync.MongoSyncTargetSystem;
+import io.flamingock.targetsystem.mongodb.springdata.MongoSpringDataTargetSystem;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.utility.DockerImageName;
@@ -38,6 +39,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Configuration
+@TestConfiguration
 public class MongoInitializer  implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     @Container
@@ -82,14 +84,12 @@ public class MongoInitializer  implements ApplicationContextInitializer<Configur
 
     @Bean
     @Primary
-    public MongoSyncTargetSystem mongoSyncTargetSystem(MongoClient mongoClient,
-                                                             MongoDatabase mongoDatabase,
-                                                             WriteConcern writeConcern,
-                                                             ReadConcern readConcern,
-                                                             ReadPreference readPreference) {
-        return new MongoSyncTargetSystem("mongo-target-system")
-                .withMongoClient(mongoClient)
-                .withDatabase(mongoDatabase)
+    public MongoSpringDataTargetSystem mongoSpringDataTargetSystem(MongoTemplate mongoTemplate,
+                                                                   WriteConcern writeConcern,
+                                                                   ReadConcern readConcern,
+                                                                   ReadPreference readPreference) {
+        return new MongoSpringDataTargetSystem("mongo-springdata-target-system")
+                .withMongoTemplate(mongoTemplate)
                 .withWriteConcern(writeConcern)
                 .withReadConcern(readConcern)
                 .withReadPreference(readPreference);
@@ -97,8 +97,8 @@ public class MongoInitializer  implements ApplicationContextInitializer<Configur
 
     @Bean
     @Primary
-    public MongoSyncAuditStore auditStore() {
-        return new MongoSyncAuditStore();
+    public SpringDataMongoAuditStore auditStore() {
+        return new SpringDataMongoAuditStore();
     }
 }
 

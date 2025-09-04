@@ -17,6 +17,7 @@
 package io.flamingock.examples.mongodb.springboot.springdata;
 
 
+import io.flamingock.community.mongodb.springdata.driver.SpringDataMongoAuditStore;
 import io.flamingock.examples.mongodb.springboot.springdata.config.MongoInitializer;
 import io.flamingock.examples.mongodb.springboot.springdata.events.PipelineCompletedListener;
 import io.flamingock.examples.mongodb.springboot.springdata.events.PipelineFailedListener;
@@ -24,6 +25,7 @@ import io.flamingock.examples.mongodb.springboot.springdata.events.PipelineStart
 import io.flamingock.examples.mongodb.springboot.springdata.events.StageCompletedListener;
 import io.flamingock.examples.mongodb.springboot.springdata.events.StageFailedListener;
 import io.flamingock.examples.mongodb.springboot.springdata.events.StageStartedListener;
+import io.flamingock.targetsystem.mongodb.springdata.MongoSpringDataTargetSystem;
 import org.bson.Document;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,9 +41,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Testcontainers
@@ -71,6 +71,11 @@ class SpringData3SuccessExecutionTest {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Autowired
+    private MongoSpringDataTargetSystem mongoSpringDataTargetSystem;
+
+    @Autowired
+    private SpringDataMongoAuditStore auditStore;
 
     @Test
     @DisplayName("SHOULD create clientCollection and insert two clients")

@@ -23,7 +23,7 @@ import io.flamingock.examples.mongodb.springboot.springdata.client.Client;
 import io.flamingock.examples.mongodb.springboot.springdata.client.ClientRepository;
 
 @ChangeUnit( id="insert-document" , order = "0002")
-@TargetSystem(id = "mongo-target-system")
+@TargetSystem(id = "mongo-springdata-target-system")
 public class BInsertDocument {
 
     @Execution

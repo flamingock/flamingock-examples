@@ -16,21 +16,10 @@
 
 package io.flamingock.examples.mongodb.springboot.springdata.config;
 
-import com.mongodb.ReadConcern;
-import com.mongodb.ReadPreference;
-import com.mongodb.WriteConcern;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoDatabase;
-import io.flamingock.community.mongodb.springdata.driver.SpringDataMongoAuditStore;
-import io.flamingock.targetsystem.mongodb.springdata.MongoSpringDataTargetSystem;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.utility.DockerImageName;
@@ -38,7 +27,6 @@ import org.testcontainers.utility.DockerImageName;
 import java.util.Collections;
 import java.util.List;
 
-@Configuration
 @TestConfiguration
 public class MongoInitializer  implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
@@ -56,49 +44,6 @@ public class MongoInitializer  implements ApplicationContextInitializer<Configur
         String[] urlChunks = replicaSetUrl.split("/");
         String database = urlChunks[urlChunks.length - 1 ];
         String mongoHost = urlChunks[urlChunks.length - 2 ];
-    }
-
-    @Bean
-    @Primary
-    public WriteConcern writeConcern() {
-        return WriteConcern.MAJORITY.withJournal(true);
-    }
-
-    @Bean
-    @Primary
-    public ReadConcern readConcern() {
-        return ReadConcern.MAJORITY;
-    }
-
-    @Bean
-    @Primary
-    public ReadPreference readPreference() {
-        return ReadPreference.primary();
-    }
-
-    @Bean
-    @Primary
-    public MongoDatabase mongoDatabase(MongoClient mongoClient) {
-        return mongoClient.getDatabase("test");
-    }
-
-    @Bean
-    @Primary
-    public MongoSpringDataTargetSystem mongoSpringDataTargetSystem(MongoTemplate mongoTemplate,
-                                                                   WriteConcern writeConcern,
-                                                                   ReadConcern readConcern,
-                                                                   ReadPreference readPreference) {
-        return new MongoSpringDataTargetSystem("mongo-springdata-target-system")
-                .withMongoTemplate(mongoTemplate)
-                .withWriteConcern(writeConcern)
-                .withReadConcern(readConcern)
-                .withReadPreference(readPreference);
-    }
-
-    @Bean
-    @Primary
-    public SpringDataMongoAuditStore auditStore() {
-        return new SpringDataMongoAuditStore();
     }
 }
 

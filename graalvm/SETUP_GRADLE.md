@@ -71,6 +71,6 @@ Here's a minimal setup to build the native image:
 
 ## 7. Run native image
 ```shell
-./flamingock-graalvm--1.0-SNAPSHOT
+./graalvm-0.0.1-SNAPSHOT
 ```
 

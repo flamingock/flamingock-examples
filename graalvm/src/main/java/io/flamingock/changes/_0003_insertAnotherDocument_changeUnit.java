@@ -22,9 +22,11 @@ import com.mongodb.client.MongoDatabase;
 import io.flamingock.api.annotations.ChangeUnit;
 import io.flamingock.api.annotations.Execution;
 import io.flamingock.api.annotations.RollbackExecution;
+import io.flamingock.api.annotations.TargetSystem;
 import org.bson.Document;
 
 @ChangeUnit(id = "insert-another-document", order = "0003")
+@TargetSystem(id ="mongodb-target-system")
 public class _0003_insertAnotherDocument_changeUnit {
 
     @Execution

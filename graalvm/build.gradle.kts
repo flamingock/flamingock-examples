@@ -17,7 +17,7 @@ val mongodbVersion = "5.2.0"
 val flamingockVersion = flamingockVersion()
 dependencies {
     implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
-    implementation ("io.flamingock:flamingock-ce-mongodb-sync")
+    implementation("io.flamingock:flamingock-community")
     implementation("io.flamingock:flamingock-graalvm")
     annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
 

@@ -27,9 +27,9 @@ This example has 3 Flamingock Changes:
 This example requires the following dependencies:
 ### Flamingock dependencies
     implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
-    implementation ("io.flamingock:flamingock-ce-mongodb-springdata")
-    annotationProcessor("io.flamingock:flamingock-processor")
+    implementation("io.flamingock:flamingock-community")
     implementation("io.flamingock:flamingock-springboot-integration")
+    annotationProcessor("io.flamingock:flamingock-processor")
 
 ### Springboot dependency
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -41,6 +41,10 @@ Also, it requieres the following plugins:
 ### Springboot plugins
     id("org.springframework.boot") version "3.5.3"
     id("io.spring.dependency-management") version "1.1.7"
+
+### Compatibility versions
+
+Check out the [compatibility documentation](compatibility_versions.md) for using Flamingock with Spring Boot and MongoDB Spring Data.
 
 ## How to run this example
 

@@ -20,8 +20,10 @@ import com.mongodb.client.MongoDatabase;
 import io.flamingock.api.annotations.ChangeUnit;
 import io.flamingock.api.annotations.Execution;
 import io.flamingock.api.annotations.RollbackExecution;
+import io.flamingock.api.annotations.TargetSystem;
 
 @ChangeUnit(id = "create-collection", order = "0001", transactional = false)
+@TargetSystem(id ="mongodb-target-system")
 public class _0001_createCollection_changeUnit {
 
     @Execution

@@ -23,7 +23,9 @@ import com.mongodb.client.MongoClients;
 import io.flamingock.api.annotations.EnableFlamingock;
 import io.flamingock.api.annotations.Stage;
 import io.flamingock.community.Flamingock;
+import io.flamingock.community.mongodb.sync.driver.MongoSyncAuditStore;
 import io.flamingock.internal.core.runner.Runner;
+import io.flamingock.targetystem.mongodb.sync.MongoSyncTargetSystem;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -48,9 +50,14 @@ public class App {
 
     private static Runner getRunner() {
          MongoClient mongoClient = getMongoClient();
+
+         MongoSyncTargetSystem mongodbTargetSystem = new MongoSyncTargetSystem("mongodb-target-system");
+
          return Flamingock.builder()
                  .addDependency(mongoClient)
                  .addDependency(mongoClient.getDatabase(MONGODB_DB_NAME))
+                 .addTargetSystem(mongodbTargetSystem)
+                 .setAuditStore(new MongoSyncAuditStore())
                  .setLockAcquiredForMillis(60 * 1000L)//this is just to show how is set. Default value is still 60 * 1000L
                  .setLockQuitTryingAfterMillis(3 * 60 * 1000L)//this is just to show how is set. Default value is still 3 * 60 * 1000L
                  .setLockTryFrequencyMillis(1000L)//this is just to show how is set. Default value is still 1000L

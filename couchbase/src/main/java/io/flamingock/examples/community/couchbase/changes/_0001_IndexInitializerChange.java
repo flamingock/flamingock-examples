@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,30 +18,24 @@ package io.flamingock.examples.community.couchbase.changes;
 
 import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.manager.query.DropQueryIndexOptions;
-import io.flamingock.api.annotations.ChangeUnit;
-import io.flamingock.api.annotations.Execution;
-import io.flamingock.api.annotations.RollbackExecution;
+import io.flamingock.api.annotations.Apply;
+import io.flamingock.api.annotations.Change;
+import io.flamingock.api.annotations.Rollback;
 import io.flamingock.api.annotations.TargetSystem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 
-@ChangeUnit(id = "index-initializer", order = "0001", transactional = false)
+@Change(id = "index-initializer", order = "0001", author = "flamingock-team", transactional = false)
 @TargetSystem(id = "couchbase-target-system")
-public class IndexInitializerChangeUnit {
+public class _0001_IndexInitializerChange {
 
-    private static final Logger logger = LoggerFactory.getLogger(IndexInitializerChangeUnit.class);
-
-
-    @Execution
-    public void execution(Cluster cluster) {
+    @Apply
+    public void apply(Cluster cluster) {
         cluster.queryIndexes().createIndex("bucket", "idx_standalone_index", Collections.singletonList("field1, field2"));
     }
 
-    @RollbackExecution
-    public void rollbackExecution(Cluster cluster) {
+    @Rollback
+    public void rollback(Cluster cluster) {
         cluster.queryIndexes().dropIndex("bucket", "idx_standalone_index", DropQueryIndexOptions.dropQueryIndexOptions().ignoreIfNotExists(true));
     }
-
 }

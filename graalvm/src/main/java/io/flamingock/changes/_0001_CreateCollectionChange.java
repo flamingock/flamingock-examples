@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2025 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,20 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package io.flamingock.examples.community.changes;
+ 
+package io.flamingock.changes;
 
 import com.mongodb.client.MongoDatabase;
-import io.flamingock.api.annotations.ChangeUnit;
-import io.flamingock.api.annotations.Execution;
+import io.flamingock.api.annotations.Apply;
+import io.flamingock.api.annotations.Change;
+import io.flamingock.api.annotations.Rollback;
 import io.flamingock.api.annotations.TargetSystem;
 
-@ChangeUnit( id="create-collection" , order = "0001", transactional = false)
-@TargetSystem(id = "mongodb-target-system")
-public class ACreateCollection {
+@Change(id = "create-collection", order = "0001", author = "flamingock-team", transactional = false)
+@TargetSystem(id ="mongodb-target-system")
+public class _0001_CreateCollectionChange {
 
-    @Execution
-    public void execution(MongoDatabase mongoDatabase) {
+    @Apply
+    public void apply(MongoDatabase mongoDatabase) {
         mongoDatabase.createCollection("clientCollection");
+    }
+
+    @Rollback
+    public void rollBack(MongoDatabase mongoDatabase) {
+        mongoDatabase.getCollection("clientCollection").drop();
     }
 }

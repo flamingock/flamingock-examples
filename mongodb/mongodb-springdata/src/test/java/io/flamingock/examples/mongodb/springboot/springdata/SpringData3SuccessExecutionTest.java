@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,25 +90,39 @@ class SpringData3SuccessExecutionTest {
                 .find()
                 .into(new ArrayList<>());
 
+        //6 new changes we are adding
+        assertEquals(6, flamingockDocuments.size());
 
         //New changes added
-        Document aCreateCollection = flamingockDocuments.get(0);
-        assertEquals("create-collection", aCreateCollection.get("changeId"));
-        assertEquals("EXECUTED", aCreateCollection.get("state"));
-        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes.ACreateCollection", aCreateCollection.get("changeUnitClass"));
+        Document document = flamingockDocuments.get(0);
+        assertEquals("create-collection", document.get("changeId"));
+        assertEquals("STARTED", document.get("state"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0001_CreateCollectionChange", document.get("changeUnitClass"));
 
-        Document bInsertDocument = flamingockDocuments.get(1);
-        assertEquals("insert-document", bInsertDocument.get("changeId"));
-        assertEquals("EXECUTED", bInsertDocument.get("state"));
-        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes.BInsertDocument", bInsertDocument.get("changeUnitClass"));
+        document = flamingockDocuments.get(1);
+        assertEquals("create-collection", document.get("changeId"));
+        assertEquals("APPLIED", document.get("state"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0001_CreateCollectionChange", document.get("changeUnitClass"));
 
-        Document cInsertAnotherDocument = flamingockDocuments.get(2);
-        assertEquals("insert-another-document", cInsertAnotherDocument.get("changeId"));
-        assertEquals("EXECUTED", cInsertAnotherDocument.get("state"));
-        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes.CInsertAnotherDocument", cInsertAnotherDocument.get("changeUnitClass"));
+        document = flamingockDocuments.get(2);
+        assertEquals("insert-document", document.get("changeId"));
+        assertEquals("STARTED", document.get("state"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0002_InsertDocumentChange", document.get("changeUnitClass"));
 
-        //3 new changes we are adding
-        assertEquals(3, flamingockDocuments.size());
+        document = flamingockDocuments.get(3);
+        assertEquals("insert-document", document.get("changeId"));
+        assertEquals("APPLIED", document.get("state"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0002_InsertDocumentChange", document.get("changeUnitClass"));
+
+        document = flamingockDocuments.get(4);
+        assertEquals("insert-another-document", document.get("changeId"));
+        assertEquals("STARTED", document.get("state"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0003_InsertAnotherDocumentChange", document.get("changeUnitClass"));
+
+        document = flamingockDocuments.get(5);
+        assertEquals("insert-another-document", document.get("changeId"));
+        assertEquals("APPLIED", document.get("state"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0003_InsertAnotherDocumentChange", document.get("changeUnitClass"));
     }
 
 

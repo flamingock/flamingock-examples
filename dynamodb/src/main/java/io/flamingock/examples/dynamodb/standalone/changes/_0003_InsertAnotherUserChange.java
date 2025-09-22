@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 
 package io.flamingock.examples.dynamodb.standalone.changes;
 
-import io.flamingock.api.annotations.ChangeUnit;
-import io.flamingock.api.annotations.Execution;
+import io.flamingock.api.annotations.Apply;
+import io.flamingock.api.annotations.Change;
 import io.flamingock.api.annotations.TargetSystem;
 import io.flamingock.examples.dynamodb.standalone.UserEntity;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
@@ -26,12 +26,12 @@ import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.model.TransactWriteItemsEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
-@ChangeUnit(id = "insert-another-user", order = "0004")
+@Change(id = "insert-another-user", order = "0003", author = "flamingock-team")
 @TargetSystem(id = "dynamodb-target-system")
-public class _0004_insertAnotherUser_changeUnit {
+public class _0003_InsertAnotherUserChange {
 
-    @Execution
-    public void execution(DynamoDbClient client, TransactWriteItemsEnhancedRequest.Builder writeRequestBuilder) {
+    @Apply
+    public void apply(DynamoDbClient client, TransactWriteItemsEnhancedRequest.Builder writeRequestBuilder) {
         DynamoDbTable<UserEntity> table = DynamoDbEnhancedClient.builder()
                 .dynamoDbClient(client)
                 .build()

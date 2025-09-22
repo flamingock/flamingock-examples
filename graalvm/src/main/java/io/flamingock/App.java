@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Flamingock (https://oss.flamingock.io)
+ * Copyright 2025 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,9 @@ import com.mongodb.client.MongoClients;
 import io.flamingock.api.annotations.EnableFlamingock;
 import io.flamingock.api.annotations.Stage;
 import io.flamingock.community.Flamingock;
-import io.flamingock.community.mongodb.sync.driver.MongoSyncAuditStore;
+import io.flamingock.community.mongodb.sync.driver.MongoDBSyncAuditStore;
 import io.flamingock.internal.core.runner.Runner;
-import io.flamingock.targetystem.mongodb.sync.MongoSyncTargetSystem;
+import io.flamingock.targetystem.mongodb.sync.MongoDBSyncTargetSystem;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -50,14 +50,9 @@ public class App {
 
     private static Runner getRunner() {
          MongoClient mongoClient = getMongoClient();
-
-         MongoSyncTargetSystem mongodbTargetSystem = new MongoSyncTargetSystem("mongodb-target-system");
-
          return Flamingock.builder()
-                 .addDependency(mongoClient)
-                 .addDependency(mongoClient.getDatabase(MONGODB_DB_NAME))
-                 .addTargetSystem(mongodbTargetSystem)
-                 .setAuditStore(new MongoSyncAuditStore())
+                 .setAuditStore(new MongoDBSyncAuditStore(mongoClient, MONGODB_DB_NAME))
+                 .addTargetSystem(new MongoDBSyncTargetSystem("mongodb-target-system", mongoClient, MONGODB_DB_NAME))
                  .setLockAcquiredForMillis(60 * 1000L)//this is just to show how is set. Default value is still 60 * 1000L
                  .setLockQuitTryingAfterMillis(3 * 60 * 1000L)//this is just to show how is set. Default value is still 3 * 60 * 1000L
                  .setLockTryFrequencyMillis(1000L)//this is just to show how is set. Default value is still 1000L
@@ -81,6 +76,4 @@ public class App {
         MongoClientSettings build = builder.build();
         return MongoClients.create(build);
     }
-
-
 }

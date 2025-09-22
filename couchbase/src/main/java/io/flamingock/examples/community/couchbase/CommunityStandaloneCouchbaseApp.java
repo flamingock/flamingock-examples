@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,16 +37,10 @@ public class CommunityStandaloneCouchbaseApp {
     }
 
     public void run(Cluster cluster, String bucketName) {
-        CouchbaseTargetSystem couchbaseTargetSystem = new CouchbaseTargetSystem("couchbase-target-system")
-                .withCluster(cluster)
-                .withBucket(cluster.bucket(bucketName));
-
+        // Running Flamingock
         Flamingock.builder()
-                .addDependency(cluster)
-                .addDependency(cluster.bucket(bucketName))
-                .addTargetSystem(couchbaseTargetSystem)
-                .setAuditStore(new CouchbaseAuditStore())
-                //Build and Run
+                .setAuditStore(new CouchbaseAuditStore(cluster, bucketName))
+                .addTargetSystem(new CouchbaseTargetSystem("couchbase-target-system", cluster, bucketName))
                 .build()
                 .run();
     }

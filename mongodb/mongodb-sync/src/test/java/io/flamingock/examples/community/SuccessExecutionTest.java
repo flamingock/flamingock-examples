@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -80,13 +80,13 @@ public class SuccessExecutionTest {
         assertEquals(6, flamingockDocuments.size());
 
         verifyChangeExecution(flamingockDocuments, 0, 1,
-                "create-collection", "io.flamingock.examples.community.changes.ACreateCollection");
+                "create-collection", "io.flamingock.examples.community.changes._0001_CreateCollectionChange");
 
         verifyChangeExecution(flamingockDocuments, 2, 3,
-                "insert-document", "io.flamingock.examples.community.changes.BInsertDocument");
+                "insert-document", "io.flamingock.examples.community.changes._0002_InsertDocumentChange");
 
         verifyChangeExecution(flamingockDocuments, 4, 5,
-                "insert-another-document", "io.flamingock.examples.community.changes.CInsertAnotherDocument");
+                "insert-another-document", "io.flamingock.examples.community.changes._0003_InsertAnotherDocumentChange");
     }
 
     private void verifyChangeExecution(ArrayList<Document> documents, int startedIndex, int executedIndex,
@@ -98,7 +98,7 @@ public class SuccessExecutionTest {
 
         Document executedDocument = documents.get(executedIndex);
         assertEquals(expectedChangeId, executedDocument.get("changeId"));
-        assertEquals("EXECUTED", executedDocument.get("state"));
+        assertEquals("APPLIED", executedDocument.get("state"));
         assertEquals(expectedChangeUnitClass, executedDocument.get("changeUnitClass"));
     }
 

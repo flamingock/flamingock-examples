@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Flamingock (https://oss.flamingock.io)
+ * Copyright 2025 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,21 @@
  
 package io.flamingock.changes;
 
+import com.mongodb.client.ClientSession;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import io.flamingock.api.annotations.ChangeUnit;
-import io.flamingock.api.annotations.Execution;
-import io.flamingock.api.annotations.RollbackExecution;
+import io.flamingock.api.annotations.Apply;
+import io.flamingock.api.annotations.Change;
 import io.flamingock.api.annotations.TargetSystem;
+import org.bson.Document;
 
-@ChangeUnit(id = "create-collection", order = "0001", transactional = false)
+@Change(id = "insert-document", order = "0002", author = "flamingock-team")
 @TargetSystem(id ="mongodb-target-system")
-public class _0001_createCollection_changeUnit {
+public class _0002_InsertDocumentChange {
 
-    @Execution
-    public void execution(MongoDatabase mongoDatabase) {
-        mongoDatabase.createCollection("clientCollection");
-    }
-
-    @RollbackExecution
-    public void rollBack() {
+    @Apply
+    public void apply(MongoDatabase mongoDatabase, ClientSession clientSession) {
+        MongoCollection<Document> collection = mongoDatabase.getCollection("clientCollection");
+        collection.insertOne(clientSession, new Document().append("name", "Federico"));
     }
 }

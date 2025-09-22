@@ -20,7 +20,7 @@ val couchbaseVersion = "3.7.3"
 
 dependencies {
 //    Flamingock Dependencies
-    implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
+    implementation(platform("io.flamingock:flamingock-community-bom:$flamingockVersion"))
     implementation("io.flamingock:flamingock-community")
     annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
 

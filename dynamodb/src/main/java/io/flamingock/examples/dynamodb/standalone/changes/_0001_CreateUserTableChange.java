@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 
 package io.flamingock.examples.dynamodb.standalone.changes;
 
-import io.flamingock.api.annotations.ChangeUnit;
-import io.flamingock.api.annotations.Execution;
+import io.flamingock.api.annotations.Apply;
+import io.flamingock.api.annotations.Change;
 import io.flamingock.api.annotations.TargetSystem;
 import io.flamingock.examples.dynamodb.standalone.DynamoDBUtil;
 import io.flamingock.examples.dynamodb.standalone.UserEntity;
@@ -29,16 +29,15 @@ import software.amazon.awssdk.services.dynamodb.model.DescribeTableRequest;
 
 import static java.util.Collections.emptyList;
 
-@ChangeUnit(id = "table-create", order = "0002", transactional = false)
+@Change(id = "create-user-table", order = "0001", author = "flamingock-team", transactional = false)
 @TargetSystem(id = "dynamodb-target-system")
-public class _0002_createUserTable_changeUnit {
+public class _0001_CreateUserTableChange {
 
     private DynamoDbEnhancedClient enhancedClient;
     private DynamoDbTable<UserEntity> table;
 
-    @Execution
-    public void execution(DynamoDbClient client) {
-
+    @Apply
+    public void apply(DynamoDbClient client) {
 
         DynamoDBUtil.createTable(
                 client,

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,7 @@ import io.flamingock.community.Flamingock;
 import io.flamingock.community.dynamodb.driver.DynamoDBAuditStore;
 import io.flamingock.examples.s3.util.DynamoDBUtil;
 import io.flamingock.examples.s3.util.S3Util;
-import io.flamingock.internal.core.targets.DefaultTargetSystem;
-import io.flamingock.targetsystem.dynamodb.DynamoDBTargetSystem;
+import io.flamingock.targetsystem.nontransactional.NonTransactionalTargetSystem;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.s3.S3Client;
 
@@ -41,13 +40,12 @@ public class S3FlamingockExample {
     }
 
     public void run(S3Client s3Client, DynamoDbClient dynamoDbClient) {
-
-        DefaultTargetSystem s3TargetSystem = new DefaultTargetSystem("s3-target-system");
+        // Running Flamingock
         Flamingock.builder()
-                .addDependency(dynamoDbClient)
-                .addDependency(s3Client)
-                .addTargetSystem(s3TargetSystem)
-                .setAuditStore(new DynamoDBAuditStore())
+                .setAuditStore(new DynamoDBAuditStore(dynamoDbClient))
+                .addTargetSystem(new NonTransactionalTargetSystem("s3-target-system")
+                        .addDependency(s3Client)
+                )
                 .build()
                 .run();
     }

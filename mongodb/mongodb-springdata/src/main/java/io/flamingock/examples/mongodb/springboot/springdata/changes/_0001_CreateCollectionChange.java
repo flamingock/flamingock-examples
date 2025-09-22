@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,23 @@
 
 package io.flamingock.examples.mongodb.springboot.springdata.changes;
 
-import io.flamingock.api.annotations.ChangeUnit;
-import io.flamingock.api.annotations.Execution;
+import io.flamingock.api.annotations.Apply;
+import io.flamingock.api.annotations.Change;
+import io.flamingock.api.annotations.Rollback;
 import io.flamingock.api.annotations.TargetSystem;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-@ChangeUnit(id = "create-collection", order = "0001", transactional = false)
-@TargetSystem(id = "mongo-springdata-target-system")
-public class ACreateCollection {
+@Change(id = "create-collection", order = "0001", author = "flamingock-team", transactional = false)
+@TargetSystem(id = "mongodb-springdata-target-system")
+public class _0001_CreateCollectionChange {
 
-    @Execution
-    public void execution(MongoTemplate mongoTemplate) {
+    @Apply
+    public void apply(MongoTemplate mongoTemplate) {
         mongoTemplate.createCollection("clientCollection");
+    }
+
+    @Rollback
+    public void rollback(MongoTemplate mongoTemplate) {
+        mongoTemplate.dropCollection("clientCollection");
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @Import(MongoConfig.class)
 public class MongodbSpringbootSpringdata {
 
-    public final static String DATABASE_NAME = "test";
     public final static String CLIENTS_COLLECTION_NAME = "clientCollection";
 
     public static void main(String[] args) {

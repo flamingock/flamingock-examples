@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,15 +36,11 @@ public class CommunityStandaloneDynamoDBApp {
         new CommunityStandaloneDynamoDBApp().run(DynamoDBUtil.getClient());
     }
 
-    public void run(DynamoDbClient client) throws URISyntaxException {
-
-        DynamoDBTargetSystem dynamoDbTargetSystem = new DynamoDBTargetSystem("dynamodb-target-system").withDynamoDBClient(DynamoDBUtil.getClient());
-
-        //Running flamingock
+    public void run(DynamoDbClient client) {
+        // Running Flamingock
         Flamingock.builder()
-                .addDependency(client)
-                .addTargetSystem(dynamoDbTargetSystem)
-                .setAuditStore(new DynamoDBAuditStore())
+                .setAuditStore(new DynamoDBAuditStore(client))
+                .addTargetSystem(new DynamoDBTargetSystem("dynamodb-target-system", client))
                 .build()
                 .run();
     }

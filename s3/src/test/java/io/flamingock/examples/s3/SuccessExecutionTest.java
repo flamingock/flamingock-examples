@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SuccessExecutionTest {
 
     private static final String BUCKET_NAME = "flamingock-test-bucket";
-    private static final String DEFAULT_AUDIT_STORE_TABLE_NAME = "flamingockAuditLogs";
+    private static final String AUDIT_STORE_TABLE_NAME = "flamingockAuditLogs";
     private static LocalStackContainer localstack;
     private S3Client s3Client;
     private DynamoDbClient dynamoDbClient;
@@ -69,7 +69,7 @@ public class SuccessExecutionTest {
 
         // Assert Flamingock audit logs
         ScanRequest scanRequest = ScanRequest.builder()
-                .tableName(DEFAULT_AUDIT_STORE_TABLE_NAME)
+                .tableName(AUDIT_STORE_TABLE_NAME)
                 .build();
         ScanResponse response = dynamoDbClient.scan(scanRequest);
 
@@ -80,13 +80,13 @@ public class SuccessExecutionTest {
                 .map(AttributeValue::s)
                 .toList();
 
-        assertTrue(changeIds.contains("create-bucket"), "Audit log for bucket creation should exist");
+        assertTrue(changeIds.contains("create-s3-bucket"), "Audit log for bucket creation should exist");
 
         items.stream()
                 .map(item -> item.get("state").s())
                 .forEach(state -> assertTrue(
-                        state.equals("STARTED") || state.equals("EXECUTED"),
-                        "State should be STARTED or EXECUTED but was: " + state
+                        state.equals("STARTED") || state.equals("APPLIED"),
+                        "State should be STARTED or APPLIED but was: " + state
                 ));
 
         List<String> classes = items.stream()

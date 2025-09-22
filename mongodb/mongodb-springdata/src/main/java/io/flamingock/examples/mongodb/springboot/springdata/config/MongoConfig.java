@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Flamingock (https://oss.flamingock.io)
+ * Copyright 2025 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,9 @@
 package io.flamingock.examples.mongodb.springboot.springdata.config;
 
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoDatabase;
-import io.flamingock.community.mongodb.springdata.driver.SpringDataMongoAuditStore;
+import io.flamingock.community.mongodb.sync.driver.MongoDBSyncAuditStore;
 import io.flamingock.internal.core.store.CommunityAuditStore;
-import io.flamingock.targetsystem.mongodb.springdata.MongoSpringDataTargetSystem;
+import io.flamingock.targetsystem.mongodb.springdata.MongoDBSpringDataTargetSystem;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -31,6 +30,9 @@ import com.mongodb.WriteConcern;
 
 @Configuration
 public class MongoConfig {
+
+    public final static String DATABASE_NAME = "test";
+
     @Bean
     @Primary
     public WriteConcern writeConcern() {
@@ -45,30 +47,17 @@ public class MongoConfig {
 
     @Bean
     @Primary
-    public MongoTemplate mongoTemplate(MongoClient mongoClient) {
-        return new MongoTemplate(mongoClient, "test");
-    }
-
-    @Bean
-    @Primary
     public ReadPreference readPreference() {
         return ReadPreference.primary();
     }
 
     @Bean
     @Primary
-    public MongoDatabase mongoDatabase(MongoClient mongoClient) {
-        return mongoClient.getDatabase("test");
-    }
-
-    @Bean
-    @Primary
-    public MongoSpringDataTargetSystem mongoSpringDataTargetSystem(MongoTemplate mongoTemplate,
-                                                                   WriteConcern writeConcern,
-                                                                   ReadConcern readConcern,
-                                                                   ReadPreference readPreference) {
-        return new MongoSpringDataTargetSystem("mongo-springdata-target-system")
-                .withMongoTemplate(mongoTemplate)
+    public MongoDBSpringDataTargetSystem mongoDBSpringDataTargetSystem(MongoTemplate mongoTemplate,
+                                                                     WriteConcern writeConcern,
+                                                                     ReadConcern readConcern,
+                                                                     ReadPreference readPreference) {
+        return new MongoDBSpringDataTargetSystem("mongodb-springdata-target-system", mongoTemplate)
                 .withWriteConcern(writeConcern)
                 .withReadConcern(readConcern)
                 .withReadPreference(readPreference);
@@ -76,7 +65,13 @@ public class MongoConfig {
 
     @Bean
     @Primary
-    public CommunityAuditStore auditStore() {
-        return new SpringDataMongoAuditStore();
+    public CommunityAuditStore auditStore(MongoClient mongoClient,
+                                          WriteConcern writeConcern,
+                                          ReadConcern readConcern,
+                                          ReadPreference readPreference) {
+        return new MongoDBSyncAuditStore(mongoClient, DATABASE_NAME)
+                .withWriteConcern(writeConcern)
+                .withReadConcern(readConcern)
+                .withReadPreference(readPreference);
     }
 }

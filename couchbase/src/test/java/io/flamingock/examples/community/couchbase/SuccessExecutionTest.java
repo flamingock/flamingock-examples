@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SuccessExecutionTest {
 
     private static final String BUCKET_NAME = "bucket";
-    private static final String DEFAULT_AUDIT_STORE_NAME = "flamingockAuditLogs";
+    private static final String AUDIT_STORE_SCOPE_NAME = CollectionIdentifier.DEFAULT_SCOPE;
+    private static final String AUDIT_STORE_COLLECTION_NAME = "flamingockAuditLogs";
 
     @Container
     public static final CouchbaseContainer couchbaseContainer = new CouchbaseContainer("couchbase/server:7.2.4")
@@ -77,7 +78,7 @@ public class SuccessExecutionTest {
     @DisplayName("SHOULD insert the Flamingock change history")
     void flamingockLogsTest() {
         QueryResult result = cluster.query(
-                String.format("SELECT `%s`.* FROM `%s`.`%s`.`%s`", DEFAULT_AUDIT_STORE_NAME, BUCKET_NAME, CollectionIdentifier.DEFAULT_SCOPE, DEFAULT_AUDIT_STORE_NAME),
+                String.format("SELECT `%s`.* FROM `%s`.`%s`.`%s`", AUDIT_STORE_COLLECTION_NAME, BUCKET_NAME, AUDIT_STORE_SCOPE_NAME, AUDIT_STORE_COLLECTION_NAME),
                 QueryOptions.queryOptions()
                         .scanConsistency(QueryScanConsistency.REQUEST_PLUS));
 
@@ -91,7 +92,7 @@ public class SuccessExecutionTest {
 
         JsonObject executionEntry = flamingockDocuments.get(0);
         assertEquals("index-initializer", executionEntry.get("changeId"));
-        assertEquals("EXECUTED", executionEntry.get("state"));
-        assertEquals("io.flamingock.examples.community.couchbase.changes.IndexInitializerChangeUnit", executionEntry.get("changeUnitClass"));
+        assertEquals("APPLIED", executionEntry.get("state"));
+        assertEquals("io.flamingock.examples.community.couchbase.changes._0001_IndexInitializerChange", executionEntry.get("changeUnitClass"));
     }
 }

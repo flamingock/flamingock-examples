@@ -16,8 +16,8 @@ repositories {
 val mongodbVersion = "5.2.0"
 val flamingockVersion = flamingockVersion()
 dependencies {
-    implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
-    implementation ("io.flamingock:flamingock-ce-mongodb-sync")
+    implementation(platform("io.flamingock:flamingock-community-bom:$flamingockVersion"))
+    implementation("io.flamingock:flamingock-community")
     implementation("io.flamingock:flamingock-graalvm")
     annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
 
@@ -39,7 +39,7 @@ java {
 
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "io.flamingock.App"
+        attributes["Main-Class"] = "io.flamingock.examples.graalvm.App"
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 

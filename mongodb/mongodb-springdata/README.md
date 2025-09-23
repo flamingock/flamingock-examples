@@ -26,10 +26,10 @@ This example has 3 Flamingock Changes:
 
 This example requires the following dependencies:
 ### Flamingock dependencies
-    implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
-    implementation ("io.flamingock:flamingock-ce-mongodb-springdata")
-    annotationProcessor("io.flamingock:flamingock-processor")
+    implementation(platform("io.flamingock:flamingock-community-bom:$flamingockVersion"))
+    implementation("io.flamingock:flamingock-community")
     implementation("io.flamingock:flamingock-springboot-integration")
+    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
 
 ### Springboot dependency
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -41,6 +41,10 @@ Also, it requieres the following plugins:
 ### Springboot plugins
     id("org.springframework.boot") version "3.5.3"
     id("io.spring.dependency-management") version "1.1.7"
+
+### Compatibility versions
+
+Check out the [compatibility documentation](compatibility_versions.md) for using Flamingock with Spring Boot and MongoDB Spring Data.
 
 ## How to run this example
 
@@ -54,14 +58,8 @@ purposes.
 ```
 
 ### 2. Running the main class
-To run the main class, ensure you have MongoDB running. Configure Springdata to use your own endpoint. Additionally:
-1. Open the main class file
-2. Change MongoDB endpoint in the following line for Mongock simulated execution:
-```java
-//        This line adds data to simulate previous legacy Mongock executions
-        MongockExecutor.addMongockLegacyData("mongodb://localhost:27017/", DATABASE_NAME);
-```
-3. Run the example:
+To run the main class, ensure you have MongoDB running. Configure Springdata to use your own endpoint.
+Run the example:
 ```shell
 ./gradlew run
 ```
@@ -83,11 +81,11 @@ pull request. Check out our [CONTRIBUTING.md](../../CONTRIBUTING.md) for guideli
 ___
 
 ### Get involved
-⭐ Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
+⭐ Star the [Flamingock repository](https://github.com/flamingock/flamingock-java) to show your support!
 
-🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).
+🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/flamingock/flamingock-java/issues).
 
-💬 Join the discussion in the [Flamingock community](https://github.com/mongock/flamingock-project/discussions).
+💬 Join the discussion in the [Flamingock community](https://github.com/flamingock/flamingock-java/discussions).
 
 ___
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,9 +39,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Testcontainers
@@ -88,29 +86,43 @@ class SpringData3SuccessExecutionTest {
     @Test
     @DisplayName("SHOULD insert the Flamingock change history for all, code and templated changeUnits")
     void flamingockLogsTest() {
-        ArrayList<Document> flamingockDocuments = mongoTemplate.getCollection("flamingockAuditLogs")
+        ArrayList<Document> flamingockDocuments = mongoTemplate.getCollection("flamingockAuditLog")
                 .find()
                 .into(new ArrayList<>());
 
+        //6 new changes we are adding
+        assertEquals(6, flamingockDocuments.size());
 
         //New changes added
-        Document aCreateCollection = flamingockDocuments.get(0);
-        assertEquals("create-collection", aCreateCollection.get("changeId"));
-        assertEquals("EXECUTED", aCreateCollection.get("state"));
-        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes.ACreateCollection", aCreateCollection.get("changeUnitClass"));
+        Document document = flamingockDocuments.get(0);
+        assertEquals("create-collection", document.get("changeId"));
+        assertEquals("STARTED", document.get("state"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0001_CreateCollectionChange", document.get("changeClass"));
 
-        Document bInsertDocument = flamingockDocuments.get(1);
-        assertEquals("insert-document", bInsertDocument.get("changeId"));
-        assertEquals("EXECUTED", bInsertDocument.get("state"));
-        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes.BInsertDocument", bInsertDocument.get("changeUnitClass"));
+        document = flamingockDocuments.get(1);
+        assertEquals("create-collection", document.get("changeId"));
+        assertEquals("APPLIED", document.get("state"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0001_CreateCollectionChange", document.get("changeClass"));
 
-        Document cInsertAnotherDocument = flamingockDocuments.get(2);
-        assertEquals("insert-another-document", cInsertAnotherDocument.get("changeId"));
-        assertEquals("EXECUTED", cInsertAnotherDocument.get("state"));
-        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes.CInsertAnotherDocument", cInsertAnotherDocument.get("changeUnitClass"));
+        document = flamingockDocuments.get(2);
+        assertEquals("insert-document", document.get("changeId"));
+        assertEquals("STARTED", document.get("state"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0002_InsertDocumentChange", document.get("changeClass"));
 
-        //3 new changes we are adding
-        assertEquals(3, flamingockDocuments.size());
+        document = flamingockDocuments.get(3);
+        assertEquals("insert-document", document.get("changeId"));
+        assertEquals("APPLIED", document.get("state"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0002_InsertDocumentChange", document.get("changeClass"));
+
+        document = flamingockDocuments.get(4);
+        assertEquals("insert-another-document", document.get("changeId"));
+        assertEquals("STARTED", document.get("state"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0003_InsertAnotherDocumentChange", document.get("changeClass"));
+
+        document = flamingockDocuments.get(5);
+        assertEquals("insert-another-document", document.get("changeId"));
+        assertEquals("APPLIED", document.get("state"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0003_InsertAnotherDocumentChange", document.get("changeClass"));
     }
 
 

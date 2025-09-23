@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package io.flamingock.examples.dynamodb.standalone;
 
 import com.amazonaws.services.dynamodbv2.local.main.ServerRunner;
 import com.amazonaws.services.dynamodbv2.local.server.DynamoDBProxyServer;
+import io.flamingock.examples.dynamodb.standalone.entity.UserEntity;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -106,7 +107,7 @@ public class SuccessExecutionTest {
     @DisplayName("SHOULD insert the Flamingock change history")
     void flamingockLogsTest() {
         ScanRequest scanRequest = ScanRequest.builder()
-                .tableName("flamingockAuditLogs")
+                .tableName("flamingockAuditLog")
                 .build();
 
         ScanResponse response = client.scan(scanRequest);
@@ -121,25 +122,25 @@ public class SuccessExecutionTest {
                 .map(AttributeValue::s)
                 .toList();
 
-        assertTrue(taskIds.contains("table-create"));
+        assertTrue(taskIds.contains("create-user-table"));
         assertTrue(taskIds.contains("insert-user"));
         assertTrue(taskIds.contains("insert-another-user"));
 
         items.stream()
                 .map((Map<String, AttributeValue> item) -> item.get("state").s())
                 .forEach(state -> assertTrue(
-                        state.equals("STARTED") || state.equals("EXECUTED"),
-                        "State should be STARTED or EXECUTED but was: " + state
+                        state.equals("STARTED") || state.equals("APPLIED"),
+                        "State should be STARTED or APPLIED but was: " + state
                 ));
 
         List<String> classes = items.stream()
-                .map((Map<String, AttributeValue> item) -> item.get("changeUnitClass"))
+                .map((Map<String, AttributeValue> item) -> item.get("changeClass"))
                 .filter(Objects::nonNull)
                 .map(AttributeValue::s)
                 .toList();
-        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0002_createUserTable_changeUnit"));
-        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0003_insertUser_changeUnit"));
-        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0004_insertAnotherUser_changeUnit"));
+        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0001_CreateUserTableChange"));
+        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0002_InsertUserChange"));
+        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0003_InsertAnotherUserChange"));
 
         assertEquals(6, items.size());
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://oss.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package io.flamingock.examples.mongodb.springboot.springdata;
 import io.flamingock.api.annotations.EnableFlamingock;
 import io.flamingock.api.annotations.Stage;
 import io.flamingock.examples.mongodb.springboot.springdata.client.ClientRepository;
+import io.flamingock.examples.mongodb.springboot.springdata.config.MongoConfig;
 import io.flamingock.examples.mongodb.springboot.springdata.events.PipelineCompletedListener;
 import io.flamingock.examples.mongodb.springboot.springdata.events.PipelineFailedListener;
 import io.flamingock.examples.mongodb.springboot.springdata.events.PipelineStartedListener;
@@ -28,6 +29,7 @@ import io.flamingock.examples.mongodb.springboot.springdata.events.StageStartedL
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 
@@ -39,17 +41,17 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 )
 @SpringBootApplication
 @EnableMongoRepositories(basePackageClasses = ClientRepository.class)
+@Import(MongoConfig.class)
 public class MongodbSpringbootSpringdata {
 
-    public final static String DATABASE_NAME = "test";
     public final static String CLIENTS_COLLECTION_NAME = "clientCollection";
 
     public static void main(String[] args) {
-//        Run SpringApplication
+        // Run SpringApplication
         SpringApplication.run(MongodbSpringbootSpringdata.class, args);
     }
 
-//    Configure Listeners beans
+    // Configure Listeners beans
     @Bean
     public PipelineStartedListener startFlamingockListener() {
         return new PipelineStartedListener();
@@ -73,6 +75,4 @@ public class MongodbSpringbootSpringdata {
 
     @Bean
     public StageFailedListener stageFailedListener() {return new StageFailedListener();}
-
-
 }

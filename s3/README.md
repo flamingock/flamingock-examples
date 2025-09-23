@@ -18,7 +18,7 @@ This example has 1 Flamingock Changes:
 3. [How to run this example](#how-to-run-this-example)
 4. [Proven functionalities](#proven-functionalities)
 
-> **Note**: Flamingock requires a backend to maintain its metadata. This example uses the Flamingock CE with DynamoDB as backend.
+> **Note**: Flamingock requires a backend to maintain its metadata. This example uses the Flamingock CE with DynamoDB as storage backend.
 
 ## Prerequisites
 
@@ -29,15 +29,16 @@ This example has 1 Flamingock Changes:
 
 This example requires the following dependencies:
 ### Flamingock dependencies
-    implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
-    implementation("io.flamingock:flamingock-ce-dynamodb")
-    annotationProcessor("io.flamingock:flamingock-processor")
+    implementation(platform("io.flamingock:flamingock-community-bom:$flamingockVersion"))
+    implementation("io.flamingock:flamingock-community")
+    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
 
 ### AWS SDK dependencies
     implementation("software.amazon.awssdk:s3:$awsSdkVersion")
     implementation("software.amazon.awssdk:apache-client:${awsSdkVersion}")
     implementation("software.amazon.awssdk:dynamodb:$awsSdkVersion")
     implementation("software.amazon.awssdk:dynamodb-enhanced:$awsSdkVersion")
+    implementation("software.amazon.awssdk:url-connection-client:$awsSdkVersion")
 
 ## How to run this example
 
@@ -89,11 +90,11 @@ pull request. Check out our [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines
 ___
 
 ### Get involved
-⭐ Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
+⭐ Star the [Flamingock repository](https://github.com/flamingock/flamingock-java) to show your support!
 
-🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).
+🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/flamingock/flamingock-java/issues).
 
-💬 Join the discussion in the [Flamingock community](https://github.com/mongock/flamingock-project/discussions).
+💬 Join the discussion in the [Flamingock community](https://github.com/flamingock/flamingock-java/discussions).
 
 ___
 

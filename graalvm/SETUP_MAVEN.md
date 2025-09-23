@@ -6,7 +6,7 @@
    <dependencies>
       <dependency>
          <groupId>io.flamingock</groupId>
-         <artifactId>flamingock-ce-bom</artifactId>
+         <artifactId>flamingock-community-bom</artifactId>
          <version>${flamingockVersion}</version>
          <type>pom</type>
          <scope>import</scope>
@@ -17,7 +17,7 @@
 <dependencies>
     <dependency>
         <groupId>io.flamingock</groupId>
-        <artifactId>flamingock-ce-mongodb-sync</artifactId>
+        <artifactId>flamingock-community</artifactId>
     </dependency>
 
     <dependency>

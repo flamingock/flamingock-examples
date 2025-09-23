@@ -73,7 +73,7 @@ public class SuccessExecutionTest {
     @DisplayName("SHOULD insert the Flamingock change history")
     void flamingockLogsTest() {
         ArrayList<Document> flamingockDocuments = mongoClient.getDatabase(DATABASE_NAME)
-                .getCollection("flamingockAuditLogs")
+                .getCollection("flamingockAuditLog")
                 .find()
                 .into(new ArrayList<>());
 
@@ -94,12 +94,12 @@ public class SuccessExecutionTest {
         Document startedDocument = documents.get(startedIndex);
         assertEquals(expectedChangeId, startedDocument.get("changeId"));
         assertEquals("STARTED", startedDocument.get("state"));
-        assertEquals(expectedChangeUnitClass, startedDocument.get("changeUnitClass"));
+        assertEquals(expectedChangeUnitClass, startedDocument.get("changeClass"));
 
         Document executedDocument = documents.get(executedIndex);
         assertEquals(expectedChangeId, executedDocument.get("changeId"));
         assertEquals("APPLIED", executedDocument.get("state"));
-        assertEquals(expectedChangeUnitClass, executedDocument.get("changeUnitClass"));
+        assertEquals(expectedChangeUnitClass, executedDocument.get("changeClass"));
     }
 
 }

@@ -107,7 +107,7 @@ public class SuccessExecutionTest {
     @DisplayName("SHOULD insert the Flamingock change history")
     void flamingockLogsTest() {
         ScanRequest scanRequest = ScanRequest.builder()
-                .tableName("flamingockAuditLogs")
+                .tableName("flamingockAuditLog")
                 .build();
 
         ScanResponse response = client.scan(scanRequest);
@@ -134,7 +134,7 @@ public class SuccessExecutionTest {
                 ));
 
         List<String> classes = items.stream()
-                .map((Map<String, AttributeValue> item) -> item.get("changeUnitClass"))
+                .map((Map<String, AttributeValue> item) -> item.get("changeClass"))
                 .filter(Objects::nonNull)
                 .map(AttributeValue::s)
                 .toList();

@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SuccessExecutionTest {
 
     private static final String BUCKET_NAME = "flamingock-test-bucket";
-    private static final String AUDIT_STORE_TABLE_NAME = "flamingockAuditLogs";
+    private static final String AUDIT_STORE_TABLE_NAME = "flamingockAuditLog";
     private static LocalStackContainer localstack;
     private S3Client s3Client;
     private DynamoDbClient dynamoDbClient;
@@ -90,7 +90,7 @@ public class SuccessExecutionTest {
                 ));
 
         List<String> classes = items.stream()
-                .map(item -> item.get("changeUnitClass"))
+                .map(item -> item.get("changeClass"))
                 .filter(Objects::nonNull)
                 .map(AttributeValue::s)
                 .toList();

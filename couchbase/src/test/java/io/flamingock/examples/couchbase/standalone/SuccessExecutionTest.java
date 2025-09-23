@@ -42,7 +42,7 @@ public class SuccessExecutionTest {
 
     private static final String BUCKET_NAME = "bucket";
     private static final String AUDIT_STORE_SCOPE_NAME = CollectionIdentifier.DEFAULT_SCOPE;
-    private static final String AUDIT_STORE_COLLECTION_NAME = "flamingockAuditLogs";
+    private static final String AUDIT_STORE_COLLECTION_NAME = "flamingockAuditLog";
 
     @Container
     public static final CouchbaseContainer couchbaseContainer = new CouchbaseContainer("couchbase/server:7.2.4")
@@ -93,6 +93,6 @@ public class SuccessExecutionTest {
         JsonObject executionEntry = flamingockDocuments.get(0);
         assertEquals("index-initializer", executionEntry.get("changeId"));
         assertEquals("APPLIED", executionEntry.get("state"));
-        assertEquals("io.flamingock.examples.couchbase.standalone.changes._0001_IndexInitializerChange", executionEntry.get("changeUnitClass"));
+        assertEquals("io.flamingock.examples.couchbase.standalone.changes._0001_IndexInitializerChange", executionEntry.get("changeClass"));
     }
 }

@@ -5,7 +5,7 @@ ___
 
 ## Example Overview
 
-This project demonstrates how to integrate [Flamingock](https://github.com/mongock/flamingock-project) and
+This project demonstrates how to integrate [Flamingock](https://github.com/flamingock/flamingock-java) and
 GraalVM native image, offering significantly faster startup times and reduced memory footprint compared to traditional JVM applications. It includes examples for both Maven and Gradle.
 
 > **Note**: This is a simplified example to demonstrate Flamingock integration with GraalVM native image. For production applications, please refer to the official GraalVM documentation for comprehensive native image configuration guidelines.
@@ -103,11 +103,11 @@ pull request. Check out our [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines
 ___
 
 ### Get involved
-⭐ Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
+⭐ Star the [Flamingock repository](https://github.com/flamingock/flamingock-java) to show your support!
 
-🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).
+🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/flamingock/flamingock-java/issues).
 
-💬 Join the discussion in the [Flamingock community](https://github.com/mongock/flamingock-project/discussions).
+💬 Join the discussion in the [Flamingock community](https://github.com/flamingock/flamingock-java/discussions).
 
 ___
 

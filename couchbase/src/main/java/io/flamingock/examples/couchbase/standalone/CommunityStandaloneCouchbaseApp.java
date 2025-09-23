@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.community.couchbase;
+package io.flamingock.examples.couchbase.standalone;
 
 import com.couchbase.client.java.Cluster;
 import io.flamingock.api.annotations.EnableFlamingock;
@@ -25,7 +25,7 @@ import io.flamingock.targetsystem.couchbase.CouchbaseTargetSystem;
 
 @EnableFlamingock(
     stages = {
-        @Stage(name = "couchbase-initialisation", location = "io.flamingock.examples.community.couchbase.changes")
+        @Stage(name = "couchbase-initialisation", location = "io.flamingock.examples.couchbase.standalone.changes")
     }
 )
 public class CommunityStandaloneCouchbaseApp {

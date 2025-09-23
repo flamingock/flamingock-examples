@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.community.changes;
+package io.flamingock.examples.mongodb.standalone.changes;
 
 import com.mongodb.client.ClientSession;
 import com.mongodb.client.MongoCollection;
@@ -24,7 +24,7 @@ import io.flamingock.api.annotations.Change;
 import io.flamingock.api.annotations.TargetSystem;
 import org.bson.Document;
 
-@Change( id="insert-another-document" , order = "0003", author = "flamingock-team")
+@Change( id="insert-another-document", author = "flamingock-team")
 @TargetSystem(id = "mongodb-target-system")
 public class _0003_InsertAnotherDocumentChange {
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.community.couchbase;
+package io.flamingock.examples.couchbase.standalone;
 
 import com.couchbase.client.core.io.CollectionIdentifier;
 import com.couchbase.client.java.Cluster;
@@ -93,6 +93,6 @@ public class SuccessExecutionTest {
         JsonObject executionEntry = flamingockDocuments.get(0);
         assertEquals("index-initializer", executionEntry.get("changeId"));
         assertEquals("APPLIED", executionEntry.get("state"));
-        assertEquals("io.flamingock.examples.community.couchbase.changes._0001_IndexInitializerChange", executionEntry.get("changeUnitClass"));
+        assertEquals("io.flamingock.examples.couchbase.standalone.changes._0001_IndexInitializerChange", executionEntry.get("changeUnitClass"));
     }
 }

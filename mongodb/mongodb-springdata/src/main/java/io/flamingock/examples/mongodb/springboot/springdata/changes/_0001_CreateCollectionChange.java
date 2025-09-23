@@ -22,7 +22,7 @@ import io.flamingock.api.annotations.Rollback;
 import io.flamingock.api.annotations.TargetSystem;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-@Change(id = "create-collection", order = "0001", author = "flamingock-team", transactional = false)
+@Change(id = "create-collection", author = "flamingock-team", transactional = false)
 @TargetSystem(id = "mongodb-springdata-target-system")
 public class _0001_CreateCollectionChange {
 

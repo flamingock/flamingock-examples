@@ -14,7 +14,7 @@
  * limitations under the License.
  */
  
-package io.flamingock.examples.dynamodb.standalone;
+package io.flamingock.examples.dynamodb.standalone.entity;
 
 
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;

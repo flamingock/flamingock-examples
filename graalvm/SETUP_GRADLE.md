@@ -2,14 +2,14 @@
 
 ## 1. Add flamingock dependencies
 ```kotlin
-implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
-implementation ("io.flamingock:flamingock-ce-mongodb-sync")
+implementation(platform("io.flamingock:flamingock-community-bom:$flamingockVersion"))
+implementation("io.flamingock:flamingock-community")
 implementation("io.flamingock:flamingock-graalvm")
 ```
 
 ## 2. Add flamingock annotation processor
 ```kotlin
-annotationProcessor("io.flamingock:flamingock-processor")
+annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
 ```
 
 ## 3. Add plugin manager to `settings.gradle.kts`

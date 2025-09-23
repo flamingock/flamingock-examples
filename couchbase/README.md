@@ -10,12 +10,6 @@ standalone application. It highlights key functionalities such as auditing chang
 
 This example has 1 Flamingock Changes:
 1. Initialize an index in a bucket called *bucket*. With Rollback that drops that bucket.
-```java
-    @RollbackExecution
-    public void rollbackExecution(Cluster cluster) {
-       cluster.queryIndexes().dropIndex("bucket", "idx_standalone_index", DropQueryIndexOptions.dropQueryIndexOptions().ignoreIfNotExists(true));
-    }
-```
 
 ## Table of Contents
 
@@ -29,9 +23,9 @@ This example has 1 Flamingock Changes:
 
 This example requires the following dependencies:
 ### Flamingock dependencies
-    implementation(platform("io.flamingock:flamingock-ce-bom:$flamingockVersion"))
-    implementation("io.flamingock:flamingock-ce-couchbase")
-    annotationProcessor("io.flamingock:flamingock-processor")
+    implementation(platform("io.flamingock:flamingock-community-bom:$flamingockVersion"))
+    implementation("io.flamingock:flamingock-community")
+    annotationProcessor("io.flamingock:flamingock-processor:$flamingockVersion")
 
 ### Couchbase dependency
     implementation("com.couchbase.client:java-client:$couchbaseVersion")
@@ -77,11 +71,11 @@ pull request. Check out our [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines
 ___
 
 ### Get involved
-⭐ Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
+⭐ Star the [Flamingock repository](https://github.com/flamingock/flamingock-java) to show your support!
 
-🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).
+🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/flamingock/flamingock-java/issues).
 
-💬 Join the discussion in the [Flamingock community](https://github.com/mongock/flamingock-project/discussions).
+💬 Join the discussion in the [Flamingock community](https://github.com/flamingock/flamingock-java/discussions).
 
 ___
 

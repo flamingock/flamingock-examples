@@ -39,7 +39,7 @@ java {
 
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "io.flamingock.App"
+        attributes["Main-Class"] = "io.flamingock.examples.graalvm.App"
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 

@@ -47,11 +47,11 @@ public class MongodbSpringbootSpringdata {
     public final static String CLIENTS_COLLECTION_NAME = "clientCollection";
 
     public static void main(String[] args) {
-//        Run SpringApplication
+        // Run SpringApplication
         SpringApplication.run(MongodbSpringbootSpringdata.class, args);
     }
 
-//    Configure Listeners beans
+    // Configure Listeners beans
     @Bean
     public PipelineStartedListener startFlamingockListener() {
         return new PipelineStartedListener();
@@ -75,6 +75,4 @@ public class MongodbSpringbootSpringdata {
 
     @Bean
     public StageFailedListener stageFailedListener() {return new StageFailedListener();}
-
-
 }

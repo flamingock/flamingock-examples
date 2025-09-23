@@ -17,6 +17,7 @@
 package io.flamingock.examples.dynamodb.standalone;
 
 import io.flamingock.community.dynamodb.driver.DynamoDBAuditStore;
+import io.flamingock.examples.dynamodb.standalone.util.DynamoDBUtil;
 import io.flamingock.targetsystem.dynamodb.DynamoDBTargetSystem;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import io.flamingock.api.annotations.EnableFlamingock;

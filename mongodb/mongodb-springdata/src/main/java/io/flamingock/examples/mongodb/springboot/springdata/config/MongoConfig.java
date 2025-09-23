@@ -24,54 +24,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import com.mongodb.ReadConcern;
-import com.mongodb.ReadPreference;
-import com.mongodb.WriteConcern;
 
 @Configuration
 public class MongoConfig {
 
-    public final static String DATABASE_NAME = "test";
-
     @Bean
     @Primary
-    public WriteConcern writeConcern() {
-        return WriteConcern.MAJORITY.withJournal(true);
+    public MongoDBSpringDataTargetSystem mongoDBSpringDataTargetSystem(MongoTemplate mongoTemplate) {
+        return new MongoDBSpringDataTargetSystem("mongodb-springdata-target-system", mongoTemplate);
     }
 
     @Bean
     @Primary
-    public ReadConcern readConcern() {
-        return ReadConcern.MAJORITY;
-    }
-
-    @Bean
-    @Primary
-    public ReadPreference readPreference() {
-        return ReadPreference.primary();
-    }
-
-    @Bean
-    @Primary
-    public MongoDBSpringDataTargetSystem mongoDBSpringDataTargetSystem(MongoTemplate mongoTemplate,
-                                                                     WriteConcern writeConcern,
-                                                                     ReadConcern readConcern,
-                                                                     ReadPreference readPreference) {
-        return new MongoDBSpringDataTargetSystem("mongodb-springdata-target-system", mongoTemplate)
-                .withWriteConcern(writeConcern)
-                .withReadConcern(readConcern)
-                .withReadPreference(readPreference);
-    }
-
-    @Bean
-    @Primary
-    public CommunityAuditStore auditStore(MongoClient mongoClient,
-                                          WriteConcern writeConcern,
-                                          ReadConcern readConcern,
-                                          ReadPreference readPreference) {
-        return new MongoDBSyncAuditStore(mongoClient, DATABASE_NAME)
-                .withWriteConcern(writeConcern)
-                .withReadConcern(readConcern)
-                .withReadPreference(readPreference);
+    public CommunityAuditStore auditStore(MongoClient mongoClient, MongoTemplate mongoTemplate) {
+        return new MongoDBSyncAuditStore(mongoClient, mongoTemplate.getDb().getName());
     }
 }

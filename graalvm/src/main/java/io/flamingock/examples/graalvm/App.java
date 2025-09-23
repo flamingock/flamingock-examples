@@ -14,7 +14,7 @@
  * limitations under the License.
  */
  
-package io.flamingock;
+package io.flamingock.examples.graalvm;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -35,7 +35,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 @EnableFlamingock(
     stages = {
-        @Stage(name = "mongodb-initialisation", location = "io.flamingock.changes")
+        @Stage(name = "mongodb-initialisation", location = "io.flamingock.examples.graalvm.changes")
     }
 )
 public class App {

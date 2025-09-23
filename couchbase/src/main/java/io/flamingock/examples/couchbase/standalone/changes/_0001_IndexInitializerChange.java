@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Flamingock (https://www.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-package io.flamingock.changes;
 
-import com.mongodb.client.MongoDatabase;
+package io.flamingock.examples.couchbase.standalone.changes;
+
+import com.couchbase.client.java.Cluster;
+import com.couchbase.client.java.manager.query.DropQueryIndexOptions;
 import io.flamingock.api.annotations.Apply;
 import io.flamingock.api.annotations.Change;
 import io.flamingock.api.annotations.Rollback;
 import io.flamingock.api.annotations.TargetSystem;
 
-@Change(id = "create-collection", order = "0001", author = "flamingock-team", transactional = false)
-@TargetSystem(id ="mongodb-target-system")
-public class _0001_CreateCollectionChange {
+import java.util.Collections;
+
+@Change(id = "index-initializer", author = "flamingock-team", transactional = false)
+@TargetSystem(id = "couchbase-target-system")
+public class _0001_IndexInitializerChange {
 
     @Apply
-    public void apply(MongoDatabase mongoDatabase) {
-        mongoDatabase.createCollection("clientCollection");
+    public void apply(Cluster cluster) {
+        cluster.queryIndexes().createIndex("bucket", "idx_standalone_index", Collections.singletonList("field1, field2"));
     }
 
     @Rollback
-    public void rollBack(MongoDatabase mongoDatabase) {
-        mongoDatabase.getCollection("clientCollection").drop();
+    public void rollback(Cluster cluster) {
+        cluster.queryIndexes().dropIndex("bucket", "idx_standalone_index", DropQueryIndexOptions.dropQueryIndexOptions().ignoreIfNotExists(true));
     }
 }

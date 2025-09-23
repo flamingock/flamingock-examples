@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.community;
+package io.flamingock.examples.mongodb.standalone;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -35,7 +35,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 @EnableFlamingock(
     stages = {
-        @Stage(name = "mongodb-initialisation", location = "io.flamingock.examples.community.changes")
+        @Stage(name = "mongodb-initialisation", location = "io.flamingock.examples.mongodb.standalone.changes")
     }
 )
 public class CommunityStandaloneMongodbSyncApp {

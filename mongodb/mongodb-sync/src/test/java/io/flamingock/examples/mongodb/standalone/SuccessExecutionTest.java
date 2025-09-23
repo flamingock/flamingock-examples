@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.community;
+package io.flamingock.examples.mongodb.standalone;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import static io.flamingock.examples.community.CommunityStandaloneMongodbSyncApp.DATABASE_NAME;
+import static io.flamingock.examples.mongodb.standalone.CommunityStandaloneMongodbSyncApp.DATABASE_NAME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -80,13 +80,13 @@ public class SuccessExecutionTest {
         assertEquals(6, flamingockDocuments.size());
 
         verifyChangeExecution(flamingockDocuments, 0, 1,
-                "create-collection", "io.flamingock.examples.community.changes._0001_CreateCollectionChange");
+                "create-collection", "io.flamingock.examples.mongodb.standalone.changes._0001_CreateCollectionChange");
 
         verifyChangeExecution(flamingockDocuments, 2, 3,
-                "insert-document", "io.flamingock.examples.community.changes._0002_InsertDocumentChange");
+                "insert-document", "io.flamingock.examples.mongodb.standalone.changes._0002_InsertDocumentChange");
 
         verifyChangeExecution(flamingockDocuments, 4, 5,
-                "insert-another-document", "io.flamingock.examples.community.changes._0003_InsertAnotherDocumentChange");
+                "insert-another-document", "io.flamingock.examples.mongodb.standalone.changes._0003_InsertAnotherDocumentChange");
     }
 
     private void verifyChangeExecution(ArrayList<Document> documents, int startedIndex, int executedIndex,

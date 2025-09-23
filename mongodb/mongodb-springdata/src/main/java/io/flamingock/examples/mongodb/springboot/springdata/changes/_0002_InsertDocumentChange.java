@@ -22,7 +22,7 @@ import io.flamingock.api.annotations.TargetSystem;
 import io.flamingock.examples.mongodb.springboot.springdata.client.Client;
 import io.flamingock.examples.mongodb.springboot.springdata.client.ClientRepository;
 
-@Change( id="insert-document" , order = "0002", author = "flamingock-team")
+@Change( id="insert-document", author = "flamingock-team")
 @TargetSystem(id = "mongodb-springdata-target-system")
 public class _0002_InsertDocumentChange {
 

@@ -85,11 +85,11 @@ pull request. Check out our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 ___
 
 ## Get Involved
-⭐ Star the [Flamingock repository](https://github.com/mongock/flamingock-project) to show your support!
+⭐ Star the [Flamingock repository](https://github.com/flamingock/flamingock-java) to show your support!
 
-🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/mongock/flamingock-project/issues).
+🐞 Report issues or suggest features in the [Flamingock issue tracker](https://github.com/flamingock/flamingock-java/issues).
 
-💬 Join the discussion in the [Flamingock community](https://github.com/mongock/flamingock-project/discussions).
+💬 Join the discussion in the [Flamingock community](https://github.com/flamingock/flamingock-java/discussions).
 
 ___
 

@@ -19,8 +19,8 @@ package io.flamingock.examples.dynamodb.standalone.changes;
 import io.flamingock.api.annotations.Apply;
 import io.flamingock.api.annotations.Change;
 import io.flamingock.api.annotations.TargetSystem;
-import io.flamingock.examples.dynamodb.standalone.DynamoDBUtil;
-import io.flamingock.examples.dynamodb.standalone.UserEntity;
+import io.flamingock.examples.dynamodb.standalone.entity.UserEntity;
+import io.flamingock.examples.dynamodb.standalone.util.DynamoDBUtil;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
@@ -29,7 +29,7 @@ import software.amazon.awssdk.services.dynamodb.model.DescribeTableRequest;
 
 import static java.util.Collections.emptyList;
 
-@Change(id = "create-user-table", order = "0001", author = "flamingock-team", transactional = false)
+@Change(id = "create-user-table", author = "flamingock-team", transactional = false)
 @TargetSystem(id = "dynamodb-target-system")
 public class _0001_CreateUserTableChange {
 
@@ -56,7 +56,5 @@ public class _0001_CreateUserTableChange {
 
         this.enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(client).build();
         this.table = this.enhancedClient.table(UserEntity.tableName, TableSchema.fromBean(UserEntity.class));
-
-
     }
 }

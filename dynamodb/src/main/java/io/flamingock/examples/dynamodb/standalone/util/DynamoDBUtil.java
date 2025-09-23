@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.dynamodb.standalone;
+package io.flamingock.examples.dynamodb.standalone.util;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -84,27 +84,6 @@ public final class DynamoDBUtil {
 
     public static ProvisionedThroughput getProvisionedThroughput(Long readCap, Long writeCap) {
         return ProvisionedThroughput.builder().readCapacityUnits(readCap).writeCapacityUnits(writeCap).build();
-    }
-
-    public static LocalSecondaryIndex generateLSI(String lsiName, String lsiPK, String lsiSK) {
-        return LocalSecondaryIndex.builder()
-                .indexName(lsiName)
-                .keySchema(
-                        Arrays.asList(
-                                KeySchemaElement.builder()
-                                        .attributeName(lsiPK).
-                                        keyType(KeyType.HASH)
-                                        .build(),
-                                KeySchemaElement.builder()
-                                        .attributeName(lsiSK)
-                                        .keyType(KeyType.RANGE)
-                                        .build()
-                        )
-                )
-                .projection(Projection.builder()
-                        .projectionType(ProjectionType.ALL)
-                        .build())
-                .build();
     }
 
     public static void createTable(

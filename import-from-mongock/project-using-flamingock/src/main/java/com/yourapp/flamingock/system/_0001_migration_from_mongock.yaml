@@ -1,5 +1,0 @@
-id: migration-from-mongock
-order: 0001
-template: MongoDbImporterChangeTemplate
-configuration:
-  origin: mongockChangeLog

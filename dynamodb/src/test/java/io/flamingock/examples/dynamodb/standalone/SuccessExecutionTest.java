@@ -138,9 +138,9 @@ public class SuccessExecutionTest {
                 .filter(Objects::nonNull)
                 .map(AttributeValue::s)
                 .toList();
-        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0001_CreateUserTableChange"));
-        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0002_InsertUserChange"));
-        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0003_InsertAnotherUserChange"));
+        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0001__CreateUserTableChange"));
+        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0002__InsertUserChange"));
+        assertTrue(classes.contains("io.flamingock.examples.dynamodb.standalone.changes._0003__InsertAnotherUserChange"));
 
         assertEquals(6, items.size());
     }

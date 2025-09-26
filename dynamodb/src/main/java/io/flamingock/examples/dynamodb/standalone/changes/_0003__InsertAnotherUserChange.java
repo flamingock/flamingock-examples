@@ -23,24 +23,20 @@ import io.flamingock.examples.dynamodb.standalone.entity.UserEntity;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
-import software.amazon.awssdk.enhanced.dynamodb.model.PutItemEnhancedRequest;
+import software.amazon.awssdk.enhanced.dynamodb.model.TransactWriteItemsEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
-@Change(id = "insert-user", author = "flamingock-team", transactional = false)
+@Change(id = "insert-another-user", author = "flamingock-team")
 @TargetSystem(id = "dynamodb-target-system")
-public class _0002_InsertUserChange {
+public class _0003__InsertAnotherUserChange {
 
     @Apply
-    public void apply(DynamoDbClient client) {
+    public void apply(DynamoDbClient client, TransactWriteItemsEnhancedRequest.Builder writeRequestBuilder) {
         DynamoDbTable<UserEntity> table = DynamoDbEnhancedClient.builder()
                 .dynamoDbClient(client)
                 .build()
                 .table(UserEntity.tableName, TableSchema.fromBean(UserEntity.class));
 
-        table.putItem(
-                PutItemEnhancedRequest.builder(UserEntity.class)
-                        .item(new UserEntity("Pepe", "Pérez"))
-                        .build()
-        );
+        writeRequestBuilder.addPutItem(table, new UserEntity("Pablo", "López"));
     }
 }

@@ -31,7 +31,7 @@ import static java.util.Collections.emptyList;
 
 @Change(id = "create-user-table", author = "flamingock-team", transactional = false)
 @TargetSystem(id = "dynamodb-target-system")
-public class _0001_CreateUserTableChange {
+public class _0001__CreateUserTableChange {
 
     private DynamoDbEnhancedClient enhancedClient;
     private DynamoDbTable<UserEntity> table;

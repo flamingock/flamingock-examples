@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Flamingock (https://www.flamingock.io)
+ * Copyright 2023 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-package io.flamingock.examples.graalvm.changes;
 
-import com.mongodb.client.MongoDatabase;
+package io.flamingock.examples.mongodb.springboot.springdata.changes;
+
 import io.flamingock.api.annotations.Apply;
 import io.flamingock.api.annotations.Change;
-import io.flamingock.api.annotations.Rollback;
 import io.flamingock.api.annotations.TargetSystem;
+import io.flamingock.examples.mongodb.springboot.springdata.client.Client;
+import io.flamingock.examples.mongodb.springboot.springdata.client.ClientRepository;
 
-@Change(id = "create-collection", author = "flamingock-team", transactional = false)
-@TargetSystem(id ="mongodb-target-system")
-public class _0001_CreateCollectionChange {
+@Change( id="insert-document", author = "flamingock-team")
+@TargetSystem(id = "mongodb-springdata-target-system")
+public class _0002__InsertDocumentChange {
 
     @Apply
-    public void apply(MongoDatabase mongoDatabase) {
-        mongoDatabase.createCollection("clientCollection");
-    }
-
-    @Rollback
-    public void rollBack(MongoDatabase mongoDatabase) {
-        mongoDatabase.getCollection("clientCollection").drop();
+    public void apply(ClientRepository clientRepository) {
+        clientRepository.save(new Client("Federico", null, null, null));
     }
 }

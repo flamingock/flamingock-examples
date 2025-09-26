@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Flamingock (https://www.flamingock.io)
+ * Copyright 2025 Flamingock (https://www.flamingock.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ 
+package io.flamingock.examples.graalvm.changes;
 
-package io.flamingock.examples.mongodb.springboot.springdata.changes;
-
+import com.mongodb.client.ClientSession;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import io.flamingock.api.annotations.Apply;
 import io.flamingock.api.annotations.Change;
-import io.flamingock.api.annotations.Rollback;
 import io.flamingock.api.annotations.TargetSystem;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.bson.Document;
 
-@Change(id = "create-collection", author = "flamingock-team", transactional = false)
-@TargetSystem(id = "mongodb-springdata-target-system")
-public class _0001_CreateCollectionChange {
+@Change(id = "insert-another-document", author = "flamingock-team")
+@TargetSystem(id ="mongodb-target-system")
+public class _0003__InsertAnotherDocumentChange {
 
     @Apply
-    public void apply(MongoTemplate mongoTemplate) {
-        mongoTemplate.createCollection("clientCollection");
-    }
-
-    @Rollback
-    public void rollback(MongoTemplate mongoTemplate) {
-        mongoTemplate.dropCollection("clientCollection");
+    public void apply(MongoDatabase mongoDatabase, ClientSession clientSession) {
+        MongoCollection<Document> collection = mongoDatabase.getCollection("clientCollection");
+        collection.insertOne(clientSession, new Document().append("name", "Jorge"));
     }
 }

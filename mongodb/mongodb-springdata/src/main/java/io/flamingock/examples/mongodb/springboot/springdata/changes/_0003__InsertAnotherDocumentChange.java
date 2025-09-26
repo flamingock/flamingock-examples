@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.mongodb.standalone.changes;
+package io.flamingock.examples.mongodb.springboot.springdata.changes;
 
-import com.mongodb.client.ClientSession;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import io.flamingock.api.annotations.Apply;
 import io.flamingock.api.annotations.Change;
 import io.flamingock.api.annotations.TargetSystem;
-import org.bson.Document;
+import io.flamingock.examples.mongodb.springboot.springdata.client.Client;
+import io.flamingock.examples.mongodb.springboot.springdata.client.ClientRepository;
 
 @Change( id="insert-another-document", author = "flamingock-team")
-@TargetSystem(id = "mongodb-target-system")
-public class _0003_InsertAnotherDocumentChange {
+@TargetSystem(id = "mongodb-springdata-target-system")
+public class _0003__InsertAnotherDocumentChange {
 
     @Apply
-    public void apply(MongoDatabase mongoDatabase, ClientSession clientSession) {
-        MongoCollection<Document> collection = mongoDatabase.getCollection("clientCollection");
-        collection.insertOne(clientSession, new Document().append("name", "Jorge"));
+    public void apply(ClientRepository clientRepository) {
+        clientRepository.save(new Client("Jorge", null, null, null));
     }
 }

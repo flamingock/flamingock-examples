@@ -80,13 +80,13 @@ public class SuccessExecutionTest {
         assertEquals(6, flamingockDocuments.size());
 
         verifyChangeExecution(flamingockDocuments, 0, 1,
-                "create-collection", "io.flamingock.examples.mongodb.standalone.changes._0001_CreateCollectionChange");
+                "create-collection", "io.flamingock.examples.mongodb.standalone.changes._0001__CreateCollectionChange");
 
         verifyChangeExecution(flamingockDocuments, 2, 3,
-                "insert-document", "io.flamingock.examples.mongodb.standalone.changes._0002_InsertDocumentChange");
+                "insert-document", "io.flamingock.examples.mongodb.standalone.changes._0002__InsertDocumentChange");
 
         verifyChangeExecution(flamingockDocuments, 4, 5,
-                "insert-another-document", "io.flamingock.examples.mongodb.standalone.changes._0003_InsertAnotherDocumentChange");
+                "insert-another-document", "io.flamingock.examples.mongodb.standalone.changes._0003__InsertAnotherDocumentChange");
     }
 
     private void verifyChangeExecution(ArrayList<Document> documents, int startedIndex, int executedIndex,

@@ -27,7 +27,7 @@ import java.util.Collections;
 
 @Change(id = "index-initializer", author = "flamingock-team", transactional = false)
 @TargetSystem(id = "couchbase-target-system")
-public class _0001_IndexInitializerChange {
+public class _0001__IndexInitializerChange {
 
     @Apply
     public void apply(Cluster cluster) {

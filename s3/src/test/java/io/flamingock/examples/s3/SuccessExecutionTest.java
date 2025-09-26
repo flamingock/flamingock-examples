@@ -94,7 +94,7 @@ public class SuccessExecutionTest {
                 .filter(Objects::nonNull)
                 .map(AttributeValue::s)
                 .toList();
-        assertTrue(classes.contains("io.flamingock.examples.s3.changes._0001_CreateS3BucketChange"));
+        assertTrue(classes.contains("io.flamingock.examples.s3.changes._0001__CreateS3BucketChange"));
 
         assertFalse(items.isEmpty(), "Audit log should not be empty");
     }

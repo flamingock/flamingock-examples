@@ -16,21 +16,23 @@
  
 package io.flamingock.examples.graalvm.changes;
 
-import com.mongodb.client.ClientSession;
-import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import io.flamingock.api.annotations.Apply;
 import io.flamingock.api.annotations.Change;
+import io.flamingock.api.annotations.Rollback;
 import io.flamingock.api.annotations.TargetSystem;
-import org.bson.Document;
 
-@Change(id = "insert-another-document", author = "flamingock-team")
+@Change(id = "create-collection", author = "flamingock-team", transactional = false)
 @TargetSystem(id ="mongodb-target-system")
-public class _0003_InsertAnotherDocumentChange {
+public class _0001__CreateCollectionChange {
 
     @Apply
-    public void apply(MongoDatabase mongoDatabase, ClientSession clientSession) {
-        MongoCollection<Document> collection = mongoDatabase.getCollection("clientCollection");
-        collection.insertOne(clientSession, new Document().append("name", "Jorge"));
+    public void apply(MongoDatabase mongoDatabase) {
+        mongoDatabase.createCollection("clientCollection");
+    }
+
+    @Rollback
+    public void rollBack(MongoDatabase mongoDatabase) {
+        mongoDatabase.getCollection("clientCollection").drop();
     }
 }

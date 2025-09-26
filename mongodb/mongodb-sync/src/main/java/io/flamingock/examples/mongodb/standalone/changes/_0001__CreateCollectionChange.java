@@ -14,31 +14,25 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.s3.changes;
+package io.flamingock.examples.mongodb.standalone.changes;
 
+import com.mongodb.client.MongoDatabase;
 import io.flamingock.api.annotations.Apply;
 import io.flamingock.api.annotations.Change;
 import io.flamingock.api.annotations.Rollback;
 import io.flamingock.api.annotations.TargetSystem;
-import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
-import software.amazon.awssdk.services.s3.model.DeleteBucketRequest;
 
-@Change(id = "create-s3-bucket", author = "flamingock-team")
-@TargetSystem(id = "s3-target-system")
-public class _0001_CreateS3BucketChange {
+@Change( id="create-collection", author = "flamingock-team", transactional = false)
+@TargetSystem(id = "mongodb-target-system")
+public class _0001__CreateCollectionChange {
 
-  @Apply
-  public void apply(S3Client s3Client) {
-    s3Client.createBucket(CreateBucketRequest.builder()
-        .bucket("flamingock-test-bucket")
-        .build());
-  }
+    @Apply
+    public void apply(MongoDatabase mongoDatabase) {
+        mongoDatabase.createCollection("clientCollection");
+    }
 
-  @Rollback
-  public void rollback(S3Client s3Client) {
-    s3Client.deleteBucket(DeleteBucketRequest.builder()
-        .bucket("flamingock-test-bucket")
-        .build());
-  }
+    @Rollback
+    public void rollback(MongoDatabase mongoDatabase) {
+        mongoDatabase.getCollection("clientCollection").drop();
+    }
 }

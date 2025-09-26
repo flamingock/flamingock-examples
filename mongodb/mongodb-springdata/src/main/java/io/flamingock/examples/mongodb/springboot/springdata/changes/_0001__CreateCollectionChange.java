@@ -14,23 +14,25 @@
  * limitations under the License.
  */
 
-package io.flamingock.examples.mongodb.standalone.changes;
+package io.flamingock.examples.mongodb.springboot.springdata.changes;
 
-import com.mongodb.client.ClientSession;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import io.flamingock.api.annotations.Apply;
 import io.flamingock.api.annotations.Change;
+import io.flamingock.api.annotations.Rollback;
 import io.flamingock.api.annotations.TargetSystem;
-import org.bson.Document;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
-@Change( id="insert-document", author = "flamingock-team")
-@TargetSystem(id = "mongodb-target-system")
-public class _0002_InsertDocumentChange {
+@Change(id = "create-collection", author = "flamingock-team", transactional = false)
+@TargetSystem(id = "mongodb-springdata-target-system")
+public class _0001__CreateCollectionChange {
 
     @Apply
-    public void apply(MongoDatabase mongoDatabase, ClientSession clientSession) {
-        MongoCollection<Document> collection = mongoDatabase.getCollection("clientCollection");
-        collection.insertOne(clientSession, new Document().append("name", "Federico"));
+    public void apply(MongoTemplate mongoTemplate) {
+        mongoTemplate.createCollection("clientCollection");
+    }
+
+    @Rollback
+    public void rollback(MongoTemplate mongoTemplate) {
+        mongoTemplate.dropCollection("clientCollection");
     }
 }

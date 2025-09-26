@@ -93,6 +93,6 @@ public class SuccessExecutionTest {
         JsonObject executionEntry = flamingockDocuments.get(0);
         assertEquals("index-initializer", executionEntry.get("changeId"));
         assertEquals("APPLIED", executionEntry.get("state"));
-        assertEquals("io.flamingock.examples.couchbase.standalone.changes._0001_IndexInitializerChange", executionEntry.get("changeClass"));
+        assertEquals("io.flamingock.examples.couchbase.standalone.changes._0001__IndexInitializerChange", executionEntry.get("changeClass"));
     }
 }

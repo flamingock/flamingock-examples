@@ -97,32 +97,32 @@ class SpringData3SuccessExecutionTest {
         Document document = flamingockDocuments.get(0);
         assertEquals("create-collection", document.get("changeId"));
         assertEquals("STARTED", document.get("state"));
-        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0001_CreateCollectionChange", document.get("changeClass"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0001__CreateCollectionChange", document.get("changeClass"));
 
         document = flamingockDocuments.get(1);
         assertEquals("create-collection", document.get("changeId"));
         assertEquals("APPLIED", document.get("state"));
-        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0001_CreateCollectionChange", document.get("changeClass"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0001__CreateCollectionChange", document.get("changeClass"));
 
         document = flamingockDocuments.get(2);
         assertEquals("insert-document", document.get("changeId"));
         assertEquals("STARTED", document.get("state"));
-        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0002_InsertDocumentChange", document.get("changeClass"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0002__InsertDocumentChange", document.get("changeClass"));
 
         document = flamingockDocuments.get(3);
         assertEquals("insert-document", document.get("changeId"));
         assertEquals("APPLIED", document.get("state"));
-        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0002_InsertDocumentChange", document.get("changeClass"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0002__InsertDocumentChange", document.get("changeClass"));
 
         document = flamingockDocuments.get(4);
         assertEquals("insert-another-document", document.get("changeId"));
         assertEquals("STARTED", document.get("state"));
-        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0003_InsertAnotherDocumentChange", document.get("changeClass"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0003__InsertAnotherDocumentChange", document.get("changeClass"));
 
         document = flamingockDocuments.get(5);
         assertEquals("insert-another-document", document.get("changeId"));
         assertEquals("APPLIED", document.get("state"));
-        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0003_InsertAnotherDocumentChange", document.get("changeClass"));
+        assertEquals("io.flamingock.examples.mongodb.springboot.springdata.changes._0003__InsertAnotherDocumentChange", document.get("changeClass"));
     }
 
 
